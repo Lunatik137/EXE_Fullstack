@@ -1,0 +1,55 @@
+.trending-topics {
+  width: 300px;
+  min-width: 300px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.trending-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 15px 0;
+}
+
+.trending-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.trending-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.trending-item:hover {
+  opacity: 0.7;
+}
+
+.trending-hashtag {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 600;
+}
+
+.trending-count {
+  font-size: 13px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+@media (max-width: 1200px) {
+  .trending-topics {
+    display: none;
+  }
+}

@@ -1,0 +1,30 @@
+.community-page {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.community-feed {
+  flex: 1;
+  min-width: 0;
+  max-width: 650px;
+}
+
+@media (max-width: 1200px) {
+  .community-page {
+    justify-content: center;
+  }
+
+  .community-feed {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .community-page {
+    padding: 0;
+  }
+}

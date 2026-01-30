@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 const LoginPopup = ({ setShowLogin }) => {
   const {url, setToken } = useContext(StoreContext);
-  const [currentState, setCurrentState] = useState("Login");
+  const [currentState, setCurrentState] = useState("Đăng nhập");
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -24,7 +24,7 @@ const LoginPopup = ({ setShowLogin }) => {
   const onLogin = async (event) => {
     event.preventDefault();
     let newUrl = url;
-    if (currentState === "Login") {
+    if (currentState === "Đăng nhập") {
       newUrl += "/api/user/login";
     } else {
       newUrl += "/api/user/register";
@@ -51,7 +51,7 @@ const LoginPopup = ({ setShowLogin }) => {
           />
         </div>
         <div className="login-popup-inputs">
-          {currentState === "Login" ? (
+          {currentState === "Đăng nhập" ? (
             <></>
           ) : (
             <input
@@ -59,7 +59,7 @@ const LoginPopup = ({ setShowLogin }) => {
               onChange={onChangeHandler}
               value={data.name}
               type="text"
-              placeholder="Your name"
+              placeholder="Họ và tên"
               required
             />
           )}
@@ -68,7 +68,7 @@ const LoginPopup = ({ setShowLogin }) => {
             onChange={onChangeHandler}
             value={data.email}
             type="email"
-            placeholder="Your email"
+            placeholder="Email của bạn"
             required
           />
           <input
@@ -76,26 +76,22 @@ const LoginPopup = ({ setShowLogin }) => {
             onChange={onChangeHandler}
             value={data.password}
             type="password"
-            placeholder="Your password"
+            placeholder="Mật khẩu"
             required
           />
         </div>
         <button type="submit">
-          {currentState === "Sign Up" ? "Create Account" : "Login"}
+          {currentState === "Đăng ký" ? "Tạo tài khoản" : "Đăng nhập"}
         </button>
-        <div className="login-popup-condition">
-          <input type="checkbox" required />
-          <p>By continuing, i agree to the terms of use & privacy policy.</p>
-        </div>
-        {currentState === "Login" ? (
-          <p>
-            Create a new account?{" "}
-            <span onClick={() => setCurrentState("Sign Up")}>Click here</span>
+        {currentState === "Đăng nhập" ? (
+          <p className="switch-text">
+            Chưa có tài khoản?{" "}
+            <span onClick={() => setCurrentState("Đăng ký")}>Đăng ký ngay</span>
           </p>
         ) : (
-          <p>
-            Already have an account?{" "}
-            <span onClick={() => setCurrentState("Login")}>Login here</span>
+          <p className="switch-text">
+            Đã có tài khoản?{" "}
+            <span onClick={() => setCurrentState("Đăng nhập")}>Đăng nhập</span>
           </p>
         )}
       </form>
