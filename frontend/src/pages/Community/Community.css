@@ -13,6 +13,46 @@
   max-width: 650px;
 }
 
+.active-filter-banner {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+}
+
+.active-filter-banner strong {
+  font-weight: 600;
+}
+
+.clear-filter-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.clear-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.loading-posts, .no-posts {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
 @media (max-width: 1200px) {
   .community-page {
     justify-content: center;

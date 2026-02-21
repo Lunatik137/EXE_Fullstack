@@ -1,49 +1,185 @@
 import './TodayMenu.css';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
-const TodayMenu = () => {
-  const currentDate = new Date();
-  const dayOfWeek = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'][currentDate.getDay()];
-  const dateString = currentDate.toLocaleDateString('vi-VN');
+const TodayMenu = ({ mealPlan, todayMeal, loading }) => {
+  const navigate = useNavigate();
+
+  const handleRecipeClick = (recipeId) => {
+    if (recipeId) {
+      navigate(`/recipes/${recipeId}`);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="today-menu">
+        <div className="menu-card">
+          <div className="loading-skeleton">
+            <p>Đang tải thực đơn...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!mealPlan) {
+    return (
+      <div className="today-menu">
+        <div className="menu-card">
+          <div className="no-plan">
+            <p>Bạn chưa có lộ trình ăn chay nào.</p>
+            <p>Hãy bắt đầu tạo lộ trình của bạn!</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!todayMeal) {
+    return (
+      <div className="today-menu">
+        <div className="menu-card">
+          <div className="no-meal">
+            <p>Không có thực đơn cho ngày này.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Calculate current day number
+  const startDate = new Date(mealPlan.startDate);
+  const currentDay = todayMeal.dayNumber;
 
   return (
     <div className="today-menu">
-      <div className="menu-date">
-        {dayOfWeek}, {dateString}
-      </div>
-      <h1 className="menu-greeting">Chào Trang 🌸</h1>
-
       <div className="menu-card">
         <div className="menu-card-header">
           <div>
             <h2 className="menu-title">Thực đơn hôm nay</h2>
-            <p className="menu-subtitle">Dựa trên sở thích "Healthy it đấu" của bạn</p>
+            <p className="menu-subtitle">Dựa trên lộ trình "{mealPlan.dietType === 'vegan' ? 'Ăn chay' : 'Healthy'}" của bạn</p>
           </div>
-          <div className="day-badge">Day 3/14</div>
+          <div className="day-badge">Day {currentDay}/{mealPlan.duration}</div>
         </div>
 
-        <div className="meals-grid">
-          <div className="meal-card breakfast">
-            <div className="meal-label">BỮA SÁNG</div>
-            <div className="meal-name">Cháo yến mạch nấm</div>
-          </div>
+        <div className="meals-container">
+          {/* Breakfast */}
+          {todayMeal.breakfast && (
+            <div className="meal-card breakfast-card">
+              <span className="meal-label breakfast-label">BỮA SÁNG</span>
+              <div className="combo-meal-wrapper">
+                <div 
+                  className="combo-meal-item"
+                  onClick={() => handleRecipeClick(todayMeal.breakfast.recipeId)}
+                >
+                  <span className="meal-bullet">•</span>
+                  <span className="meal-text">{todayMeal.breakfast.name}</span>
+                </div>
+                <div className="item-nutrition-text">
+                  {todayMeal.breakfast.calories} kcal, {todayMeal.breakfast.protein}g protein
+                </div>
+              </div>
+            </div>
+          )}
 
-          <div className="meal-card lunch">
-            <div className="meal-label">BỮA TRƯA</div>
-            <div className="meal-name">Cơm gạo lứt + đậu hũ sốt me</div>
-          </div>
+          {/* Lunch - Combo Meal */}
+          {todayMeal.lunch && (
+            <div className="meal-card lunch-card">
+              <span className="meal-label lunch-label">BỮA TRƯA</span>
+              {todayMeal.lunch.items ? (
+                <div className="combo-meals-list">
+                  {todayMeal.lunch.items.map((item, idx) => (
+                    <div key={idx} className="combo-meal-wrapper">
+                      <div 
+                        className="combo-meal-item"
+                        onClick={() => handleRecipeClick(item.recipeId)}
+                      >
+                        <span className="meal-bullet">•</span>
+                        <span className="meal-text">{item.name}</span>
+                      </div>
+                      <div className="item-nutrition-text">
+                        {item.calories} kcal, {item.protein}g protein
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <h3 
+                    className="meal-card-title clickable"
+                    onClick={() => handleRecipeClick(todayMeal.lunch.recipeId)}
+                  >
+                    {todayMeal.lunch.name}
+                  </h3>
+                  <div className="meal-stats">
+                    <span className="stat-item">
+                      <span className="stat-icon">🔥</span>
+                      <span>{todayMeal.lunch.calories} kcal</span>
+                    </span>
+                    <span className="stat-item">
+                      <span className="stat-icon">🥩</span>
+                      <span>{todayMeal.lunch.protein}g protein</span>
+                    </span>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
 
-          <div className="meal-card dinner">
-            <div className="meal-label">BỮA TỐI</div>
-            <div className="meal-name">Mì Ý sốt cà chua tự nhiên</div>
-          </div>
+          {/* Dinner - Combo Meal */}
+          {todayMeal.dinner && (
+            <div className="meal-card dinner-card">
+              <span className="meal-label dinner-label">BỮA TỐI</span>
+              {todayMeal.dinner.items ? (
+                <div className="combo-meals-list">
+                  {todayMeal.dinner.items.map((item, idx) => (
+                    <div key={idx} className="combo-meal-wrapper">
+                      <div 
+                        className="combo-meal-item"
+                        onClick={() => handleRecipeClick(item.recipeId)}
+                      >
+                        <span className="meal-bullet">•</span>
+                        <span className="meal-text">{item.name}</span>
+                      </div>
+                      <div className="item-nutrition-text">
+                        {item.calories} kcal, {item.protein}g protein
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <h3 
+                    className="meal-card-title clickable"
+                    onClick={() => handleRecipeClick(todayMeal.dinner.recipeId)}
+                  >
+                    {todayMeal.dinner.name}
+                  </h3>
+                  <div className="meal-stats">
+                    <span className="stat-item">
+                      <span className="stat-icon">🔥</span>
+                      <span>{todayMeal.dinner.calories} kcal</span>
+                    </span>
+                    <span className="stat-item">
+                      <span className="stat-icon">🥩</span>
+                      <span>{todayMeal.dinner.protein}g protein</span>
+                    </span>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
         </div>
-
-        <button className="view-details-btn">
-          Xem chi tiết công thức →
-        </button>
       </div>
     </div>
   );
+};
+
+TodayMenu.propTypes = {
+  mealPlan: PropTypes.object,
+  todayMeal: PropTypes.object,
+  loading: PropTypes.bool
 };
 
 export default TodayMenu;

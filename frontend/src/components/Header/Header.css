@@ -8,6 +8,7 @@
 }
 
 .search-container {
+  position: relative;
   display: flex;
   align-items: center;
   background-color: #f3f4f6;
@@ -79,8 +80,8 @@
 }
 
 .user-avatar {
-  width: 45px;
-  height: 45px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -92,19 +93,19 @@
 }
 
 .user-section button {
-  background-color: #059669;
+  background-color: #10b981;
   color: white;
   border: none;
   padding: 10px 24px;
   border-radius: 8px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .user-section button:hover {
-  background-color: #047857;
+  background-color: #059669;
   transform: translateY(-1px);
 }
 
@@ -114,54 +115,75 @@
 }
 
 .navbar-profile img {
-  width: 45px;
-  height: 45px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.navbar-profile img:hover {
+  transform: scale(1.05);
 }
 
 .nav-profile-dropdown {
   position: absolute;
   display: none;
   right: 0;
-  z-index: 1;
+  z-index: 1000;
   background-color: white;
-  padding: 12px 16px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   list-style: none;
-  min-width: 180px;
-  top: 55px;
+  min-width: 200px;
+  top: 38px;
+  border: 1px solid #d1fae5;
 }
 
 .navbar-profile:hover .nav-profile-dropdown {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .nav-profile-dropdown li {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 6px;
-  transition: background-color 0.2s ease;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
 .nav-profile-dropdown li:hover {
-  background-color: #f3f4f6;
+  background-color: #f0fdf4;
+}
+
+.nav-profile-dropdown li:hover {
+  background-color: #d1fae5;
+}
+
+.nav-profile-dropdown li:hover p {
+  color: #047857;
+}
+
+.nav-profile-dropdown li:hover img {
+  filter: brightness(0) saturate(100%) invert(36%) sepia(74%) saturate(1135%) hue-rotate(116deg) brightness(95%) contrast(91%);
 }
 
 .nav-profile-dropdown img {
   width: 20px;
   height: 20px;
+  color: #059669;
 }
 
 .nav-profile-dropdown p {
   margin: 0;
   font-size: 14px;
-  color: #1f2937;
+  font-weight: 500;
+  color: #374151;
+  transition: color 0.2s ease;
 }
 
 .nav-profile-dropdown hr {
@@ -169,4 +191,69 @@
   border: none;
   height: 1px;
   background-color: #e5e7eb;
+}
+
+/* Search Results Dropdown */
+.search-results-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  z-index: 1000;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background-color: #f0fdf4;
+}
+
+.result-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.result-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.result-name {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.result-description {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

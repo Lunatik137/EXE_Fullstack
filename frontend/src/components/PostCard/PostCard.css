@@ -99,13 +99,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 12px;
+  padding-top: 16px;
   border-top: 1px solid #f3f4f6;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .post-stats {
   display: flex;
-  gap: 20px;
+  gap: 4px;
+  align-items: center;
 }
 
 .stat-btn {
@@ -116,11 +119,12 @@
   border: 1px solid transparent;
   color: #6b7280;
   cursor: pointer;
-  padding: 6px 12px;
+  padding: 8px 12px;
   border-radius: 6px;
   transition: all 0.2s ease;
   font-size: 14px;
   font-weight: 500;
+  min-width: fit-content;
 }
 
 .stat-btn:hover {
@@ -140,6 +144,31 @@
 .comment-btn:hover {
   color: #3b82f6;
   border-color: #3b82f6;
+}
+
+.post-save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid transparent;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.post-save-btn:hover {
+  background-color: #f3f4f6;
+  color: #059669;
+  border-color: #059669;
+}
+
+.post-save-btn svg {
+  width: 20px;
+  height: 20px;
 }
 
 .view-recipe-btn {
@@ -171,4 +200,143 @@
   border-radius: 50%;
   font-size: 12px;
   font-weight: 700;
+}
+
+.comment-input-section {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.comment-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.comment-input:focus {
+  border-color: #10b981;
+}
+
+.comment-submit-btn {
+  padding: 10px 20px;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.comment-submit-btn:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+.comment-submit-btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.stat-btn.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.stat-btn.like-btn.liked {
+  color: #ef4444;
+}
+
+.stat-btn.like-btn.liked svg {
+  animation: likeAnimation 0.3s ease;
+}
+
+@keyframes likeAnimation {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.comments-section {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.comment-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+
+.comment-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.comment-content {
+  background-color: #f3f4f6;
+  padding: 8px 12px;
+  border-radius: 16px;
+  flex: 1;
+}
+
+.comment-author {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 2px;
+}
+
+.comment-text {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.4;
+}
+
+.view-more-comments-btn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 0;
+  margin-left: 42px;
+  transition: color 0.2s;
+}
+
+.view-more-comments-btn:hover {
+  color: #10b981;
+}
+
+@media (max-width: 768px) {
+  .post-footer {
+    gap: 12px;
+  }
+  
+  .post-stats {
+    gap: 2px;
+  }
+  
+  .stat-btn {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+  
+  .view-recipe-btn {
+    padding: 6px 16px;
+    font-size: 13px;
+  }
 }

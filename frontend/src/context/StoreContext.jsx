@@ -10,6 +10,8 @@ const StoreContextProvider = (props) => {
   const url = "http://localhost:4000";
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
+  const [showLogin, setShowLogin] = useState({ show: false, mode: 'login' });
+  const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(true);
 
   const addToCart = async (itemId) => {
     if (!cartItems[itemId]) {
@@ -82,6 +84,9 @@ const StoreContextProvider = (props) => {
       if (localStorage.getItem("token")) {
         setToken(localStorage.getItem("token"));
         await loadCartData(localStorage.getItem("token"));
+        // Load onboarding status from localStorage
+        const onboardingStatus = localStorage.getItem("hasCompletedOnboarding");
+        setHasCompletedOnboarding(onboardingStatus === "true");
       }
     }
     loadData();
@@ -97,6 +102,10 @@ const StoreContextProvider = (props) => {
     url,
     token,
     setToken,
+    showLogin,
+    setShowLogin,
+    hasCompletedOnboarding,
+    setHasCompletedOnboarding,
   };
   return (
     <StoreContext.Provider value={contextValue}>

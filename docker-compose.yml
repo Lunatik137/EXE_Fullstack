@@ -1,30 +1,7 @@
-version: "3.8"
-
 services:
-  # MongoDB Database
-  mongodb:
-    image: mongo:7.0
-    container_name: exe-mongodb
-    restart: unless-stopped
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin123
-      MONGO_INITDB_DATABASE: food_delivery
-    volumes:
-      - mongodb_data:/data/db
-      - mongodb_config:/data/configdb
-    networks:
-      - exe-network
-    healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   # Backend Service
   backend:
+    platform: linux/amd64
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -34,94 +11,36 @@ services:
       - "4000:4000"
     environment:
       PORT: 4000
-      MONGO_URL: mongodb://admin:admin123@mongodb:27017/food_delivery?authSource=admin
-      JWT_SECRET: ${JWT_SECRET:-your_jwt_secret_key_here}
-      NODE_ENV: production
+      MONGO_URL: mongodb://host.docker.internal:27017/EXE_dev
+      JWT_SECRET: ThisIsASecretKeyForJWT
+      NODE_ENV: development
     volumes:
+      - /app/node_modules
       - ./backend/uploads:/app/uploads
-    depends_on:
-      mongodb:
-        condition: service_healthy
     networks:
       - exe-network
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "--quiet",
-          "--tries=1",
-          "--spider",
-          "http://localhost:4000/",
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    command: npm run server
 
-  # Frontend Service
+  # Frontend Service - Vite Dev Server
   frontend:
+    platform: linux/amd64
     build:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: exe-frontend
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "5173:5173"
     environment:
       VITE_API_URL: http://localhost:4000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     depends_on:
       - backend
     networks:
       - exe-network
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "--quiet",
-          "--tries=1",
-          "--spider",
-          "http://localhost:8080/",
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  # Admin Panel Service
-  admin:
-    build:
-      context: ./admin
-      dockerfile: Dockerfile
-    container_name: exe-admin
-    restart: unless-stopped
-    ports:
-      - "5174:8080"
-    environment:
-      VITE_API_URL: http://localhost:4000
-    depends_on:
-      - backend
-    networks:
-      - exe-network
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "--quiet",
-          "--tries=1",
-          "--spider",
-          "http://localhost:8080/",
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
 networks:
   exe-network:
     driver: bridge
-
-volumes:
-  mongodb_data:
-    driver: local
-  mongodb_config:
-    driver: local

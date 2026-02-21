@@ -99,7 +99,7 @@ Start the Backend server
 Start the Frontend server
 
 ```bash
-    npm start
+    npm run dev
 ```
 
 Start the Backend server
@@ -128,3 +128,4 @@ Just raise an issue, and we will discuss it.
 ## Feedback
 
 If you have any feedback, please reach out to me [here](https://www.linkedin.com/in/muhammad-shan-full-stack-developer/)
+

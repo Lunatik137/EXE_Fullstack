@@ -1,110 +1,316 @@
 .today-menu {
-  flex: 1;
-}
-
-.menu-date {
-  font-size: 14px;
-  color: #6b7280;
-  margin-bottom: 8px;
-}
-
-.menu-greeting {
-  font-size: 32px;
-  font-weight: 600;
-  color: #1f2937;
-  margin: 0 0 25px 0;
+  margin-bottom: 24px;
 }
 
 .menu-card {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   border-radius: 20px;
-  padding: 35px;
-  color: white;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.menu-card::after {
+  content: '🥗';
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  font-size: 120px;
+  opacity: 0.08;
+  pointer-events: none;
 }
 
 .menu-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
 }
 
 .menu-title {
-  font-size: 26px;
-  font-weight: 600;
-  margin: 0 0 8px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 6px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .menu-subtitle {
-  font-size: 15px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
   margin: 0;
-  opacity: 0.9;
 }
 
 .day-badge {
-  background-color: rgba(255, 255, 255, 0.2);
-  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 8px 18px;
   border-radius: 20px;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.meals-grid {
+.meals-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-bottom: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .meal-card {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 14px;
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  min-height: 110px;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 12px;
+  min-height: 160px;
+}
+
+.meal-card:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .meal-label {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  margin-bottom: 10px;
-  opacity: 0.9;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  width: fit-content;
 }
 
-.meal-name {
+.breakfast-label {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.lunch-label {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.dinner-label {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.meal-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.meal-card-title.clickable {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.meal-card-title.clickable:hover {
+  color: #fbbf24;
+  text-decoration: underline;
+}
+
+.combo-meals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.combo-meal-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.combo-meal-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.combo-meal-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.combo-meal-item .meal-bullet {
+  color: #fbbf24;
   font-size: 16px;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.combo-meal-item .meal-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.95);
   line-height: 1.4;
   font-weight: 500;
 }
 
-.view-details-btn {
-  background-color: white;
-  color: #059669;
-  border: none;
-  padding: 14px 28px;
-  border-radius: 25px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
+.combo-meal-item:hover .meal-text {
+  color: #fbbf24;
+  text-decoration: underline;
+}
+
+.item-nutrition-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 6px;
+}
+
+.meal-stats {
+  display: flex;
   gap: 8px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 8px;
 }
 
-.view-details-btn:hover {
-  background-color: #f0fdf4;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #059669;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-@media (max-width: 1024px) {
-  .meals-grid {
+.stat-icon {
+  font-size: 14px;
+}
+
+.loading-skeleton,
+.no-plan,
+.no-meal {
+  padding: 60px 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+.no-plan p:first-child {
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.loading-skeleton p {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .menu-card {
+    padding: 24px 20px;
+  }
+
+  .menu-title {
+    font-size: 20px;
+  }
+
+  .meals-container {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .meal-card {
+    min-height: 140px;
+  }
+
+  .day-badge {
+    padding: 6px 14px;
+    font-size: 12px;
   }
 }
+
+@media (max-width: 480px) {
+  .menu-card {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .menu-card::after {
+    font-size: 80px;
+    bottom: 10px;
+    right: 15px;
+  }
+
+  .menu-title {
+    font-size: 18px;
+  }
+
+  .menu-subtitle {
+    font-size: 12px;
+  }
+
+  .meal-card {
+    padding: 16px;
+    min-height: 130px;
+  }
+
+  .meal-label {
+    font-size: 9px;
+  }
+
+  .meal-card-title {
+    font-size: 15px;
+  }
+
+  .combo-meal-item .meal-text {
+    font-size: 13px;
+  }
+
+  .item-nutrition-text {
+    font-size: 11px;
+  }
+
+  .stat-item {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+}
+

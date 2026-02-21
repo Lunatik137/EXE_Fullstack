@@ -38,18 +38,246 @@
   color: #9ca3af;
 }
 
-.share-icon-btn {
-  background: none;
-  border: none;
-  color: #6b7280;
-  cursor: pointer;
-  padding: 8px;
+/* Expanded Section */
+.create-post-expanded {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Post Type Tabs */
+.post-type-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.post-type-tab {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  color: #6b7280;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.post-type-tab:hover {
+  border-color: #10b981;
+  color: #10b981;
+}
+
+.post-type-tab.active {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.tab-icon {
+  font-size: 16px;
+}
+
+.tab-label {
+  font-weight: 500;
+}
+
+/* Forms */
+.recipe-form,
+.review-form {
+  margin-bottom: 16px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #10b981;
+}
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* Ingredient/Instruction Rows */
+.ingredient-row,
+.instruction-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: flex-start;
+}
+
+.ingredient-row input {
+  flex: 1;
+}
+
+.ingredient-row input:first-child {
+  flex: 2;
+}
+
+.instruction-row {
+  position: relative;
+}
+
+.step-number {
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #10b981;
+  background: #f0fdf4;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.instruction-row textarea {
+  flex: 1;
+  margin: 0;
+}
+
+.remove-btn {
+  padding: 8px 12px;
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.remove-btn:hover {
+  background: #fecaca;
+}
+
+.add-btn {
+  padding: 8px 16px;
+  background: #f0fdf4;
+  color: #10b981;
+  border: 1px dashed #10b981;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.add-btn:hover {
+  background: #dcfce7;
+}
+
+/* Rating Input */
+.rating-input {
+  display: flex;
+  gap: 4px;
+}
+
+.star {
+  font-size: 32px;
+  color: #d1d5db;
+  cursor: pointer;
   transition: color 0.2s ease;
 }
 
-.share-icon-btn:hover {
-  color: #059669;
+.star.filled {
+  color: #fbbf24;
+}
+
+.star:hover {
+  color: #fbbf24;
+}
+
+/* Hashtag Input */
+.hashtag-input {
+  color: #10b981;
+  font-weight: 500;
+}
+
+/* Action Buttons */
+.create-post-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.cancel-btn,
+.share-btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-btn {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.cancel-btn:hover {
+  background: #e5e7eb;
+}
+
+.share-btn {
+  background: #10b981;
+  color: white;
+}
+
+.share-btn:hover {
+  background: #059669;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .post-type-tab {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+  
+  .tab-icon {
+    font-size: 14px;
+  }
 }

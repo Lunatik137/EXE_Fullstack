@@ -149,7 +149,7 @@
 .add-review-btn {
   margin-left: auto;
   padding: 8px 20px;
-  background-color: #fbbf24;
+  background-color: #10b981;
   color: white;
   border: none;
   border-radius: 6px;
@@ -284,6 +284,17 @@
 
 .action-btn:hover {
   background-color: #f3f4f6;
+}
+
+.save-btn {
+  border: 2px solid #059669 !important;
+  color: #059669 !important;
+  font-weight: 700 !important;
+}
+
+.save-btn:hover {
+  background-color: #059669 !important;
+  color: white !important;
 }
 
 .save-btn span {

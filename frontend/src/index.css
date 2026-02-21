@@ -7,9 +7,12 @@
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   scroll-behavior: smooth;
 }
-body{
+
+html, body{
   min-height: 100vh;
   background-color: #f8f9fa;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 a{
   text-decoration: none;

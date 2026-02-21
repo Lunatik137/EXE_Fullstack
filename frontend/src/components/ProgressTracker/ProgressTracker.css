@@ -1,5 +1,6 @@
 .progress-tracker {
-  width: 350px;
+  width: 100%;
+  height: 100%;
 }
 
 .progress-card {
@@ -7,6 +8,8 @@
   border-radius: 20px;
   padding: 30px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .progress-title {
@@ -96,4 +99,18 @@
     width: 100%;
     margin-top: 20px;
   }
+}
+
+.loading-skeleton {
+  padding: 40px 20px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.milestone-icon {
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

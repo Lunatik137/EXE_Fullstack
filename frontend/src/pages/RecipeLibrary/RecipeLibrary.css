@@ -2,9 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .library-sidebar {
@@ -12,10 +14,14 @@
   border-radius: 16px;
   padding: 30px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .library-header {
   text-align: center;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .library-header h1 {
@@ -50,7 +56,7 @@
   right: 6px;
   top: 50%;
   transform: translateY(-50%);
-  background-color: #fbbf24;
+  background-color: #10b981;
   color: white;
   padding: 10px 24px;
   border-radius: 25px;
@@ -62,7 +68,7 @@
 }
 
 .search-box .search-icon:hover {
-  background-color: #f59e0b;
+  background-color: #059669;
 }
 
 .popular-section h2 {
@@ -91,7 +97,11 @@
 }
 
 .recipe-detail-section {
-  display: none;
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .back-btn {
@@ -331,50 +341,20 @@
 
 .share-btn-detail {
   background: white;
-  border: 2px solid #e5e7eb;
-  color: #6b7280;
+  border: 2px solid #059669;
+  color: #059669;
+  font-weight: 700;
 }
 
 .share-btn-detail:hover {
-  border-color: #059669;
-  color: #059669;
-}
-
-.no-recipe-selected {
-  display: none;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 60px 40px;
-}
-
-.empty-icon {
-  font-size: 80px;
-  display: block;
-  margin-bottom: 20px;
-}
-
-.empty-state h2 {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1f2937;
-  margin: 0 0 12px 0;
-}
-
-.empty-state p {
-  font-size: 15px;
-  color: #6b7280;
-  margin: 0;
+  background-color: #059669;
+  color: white;
+  transform: translateY(-2px);
 }
 
 @media (max-width: 1200px) {
   .recipe-library-page {
-    grid-template-columns: 1fr;
-  }
-
-  .library-sidebar {
-    height: auto;
+    max-width: 100%;
   }
 
   .recipe-grid {
@@ -386,4 +366,166 @@
   .recipe-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  
+  .recipe-library-page {
+    padding: 0 10px;
+  }
+}
+
+/* Additional styles for dynamic data */
+.library-header .search-bar {
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.library-header .search-bar input {
+  width: 100%;
+  padding: 12px 20px;
+  border: 2px solid #e5e7eb;
+  border-radius: 30px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.library-header .search-bar input:focus {
+  border-color: #10b981;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.recipe-card-item {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.recipe-card-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.recipe-card-item .recipe-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.recipe-card-item .recipe-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recipe-card-item .recipe-content {
+  padding: 16px;
+}
+
+.recipe-card-item .recipe-content h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.recipe-card-item .recipe-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Nutrition Tab */
+.nutrition-tab {
+  padding: 24px;
+}
+
+.nutrition-tab h3 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  color: #1f2937;
+}
+
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.nutrition-item {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+
+.nutrition-label {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.nutrition-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #10b981;
+}
+
+.allergens-section {
+  margin-top: 24px;
+  padding: 20px;
+  background: #fef3c7;
+  border-radius: 12px;
+  border-left: 4px solid #f59e0b;
+}
+
+.allergens-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: #92400e;
+}
+
+.allergens-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.allergen-tag {
+  display: inline-block;
+  padding: 6px 12px;
+  background: white;
+  color: #92400e;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.ingredient-bullet {
+  color: #10b981;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.ingredient-row {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.ingredient-name-detail {
+  flex: 1;
+  font-size: 15px;
+  color: #374151;
 }

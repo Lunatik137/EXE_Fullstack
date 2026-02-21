@@ -18,7 +18,14 @@ const loginUser = async (req, res) => {
     }
     const role=user.role;
     const token = createToken(user._id, role);
-    res.json({ success: true, token,role });
+    res.json({ 
+      success: true, 
+      token,
+      role,
+      user: {
+        hasCompletedOnboarding: user.hasCompletedOnboarding
+      }
+    });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: "Error" });
@@ -34,7 +41,7 @@ const createToken = (id, role) => {
 // register user
 
 const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
   try {
     // checking user is already exist
     const exists = await userModel.findOne({ email });
@@ -58,8 +65,11 @@ const registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // Use email prefix as temporary name (will be updated during onboarding)
+    const tempName = email.split('@')[0];
+
     const newUser = new userModel({
-      name: name,
+      name: tempName,
       email: email,
       password: hashedPassword,
     });
@@ -74,4 +84,72 @@ const registerUser = async (req, res) => {
   }
 };
 
-export { loginUser, registerUser };
+// Save onboarding data
+const saveOnboarding = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const onboardingData = req.body;
+    
+    // Extract name to update the user's name field
+    const userName = onboardingData.name;
+    
+    // Remove userId from onboardingData before saving
+    delete onboardingData.userId;
+    
+    await userModel.findByIdAndUpdate(userId, {
+      name: userName, // Update the user's name from onboarding
+      hasCompletedOnboarding: true,
+      onboardingData: onboardingData
+    }); 
+    
+    res.json({ success: true, message: "Onboarding completed successfully" });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error saving onboarding data" });
+  }
+};
+
+// Get user profile
+const getUserProfile = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const user = await userModel.findById(userId).select('-password');
+    
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+    
+    res.json({ success: true, user });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error fetching user profile" });
+  }
+};
+
+// Update user profile
+const updateProfile = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const { name, email, phone, location, onboardingData } = req.body;
+    
+    const updateData = {};
+    if (name) updateData.name = name;
+    if (email) updateData.email = email;
+    if (phone) updateData.phone = phone;
+    if (location) updateData.location = location;
+    if (onboardingData) updateData.onboardingData = onboardingData;
+    
+    const user = await userModel.findByIdAndUpdate(userId, updateData, { new: true }).select('-password');
+    
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+    
+    res.json({ success: true, message: "Profile updated successfully", user });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error updating profile" });
+  }
+};
+
+export { loginUser, registerUser, saveOnboarding, getUserProfile, updateProfile };

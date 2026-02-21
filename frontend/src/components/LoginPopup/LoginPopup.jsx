@@ -4,15 +4,17 @@ import { assets } from "../../assets/frontend_assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 
-const LoginPopup = ({ setShowLogin }) => {
-  const {url, setToken } = useContext(StoreContext);
-  const [currentState, setCurrentState] = useState("Đăng nhập");
+const LoginPopup = ({ setShowLogin, initialMode = "Đăng nhập" }) => {
+  const {url, setToken, setHasCompletedOnboarding } = useContext(StoreContext);
+  const [currentState, setCurrentState] = useState(initialMode === 'signup' ? 'Đăng ký' : 'Đăng nhập');
+  const navigate = useNavigate();
   const [data, setData] = useState({
-    name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const onChangeHandler = (event) => {
@@ -23,19 +25,49 @@ const LoginPopup = ({ setShowLogin }) => {
 
   const onLogin = async (event) => {
     event.preventDefault();
+    
+    // Validate password confirmation for signup
+    if (currentState === "Đăng ký" && data.password !== data.confirmPassword) {
+      toast.error("Mật khẩu xác nhận không khớp!");
+      return;
+    }
+    
     let newUrl = url;
     if (currentState === "Đăng nhập") {
       newUrl += "/api/user/login";
     } else {
       newUrl += "/api/user/register";
     }
+    
     const response = await axios.post(newUrl, data);
     if (response.data.success) {
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
-      toast.success("Login Successfully")
-      setShowLogin(false);
-    }else{
+      
+      if (currentState === "Đăng ký") {
+        // New registration - hasn't completed onboarding yet
+        localStorage.setItem("hasCompletedOnboarding", "false");
+        setHasCompletedOnboarding(false);
+        toast.success("Đăng ký thành công! Hãy hoàn thành thông tin của bạn.");
+        setShowLogin({ show: false, mode: 'login' });
+        navigate('/onboarding');
+      } else {
+        // Check if user has completed onboarding
+        const hasOnboarded = response.data.user?.hasCompletedOnboarding;
+        localStorage.setItem("hasCompletedOnboarding", hasOnboarded ? "true" : "false");
+        setHasCompletedOnboarding(hasOnboarded);
+        
+        if (!hasOnboarded) {
+          toast.info("Vui lòng hoàn thành thông tin cá nhân");
+          setShowLogin({ show: false, mode: 'login' });
+          navigate('/onboarding');
+        } else {
+          toast.success("Đăng nhập thành công!");
+          setShowLogin({ show: false, mode: 'login' });
+          navigate('/');
+        }
+      }
+    } else {
       toast.error(response.data.message);
     }
   };
@@ -45,24 +77,12 @@ const LoginPopup = ({ setShowLogin }) => {
         <div className="login-popup-title">
           <h2>{currentState}</h2>
           <img
-            onClick={() => setShowLogin(false)}
+            onClick={() => setShowLogin({ show: false, mode: 'login' })}
             src={assets.cross_icon}
             alt=""
           />
         </div>
         <div className="login-popup-inputs">
-          {currentState === "Đăng nhập" ? (
-            <></>
-          ) : (
-            <input
-              name="name"
-              onChange={onChangeHandler}
-              value={data.name}
-              type="text"
-              placeholder="Họ và tên"
-              required
-            />
-          )}
           <input
             name="email"
             onChange={onChangeHandler}
@@ -79,6 +99,16 @@ const LoginPopup = ({ setShowLogin }) => {
             placeholder="Mật khẩu"
             required
           />
+          {currentState === "Đăng ký" && (
+            <input
+              name="confirmPassword"
+              onChange={onChangeHandler}
+              value={data.confirmPassword}
+              type="password"
+              placeholder="Nhập lại mật khẩu"
+              required
+            />
+          )}
         </div>
         <button type="submit">
           {currentState === "Đăng ký" ? "Tạo tài khoản" : "Đăng nhập"}
@@ -100,7 +130,8 @@ const LoginPopup = ({ setShowLogin }) => {
 };
 
 LoginPopup.propTypes = {
-  setShowLogin: PropTypes.func.isRequired
+  setShowLogin: PropTypes.func.isRequired,
+  initialMode: PropTypes.string
 };
 
 export default LoginPopup;
