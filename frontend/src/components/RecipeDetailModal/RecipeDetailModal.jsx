@@ -22,10 +22,6 @@ const RecipeDetailModal = ({ recipe, onClose }) => {
 
             <div className="recipe-info-box">
               <h3>Nguyên Liệu</h3>
-              <div className="recipe-meta">
-                <span>👥 {recipe.servings || "2 người"}</span>
-                <span>⏱️ {recipe.cookTime || "30 phút"}</span>
-              </div>
               <div className="ingredients-list">
                 {recipe.ingredients?.map((ingredient, index) => (
                   <div key={index} className="ingredient-item">
@@ -65,18 +61,27 @@ const RecipeDetailModal = ({ recipe, onClose }) => {
 
             <div className="recipe-steps">
               <h3>Hướng dẫn cách làm</h3>
-              <div className="recipe-duration">
-                ⏱️ {recipe.cookTime || "30 phút"}
+
+              <div className="recipe-step">
+                <div className="step-number">1</div>
+                <div className="step-content">
+                  <p className="step-text">Ngâm bánh phở trong nước ấm khoảng 10-15 phút cho mềm. Nấm hương ngâm nở, rửa sạch và thái lát.</p>
+                </div>
               </div>
 
-              {recipe.steps?.map((step, index) => (
-                <div key={index} className="recipe-step">
-                  <div className="step-number">{index + 1}</div>
-                  <div className="step-content">
-                    <p className="step-text">{step.text}</p>
-                  </div>
+              <div className="recipe-step">
+                <div className="step-number">2</div>
+                <div className="step-content">
+                  <p className="step-text">Cho nước vào nồi, thêm nấm hương, hành tây, gừng. Nêm gia vị (muối, bột ngọt, nước tương) để tạo nước dùng có vị ngọt thanh.</p>
                 </div>
-              ))}
+              </div>
+
+              <div className="recipe-step">
+                <div className="step-number">3</div>
+                <div className="step-content">
+                  <p className="step-text">Cho bánh phở đã ngâm vào tô, chan nước dùng nóng lên trên. Thêm rau thơm (hành lá, ngò rí), tiêu và chanh.</p>
+                </div>
+              </div>
             </div>
 
             <div className="recipe-actions">
@@ -97,25 +102,6 @@ const RecipeDetailModal = ({ recipe, onClose }) => {
                   </svg>
                 </span>{" "}
                 Lưu Món
-              </button>
-              <button className="action-btn share-btn">
-                <span>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <circle cx="18" cy="5" r="3" />
-                    <circle cx="6" cy="12" r="3" />
-                    <circle cx="18" cy="19" r="3" />
-                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-                  </svg>
-                </span>{" "}
-                Chia sẻ
               </button>
             </div>
           </div>

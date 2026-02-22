@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import './Sidebar.css';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
   
   // Initialize activeMenu based on current route to avoid flash
   const getActiveMenuFromPath = (path) => {
@@ -27,7 +29,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
       <div className="sidebar-header">
         <Link to="/" className="logo-container">
           <div className="logo-icon">🌿</div>
-          {!isCollapsed && <h2 className="logo-text">Greenpath</h2>}
+          {!isCollapsed && <h2 className="logo-text">GreenPath</h2>}
         </Link>
       </div>
 
@@ -82,6 +84,115 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
           <span className="nav-text">Hồ sơ cá nhân</span>
         </Link>
       </nav>
+
+      {!isCollapsed && (
+        <div className="premium-section">
+          <span className="premium-icon">
+            <svg
+  width="50"
+  height="40"
+  viewBox="0 0 256 256"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  stroke="currentColor"
+  strokeWidth="12"
+  strokeLinecap="round"
+  strokeLinejoin="round"
+>
+  <path d="M40 96L88 40H168L216 96L128 216L40 96Z" />
+  <path d="M88 40L128 96L168 40" />
+  <path d="M40 96H216" />
+  <path d="M88 96L128 216" />
+  <path d="M168 96L128 216" />
+</svg>
+          </span>
+          <h3>Premium</h3>
+          <p>Mở khóa toàn bộ tính năng cao cấp.</p>
+          <button className="upgrade-btn" onClick={() => setShowPremiumModal(true)}>Nâng cấp ngay</button>
+        </div>
+      )}
+
+      {/* Premium Comparison Modal */}
+      {showPremiumModal && (
+        <div className="premium-modal-overlay" onClick={() => setShowPremiumModal(false)}>
+          <div className="premium-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close-btn" onClick={() => setShowPremiumModal(false)}>×</button>
+            
+            <div className="modal-header">
+              <h2>Nâng cấp Greenpath Premium</h2>
+              <p className="modal-subtitle">Mở khoá toàn bộ tiềm năng sức khoẻ của bạn với chi phí bằng một cốc cà phê.</p>
+            </div>
+
+            <div className="modal-pricing-cards">
+              {/* Free Plan */}
+              <div className="modal-pricing-card modal-free-card">
+                <div className="modal-card-header">
+                  <p className="modal-plan-label">Cơ bản</p>
+                  <h3 className="modal-plan-price">Miễn phí</h3>
+                </div>
+
+                <div className="modal-features-list">
+                  <div className="modal-feature-item">
+                    <span className="modal-check-icon">✓</span>
+                    <span>Thực đơn cơ bản hằng ngày</span>
+                  </div>
+                  <div className="modal-feature-item">
+                    <span className="modal-check-icon">✓</span>
+                    <span>Tham gia cộng đồng</span>
+                  </div>
+                  <div className="modal-feature-item">
+                    <span className="modal-check-icon">✓</span>
+                    <span>Theo dõi tiến độ đơn giản</span>
+                  </div>
+                </div>
+
+                <button className="modal-plan-btn modal-current-plan-btn">Gói hiện tại</button>
+              </div>
+
+              {/* Premium Plan */}
+              <div className="modal-pricing-card modal-premium-card">
+                <div className="modal-recommended-badge">ĐỀ XUẤT</div>
+                <div className="modal-card-header">
+                  <p className="modal-plan-label modal-premium-label">Premium</p>
+                  <div className="modal-price-section">
+                    <h3 className="modal-plan-price">39k <span className="modal-price-period">/tháng</span></h3>
+                    <p className="modal-discount-info">Hoặc 379k / năm (Tiết kiệm 20%)</p>
+                  </div>
+                </div>
+
+                <div className="modal-features-list modal-premium-features">
+                  <div className="modal-feature-item modal-premium-feature">
+                    <span className="modal-star-icon">⭐</span>
+                    <span>Lộ trình chuyên sâu (Giảm cân, Tăng cơ)</span>
+                  </div>
+                  <div className="modal-feature-item modal-premium-feature">
+                    <span className="modal-star-icon">⭐</span>
+                    <span>Công thức độc quyền từ chuyên gia</span>
+                  </div>
+                  <div className="modal-feature-item modal-premium-feature">
+                    <span className="modal-star-icon">⭐</span>
+                    <span>Phân tích vi chất chi tiết</span>
+                  </div>
+                  <div className="modal-feature-item modal-premium-feature">
+                    <span className="modal-star-icon">⭐</span>
+                    <span>Tắt quảng cáo</span>
+                  </div>
+                </div>
+
+                <button 
+                  className="modal-plan-btn modal-premium-btn"
+                  onClick={() => {
+                    setShowPremiumModal(false);
+                    navigate('/premium');
+                  }}
+                >
+                  Đăng ký ngay
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <button 
         className={isCollapsed ? "expand-sidebar-btn" : "toggle-sidebar-btn-bottom"} 

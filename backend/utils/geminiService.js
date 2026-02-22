@@ -1,46 +1,14 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import GeminiKeyManager from '../config/geminiKeys.js';
 
-/**
- * Gemini AI Service with automatic failover and retry logic
- * 
- * Features:
- * - Auto-rotates through 9 Gemini model variants if one is unavailable
- * - Auto-rotates through multiple API keys on quota/auth errors
- * - Remembers last working model for faster subsequent calls
- * - Graceful degradation to fallback mode if all attempts fail
- * 
- * Model priority (tries in order):
- * 1. gemini-2.5-flash (latest, fastest)
- * 2. gemini-2.0-flash (stable 2.0)
- * 3. gemini-flash-latest (alias)
- * 4. gemini-2.5-pro (more capable)
- * 5. Other 2.x variants...
- * 
- * Error handling:
- * - 404 Not Found → Try next model
- * - 400 Invalid Key → Try next API key
- * - 429 Quota Exceeded → Try next API key
- * - All failed → Throws error for fallback mode
- */
-
 class GeminiService {
   constructor() {
     this.maxRetries = GeminiKeyManager.getTotalKeys();
     this.currentClient = null;
     this.isConfigured = false;
-    this.currentModelName = null; // Track last working model
+    this.currentModelName = null; 
     this.availableModels = [
-      // Updated with Gemini 2.x models (verified working Feb 13, 2026)
-      'gemini-2.5-flash',           // Latest Flash (fastest, recommended)
-      'gemini-2.0-flash',            // Stable 2.0 Flash
-      'gemini-flash-latest',         // Alias for latest Flash
-      'gemini-2.5-pro',              // Latest Pro (more capable)
-      'gemini-2.0-flash-001',        // Specific 2.0 version
-      'gemini-pro-latest',           // Alias for latest Pro
-      'gemini-2.5-flash-lite',       // Lightweight version
-      'gemini-2.0-flash-lite',       // Lightweight 2.0
-      'gemini-exp-1206'              // Experimental (backup)
+      'gemini-2.5-flash'
     ];
     this.modelIndex = 0;
     

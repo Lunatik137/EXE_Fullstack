@@ -100,14 +100,6 @@ const RecipeLibrary = () => {
         <div className="library-sidebar">
           <div className="library-header">
             <h1>Thư viện công thức</h1>
-            <div className="search-bar">
-              <input
-                type="text"
-                placeholder="Tìm kiếm công thức..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
           </div>
 
           <RecipeCategories onCategoryChange={setSelectedCategory} />
@@ -151,13 +143,9 @@ const RecipeLibrary = () => {
           </button>
           
           <div className="recipe-detail-hero">
-            <img src={selectedRecipe.image} alt={selectedRecipe.title} />
+            <img src={selectedRecipe.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800'} alt={selectedRecipe.name} />
             <div className="recipe-detail-overlay">
-              <h1>{selectedRecipe.title}</h1>
-              <div className="recipe-stats">
-                <span>❤️ {selectedRecipe.ratingCount}</span>
-                <span>👤 {selectedRecipe.servings}</span>
-              </div>
+              <h1>{selectedRecipe.name}</h1>
             </div>
           </div>
 
@@ -252,29 +240,8 @@ const RecipeLibrary = () => {
           </div>
 
           <div className="recipe-actions-bar">
-            <button className="favorite-btn">
-              <span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg></span> Yêu thích
-            </button>
             <button className="add-menu-btn" onClick={handleAddToMenu}>
               Thêm vào thực đơn
-            </button>
-            <button className="share-btn-detail">
-              <span><svg
-  width="20"
-  height="20"
-  viewBox="0 0 256 256"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
-  stroke="currentColor"
-  strokeWidth="12"
-  strokeLinecap="round"
-  strokeLinejoin="round"
->
-  <path d="M64 40h128a16 16 0 0 1 16 16v160l-80-48-80 48V56a16 16 0 0 1 16-16z"/>
-</svg>
-</span> Lưu
             </button>
           </div>
         </div>
