@@ -1,5 +1,4 @@
-// Vietnamese Vegan Recipes - Easy Home Cooking
-// 107 món gồm: 3 món cơm + 104 món ăn chay Việt Nam
+// Vietnamese Vegan Recipes - Easy Home Cooking// 107 món gồm: 3 món cơm + 104 món ăn chay Việt Nam
 // Updated with heart health nutrition information
 export const veganRecipes = [
   {
@@ -30,7 +29,7 @@ export const veganRecipes = [
     "servings": 1,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "staple",
       "basic",
@@ -77,7 +76,7 @@ export const veganRecipes = [
     "servings": 1,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "staple",
       "basic",
@@ -124,7 +123,7 @@ export const veganRecipes = [
     "servings": 1,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "staple",
       "basic",
@@ -173,7 +172,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "quick",
       "healthy",
@@ -220,7 +219,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "healthy",
       "nutritious"
@@ -264,7 +263,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "simple",
       "healthy"
@@ -313,7 +312,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "flavorful",
       "traditional"
@@ -357,7 +356,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "light",
       "quick"
@@ -403,7 +402,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "filling",
       "comfort"
@@ -451,7 +450,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "healthy",
       "colorful"
@@ -503,7 +502,7 @@ export const veganRecipes = [
       "gluten",
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "filling",
       "quick-meal"
@@ -546,7 +545,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "simple",
       "quick"
@@ -593,7 +592,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "traditional",
       "light"
@@ -643,7 +642,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "spicy",
       "flavorful",
@@ -695,7 +694,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "filling",
       "leftover",
@@ -738,7 +737,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "simple",
       "snack",
@@ -782,7 +781,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "nutritious",
@@ -826,7 +825,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "quick",
       "protein",
@@ -874,7 +873,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "light",
       "healthy",
@@ -917,7 +916,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "traditional",
       "filling"
@@ -959,7 +958,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "traditional",
       "comfort"
@@ -1002,7 +1001,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "healthy",
       "light",
@@ -1045,7 +1044,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "light",
       "healthy"
@@ -1087,7 +1086,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "nutritious"
@@ -1130,7 +1129,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "healthy",
       "medicinal"
@@ -1183,7 +1182,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sour",
       "refreshing",
@@ -1231,7 +1230,7 @@ export const veganRecipes = [
     "servings": 3,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "light",
       "healthy",
@@ -1277,7 +1276,7 @@ export const veganRecipes = [
     "servings": 3,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "light",
       "refreshing",
@@ -1326,7 +1325,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "nutritious",
@@ -1375,7 +1374,7 @@ export const veganRecipes = [
     "servings": 3,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "savory",
       "light",
@@ -1424,7 +1423,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "simple",
       "protein",
@@ -1470,7 +1469,7 @@ export const veganRecipes = [
     "servings": 3,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "light",
       "quick",
@@ -1518,7 +1517,7 @@ export const veganRecipes = [
     "servings": 3,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "creamy",
       "comfort",
@@ -1570,7 +1569,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "creamy",
       "umami",
@@ -1615,7 +1614,7 @@ export const veganRecipes = [
     "servings": 3,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "simple",
       "light",
@@ -1666,7 +1665,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "hotpot",
       "sharing",
@@ -1718,7 +1717,7 @@ export const veganRecipes = [
       "soy",
       "gluten"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "traditional",
       "filling",
@@ -1767,7 +1766,7 @@ export const veganRecipes = [
       "soy",
       "peanuts"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "refreshing",
       "tangy",
@@ -1815,7 +1814,7 @@ export const veganRecipes = [
     "allergens": [
       "peanuts"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "crunchy",
       "colorful",
@@ -1864,7 +1863,7 @@ export const veganRecipes = [
       "soy",
       "peanuts"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "refreshing",
       "crunchy",
@@ -1910,7 +1909,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "fresh",
       "healthy",
@@ -1961,7 +1960,7 @@ export const veganRecipes = [
       "soy",
       "peanuts"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "spicy",
       "tangy",
@@ -2010,7 +2009,7 @@ export const veganRecipes = [
       "peanuts",
       "sesame"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "crunchy",
       "elegant",
@@ -2063,7 +2062,7 @@ export const veganRecipes = [
       "soy",
       "gluten"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "fresh",
       "light",
@@ -2111,7 +2110,7 @@ export const veganRecipes = [
     "allergens": [
       "peanuts"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "crunchy",
       "tangy",
@@ -2161,7 +2160,7 @@ export const veganRecipes = [
       "soy",
       "peanuts"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "unique",
       "savory",
@@ -2210,7 +2209,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "refreshing",
@@ -2256,7 +2255,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "smoky",
       "traditional",
@@ -2304,7 +2303,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "savory",
       "umami",
@@ -2353,7 +2352,7 @@ export const veganRecipes = [
       "soy",
       "sesame"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "protein",
       "crispy",
@@ -2397,7 +2396,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "smoky",
@@ -2439,7 +2438,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "simple",
@@ -2485,7 +2484,7 @@ export const veganRecipes = [
       "gluten",
       "peanuts"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "quick",
       "breakfast",
@@ -2527,7 +2526,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "filling",
@@ -2571,7 +2570,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "light",
       "healthy",
@@ -2614,7 +2613,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "colorful",
       "sweet",
@@ -2663,7 +2662,7 @@ export const veganRecipes = [
       "soy",
       "sesame"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "protein",
       "savory",
@@ -2714,7 +2713,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "savory",
       "protein",
@@ -2764,7 +2763,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "warming",
       "aromatic",
@@ -2814,7 +2813,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "comfort",
       "filling",
@@ -2864,7 +2863,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "traditional",
       "protein",
@@ -2914,7 +2913,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "traditional",
       "savory",
@@ -2964,7 +2963,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "soft",
       "flavorful",
@@ -3013,7 +3012,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "comfort",
@@ -3064,7 +3063,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "protein",
       "umami",
@@ -3114,7 +3113,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "aromatic",
       "unique",
@@ -3163,7 +3162,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "creamy",
       "comfort",
@@ -3213,7 +3212,7 @@ export const veganRecipes = [
       "soy",
       "gluten"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "healthy",
       "delicate",
@@ -3262,7 +3261,7 @@ export const veganRecipes = [
       "soy",
       "sesame"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "light",
       "umami",
@@ -3311,7 +3310,7 @@ export const veganRecipes = [
       "soy",
       "sesame"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "silky",
       "light",
@@ -3353,7 +3352,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "simple",
@@ -3395,7 +3394,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "simple",
@@ -3435,7 +3434,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "filling",
@@ -3477,7 +3476,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "nutritious",
       "simple",
@@ -3518,7 +3517,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "healthy",
       "light",
@@ -3562,7 +3561,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "traditional",
       "unique",
@@ -3603,7 +3602,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "protein",
       "quick",
@@ -3651,7 +3650,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "crispy",
       "protein",
@@ -3696,7 +3695,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "crispy",
       "popular",
@@ -3744,7 +3743,7 @@ export const veganRecipes = [
     "allergens": [
       "gluten"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "dessert",
@@ -3796,7 +3795,7 @@ export const veganRecipes = [
       "soy",
       "gluten"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "crispy",
       "traditional",
@@ -3848,7 +3847,7 @@ export const veganRecipes = [
       "soy",
       "gluten"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "crispy",
       "savory",
@@ -3896,7 +3895,7 @@ export const veganRecipes = [
     "allergens": [
       "gluten"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "crispy",
       "snack",
@@ -3944,7 +3943,7 @@ export const veganRecipes = [
     "allergens": [
       "gluten"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "crispy",
       "savory",
@@ -3992,7 +3991,7 @@ export const veganRecipes = [
     "allergens": [
       "gluten"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "crispy",
@@ -4040,7 +4039,7 @@ export const veganRecipes = [
     "allergens": [
       "gluten"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "dessert",
@@ -4085,7 +4084,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "crispy",
       "nutty",
@@ -4133,7 +4132,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "high-protein",
       "aromatic",
@@ -4183,7 +4182,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "spicy",
       "protein",
@@ -4230,7 +4229,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "fiber",
       "healthy",
@@ -4277,7 +4276,7 @@ export const veganRecipes = [
     "servings": 3,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "nutritious",
       "sweet",
@@ -4325,7 +4324,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "light",
       "low-calorie",
@@ -4374,7 +4373,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "traditional",
       "cooling",
@@ -4424,7 +4423,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "flavorful",
       "protein",
@@ -4472,7 +4471,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "medium",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "comfort-food",
       "traditional",
@@ -4519,7 +4518,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "medium",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "warming",
       "medicinal",
@@ -4565,7 +4564,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "medium",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "premium",
       "aromatic",
@@ -4610,7 +4609,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "sweet",
       "dessert",
@@ -4659,7 +4658,7 @@ export const veganRecipes = [
     "allergens": [
       "soy"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "tangy",
       "protein",
@@ -4705,7 +4704,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "hard",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "elegant",
       "low-fat",
@@ -4750,7 +4749,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "medium",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "light",
       "healthy",
@@ -4798,7 +4797,7 @@ export const veganRecipes = [
       "soy",
       "sesame"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "quick",
       "healthy",
@@ -4841,7 +4840,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "snack",
       "fiber",
@@ -4890,7 +4889,7 @@ export const veganRecipes = [
     "allergens": [
       "peanuts"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "crunchy",
       "refreshing",
@@ -4938,7 +4937,7 @@ export const veganRecipes = [
     "allergens": [
       "peanuts"
     ],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "raw",
       "crunchy",
@@ -4982,7 +4981,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "medium",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "crispy",
       "traditional",
@@ -5028,7 +5027,7 @@ export const veganRecipes = [
     "servings": 2,
     "difficulty": "easy",
     "allergens": [],
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
     "tags": [
       "comfort-food",
       "aromatic",
@@ -5045,3 +5044,157 @@ export const veganRecipes = [
     "sodium": 118
   }
 ];
+e: "vegan",
+    calories: 140,
+    protein: 5,
+    carbs: 20,
+    fat: 5,
+    fiber: 6,
+    ingredients: [
+      "200g ngó sen",
+      "100g nấm đùi gà luộc",
+      "Rau thơm",
+      "Đậu phộng rang",
+      "Nước mắm chay, chanh, đường"
+    ],
+    instructions: [
+      "Ngó sen luộc chín, thái lát mỏng",
+      "Nấm luộc, xé sợi",
+      "Trộn ngó sen, nấm với rau thơm",
+      "Làm nước mắm chua ngọt",
+      "Rưới nước sốt lên, rắc đậu phộng"
+    ],
+    preparationTime: 20,
+    cookingTime: 15,
+    servings: 2,
+    difficulty: "medium",
+    allergens: ["peanuts"],
+    image: "",
+    tags: ["crunchy", "refreshing", "salad"],
+    isPopular: true,
+    season: ["summer"]
+  },
+  {
+    name: "Nộm Su Hào Cà Rốt",
+    description: "Nộm su hào giòn ngọt trộn cà rốt, món ăn thanh mát bổ dưỡng",
+    category: "lunch",
+    cookingMethod: "tron",
+    dietType: "vegan",
+    calories: 110,
+    protein: 3,
+    carbs: 18,
+    fat: 4,
+    fiber: 5,
+    ingredients: [
+      "200g su hào",
+      "100g cà rốt",
+      "Rau thơm",
+      "Đậu phộng rang",
+      "Giấm, đường, muối"
+    ],
+    instructions: [
+      "Su hào, cà rốt gọt vỏ, thái sợi mỏng",
+      "Ngâm nước muối 10 phút",
+      "Vắt khô, trộn với rau thơm",
+      "Làm nước sốt giấm đường",
+      "Rưới lên, rắc đậu phộng"
+    ],
+    preparationTime: 15,
+    cookingTime: 0,
+    servings: 2,
+    difficulty: "easy",
+    allergens: ["peanuts"],
+    image: "",
+    tags: ["raw", "crunchy", "vitamin-rich"],
+    isPopular: false,
+    season: ["all-season"]
+  },
+
+  // Chiên - 2 món mới
+  {
+    name: "Bánh Đúc Chiên",
+    description: "Bánh đúc chiên giòn rụm, ăn kèm rau sống và nước mắm chua ngọt",
+    category: "breakfast",
+    cookingMethod: "chien",
+    dietType: "vegan",
+    calories: 200,
+    protein: 3,
+    carbs: 32,
+    fat: 7,
+    fiber: 2,
+    ingredients: [
+      "300g bánh đúc",
+      "Dầu chiên",
+      "Rau sống",
+      "Nước mắm chay chua ngọt"
+    ],
+    instructions: [
+      "Bánh đúc cắt miếng vuông 2x2cm",
+      "Làm nóng dầu",
+      "Chiên bánh đúc đến vàng giòn",
+      "Ăn với rau sống và nước chấm"
+    ],
+    preparationTime: 5,
+    cookingTime: 15,
+    servings: 2,
+    difficulty: "medium",
+    allergens: [],
+    image: "",
+    tags: ["crispy", "traditional", "street-food"],
+    isPopular: true,
+    season: ["all-season"]
+  },
+  {
+    name: "Khoai Lang Chiên Bơ Tỏi",
+    description: "Khoai lang chiên giòn phết bơ tỏi thơm lừng, món ăn vặt hấp dẫn",
+    category: "breakfast",
+    cookingMethod: "chien",
+    dietType: "vegan",
+    calories: 240,
+    protein: 3,
+    carbs: 36,
+    fat: 10,
+    fiber: 4,
+    ingredients: [
+      "300g khoai lang",
+      "Dầu chiên",
+      "3 tép tỏi",
+      "3 muỗng canh bơ thực vật",
+      "Rau mùi"
+    ],
+    instructions: [
+      "Khoai lang gọt vỏ, cắt que",
+      "Chiên vàng giòn",
+      "Tỏi băm, phi với bơ thực vật",
+      "Rưới bơ tỏi lên khoai",
+      "Rắc rau mùi"
+    ],
+    preparationTime: 10,
+    cookingTime: 20,
+    servings: 2,
+    difficulty: "easy",
+    allergens: [],
+    image: "",
+    tags: ["comfort-food", "aromatic", "sweet"],
+    isPopular: true,
+    season: ["all-season"]
+  }
+];
+
+// Helper functions
+export const getRecipesByCookingMethod = (method) => {
+  return veganRecipes.filter(recipe => recipe.cookingMethod === method);
+};
+
+export const getRecipesByCategory = (category) => {
+  return veganRecipes.filter(recipe => recipe.category === category);
+};
+
+export const getPopularRecipes = () => {
+  return veganRecipes.filter(recipe => recipe.isPopular);
+};
+
+export const getCookingMethods = () => {
+  return ['xao', 'luoc', 'canh', 'tron', 'nuong', 'kho', 'hap', 'chien'];
+};
+
