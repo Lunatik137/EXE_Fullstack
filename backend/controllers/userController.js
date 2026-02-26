@@ -152,4 +152,87 @@ const updateProfile = async (req, res) => {
   }
 };
 
-export { loginUser, registerUser, saveOnboarding, getUserProfile, updateProfile };
+// Select plan (Basic/Premium)
+const selectPlan = async (req, res) => {
+  try {
+    const { planType } = req.body;
+    const userId = req.body.userId;
+
+    if (!planType || !['free', 'premium'].includes(planType)) {
+      return res.json({ success: false, message: "Invalid plan type" });
+    }
+
+    const updateData = { planType };
+
+    // If premium, set subscription dates (30 days from now)
+    if (planType === 'premium') {
+      updateData.subscriptionStatus = 'active';
+      updateData.subscriptionStartDate = new Date();
+      updateData.subscriptionEndDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+    }
+
+    const user = await userModel.findByIdAndUpdate(userId, updateData, { new: true });
+
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    res.json({ success: true, message: `Selected ${planType} plan`, user });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error selecting plan" });
+  }
+};
+
+// Get user's current plan
+const getCurrentPlan = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const user = await userModel.findById(userId).select('planType subscriptionStatus');
+
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    res.json({ 
+      success: true, 
+      planType: user.planType || 'free',
+      subscriptionStatus: user.subscriptionStatus
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error fetching plan" });
+  }
+};
+
+// Confirm premium (payment completed)
+const confirmPremium = async (req, res) => {
+  try {
+    const { planType } = req.body;
+    const userId = req.body.userId;
+
+    if (planType !== 'premium') {
+      return res.json({ success: false, message: "Invalid plan type for confirmation" });
+    }
+
+    const updateData = {
+      planType: 'premium',
+      subscriptionStatus: 'active',
+      subscriptionStartDate: new Date(),
+      subscriptionEndDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+    };
+
+    const user = await userModel.findByIdAndUpdate(userId, updateData, { new: true });
+
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    res.json({ success: true, message: "Premium plan activated", user });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error confirming premium" });
+  }
+};
+
+export { loginUser, registerUser, saveOnboarding, getUserProfile, updateProfile, selectPlan, getCurrentPlan, confirmPremium };

@@ -7,6 +7,7 @@ import mealPlanRouter from "./routes/mealPlanRoute.js";
 import recipeRouter from "./routes/recipeRoute.js";
 import weightRouter from "./routes/weightRoute.js";
 import postRouter from "./routes/postRoute.js";
+import notificationRouter from "./routes/notificationRoute.js";
 import "dotenv/config";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
@@ -32,6 +33,7 @@ app.use("/api/meal-plan", mealPlanRouter);
 app.use("/api/recipes", recipeRouter);
 app.use("/api/weight", weightRouter);
 app.use("/api/posts", postRouter);
+app.use("/api/notifications", notificationRouter);
 
 app.get("/", (req, res) => {
   res.send("API Working");

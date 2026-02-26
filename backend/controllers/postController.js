@@ -1,5 +1,6 @@
 import postModel from "../models/postModel.js";
 import userModel from "../models/userModel.js";
+import { notifyNewComment, notifyNewLike } from "./notificationController.js";
 
 // Create a new post
 const createPost = async (req, res) => {
@@ -224,20 +225,35 @@ const likePost = async (req, res) => {
     }
 
     const likeIndex = post.likes.indexOf(userId);
+    let wasLiked = false;
 
     if (likeIndex === -1) {
       // Like the post
       post.likes.push(userId);
+      wasLiked = true;
     } else {
       // Unlike the post
       post.likes.splice(likeIndex, 1);
+      wasLiked = false;
     }
 
     await post.save();
 
+    // Send notification to post creator if liked
+    if (wasLiked && userId !== post.userId.toString()) {
+      const likeUser = await userModel.findById(userId);
+      const likeUserName = likeUser?.name || "Someone";
+      await notifyNewLike(
+        post.userId,
+        likeUserName,
+        post._id,
+        post.content
+      );
+    }
+
     res.json({ 
       success: true, 
-      message: likeIndex === -1 ? "Post liked" : "Post unliked",
+      message: wasLiked ? "Post liked" : "Post unliked",
       likesCount: post.likes.length
     });
   } catch (error) {
@@ -272,6 +288,18 @@ const addComment = async (req, res) => {
     await post.save();
     await post.populate('comments.userId', 'name');
 
+    // Send notification to post creator if commenter is not the post creator
+    if (userId !== post.userId.toString()) {
+      const commentUser = await userModel.findById(userId);
+      const commentUserName = commentUser?.name || "Someone";
+      await notifyNewComment(
+        post.userId,
+        commentUserName,
+        post._id,
+        post.content
+      );
+    }
+
     res.json({ 
       success: true, 
       message: "Comment added successfully",
@@ -280,6 +308,88 @@ const addComment = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.json({ success: false, message: "Error adding comment" });
+  }
+};
+
+// Update comment
+const updateComment = async (req, res) => {
+  try {
+    const { id, commentId } = req.params;
+    const userId = req.body.userId;
+    const { content } = req.body;
+
+    if (!content || content.trim() === '') {
+      return res.json({ success: false, message: "Comment content is required" });
+    }
+
+    const post = await postModel.findById(id).populate('comments.userId', 'name');
+
+    if (!post) {
+      return res.json({ success: false, message: "Post not found" });
+    }
+
+    const comment = post.comments.id(commentId);
+
+    if (!comment) {
+      return res.json({ success: false, message: "Comment not found" });
+    }
+
+    const commentUserId = comment.userId?._id || comment.userId;
+    if (commentUserId.toString() !== userId.toString()) {
+      return res.json({ success: false, message: "Unauthorized to update this comment" });
+    }
+
+    comment.content = content;
+    comment.updatedAt = new Date();
+    await post.save();
+    await post.populate('comments.userId', 'name');
+
+    res.json({
+      success: true,
+      message: "Comment updated successfully",
+      comments: post.comments
+    });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Error updating comment" });
+  }
+};
+
+// Delete comment
+const deleteComment = async (req, res) => {
+  try {
+    const { id, commentId } = req.params;
+    const userId = req.body.userId;
+
+    const post = await postModel.findById(id).populate('comments.userId', 'name');
+
+    if (!post) {
+      return res.json({ success: false, message: "Post not found" });
+    }
+
+    const comment = post.comments.id(commentId);
+
+    if (!comment) {
+      return res.json({ success: false, message: "Comment not found" });
+    }
+
+    const commentUserId = comment.userId?._id || comment.userId;
+    if (commentUserId.toString() !== userId.toString()) {
+      return res.json({ success: false, message: "Unauthorized to delete this comment" });
+    }
+
+    comment.deleteOne();
+    await post.save();
+    await post.populate('comments.userId', 'name');
+
+    res.json({
+      success: true,
+      message: "Comment deleted successfully",
+      comments: post.comments
+    });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: "Error deleting comment" });
   }
 };
 
@@ -367,6 +477,8 @@ export {
   deletePost,
   likePost,
   addComment,
+  updateComment,
+  deleteComment,
   getPostsByHashtag,
   getTrendingHashtags
 };

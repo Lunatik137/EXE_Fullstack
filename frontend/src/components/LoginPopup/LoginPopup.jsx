@@ -11,6 +11,8 @@ const LoginPopup = ({ setShowLogin, initialMode = "Đăng nhập" }) => {
   const {url, setToken, setHasCompletedOnboarding } = useContext(StoreContext);
   const [currentState, setCurrentState] = useState(initialMode === 'signup' ? 'Đăng ký' : 'Đăng nhập');
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -64,7 +66,7 @@ const LoginPopup = ({ setShowLogin, initialMode = "Đăng nhập" }) => {
         } else {
           toast.success("Đăng nhập thành công!");
           setShowLogin({ show: false, mode: 'login' });
-          navigate('/');
+          navigate('/home');
         }
       }
     } else {
@@ -91,23 +93,61 @@ const LoginPopup = ({ setShowLogin, initialMode = "Đăng nhập" }) => {
             placeholder="Email của bạn"
             required
           />
-          <input
-            name="password"
-            onChange={onChangeHandler}
-            value={data.password}
-            type="password"
-            placeholder="Mật khẩu"
-            required
-          />
-          {currentState === "Đăng ký" && (
+          <div className="password-input-wrapper">
             <input
-              name="confirmPassword"
+              name="password"
               onChange={onChangeHandler}
-              value={data.confirmPassword}
-              type="password"
-              placeholder="Nhập lại mật khẩu"
+              value={data.password}
+              type={showPassword ? "text" : "password"}
+              placeholder="Mật khẩu"
               required
             />
+            <button
+              type="button"
+              className="password-toggle-btn"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              )}
+            </button>
+          </div>
+          {currentState === "Đăng ký" && (
+            <div className="password-input-wrapper">
+              <input
+                name="confirmPassword"
+                onChange={onChangeHandler}
+                value={data.confirmPassword}
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Nhập lại mật khẩu"
+                required
+              />
+              <button
+                type="button"
+                className="password-toggle-btn"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                )}
+              </button>
+            </div>
           )}
         </div>
         <button type="submit">

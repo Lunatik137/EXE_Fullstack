@@ -53,6 +53,34 @@
   color: #1f2937;
 }
 
+.user-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-label {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 15px;
+  color: #1f2937;
+  font-weight: 600;
+}
+
 .profile-age {
   margin: 4px 0 0 0;
   font-size: 14px;
@@ -374,6 +402,22 @@
   max-width: 400px;
   width: 90%;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .user-info-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .goals-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .profile-header-card {
+    padding: 20px;
+  }
 }
 
 .modal-content h3 {

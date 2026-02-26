@@ -9,6 +9,8 @@ import {
   deletePost,
   likePost,
   addComment,
+  updateComment,
+  deleteComment,
   getPostsByHashtag,
   getTrendingHashtags
 } from "../controllers/postController.js";
@@ -31,5 +33,7 @@ postRouter.put("/:id", authMiddleware, updatePost);
 postRouter.delete("/:id", authMiddleware, deletePost);
 postRouter.post("/:id/like", authMiddleware, likePost);
 postRouter.post("/:id/comment", authMiddleware, addComment);
+postRouter.put("/:id/comment/:commentId", authMiddleware, updateComment);
+postRouter.delete("/:id/comment/:commentId", authMiddleware, deleteComment);
 
 export default postRouter;

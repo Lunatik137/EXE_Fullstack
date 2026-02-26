@@ -1,6 +1,8 @@
 import './TodayMenu.css';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import notificationService from '../../services/notificationService';
 
 const TodayMenu = ({ mealPlan, todayMeal, loading }) => {
   const navigate = useNavigate();
@@ -10,6 +12,42 @@ const TodayMenu = ({ mealPlan, todayMeal, loading }) => {
       navigate(`/recipes/${recipeId}`);
     }
   };
+
+  // Setup meal reminders
+  useEffect(() => {
+    if (!todayMeal) return;
+
+    const setupMealReminders = async () => {
+      // Request permission first
+      const hasPermission = await notificationService.requestPermission();
+      if (!hasPermission) return; // Skip reminders if permission denied
+      
+      // Subscribe to push notifications
+      await notificationService.subscribe();
+
+      // Set reminders for each meal at 30 min before (simplified)
+      const mealTimes = [
+        { name: 'Bữa sáng', time: '07:00', offset: 7 * 60 },
+        { name: 'Bữa trưa', time: '12:00', offset: 12 * 60 },
+        { name: 'Bữa tối', time: '18:00', offset: 18 * 60 }
+      ];
+
+      const now = new Date();
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+      mealTimes.forEach(meal => {
+        if (todayMeal[meal.name.toLowerCase().replace('ữa ', '')] && currentMinutes < meal.offset - 30) {
+          const timeUntilReminder = (meal.offset - 30 - currentMinutes) * 60 * 1000;
+          
+          setTimeout(() => {
+            notificationService.notifyMealSchedule(meal.name, meal.time);
+          }, timeUntilReminder);
+        }
+      });
+    };
+
+    setupMealReminders();
+  }, [todayMeal]);
 
   if (loading) {
     return (
@@ -28,8 +66,14 @@ const TodayMenu = ({ mealPlan, todayMeal, loading }) => {
       <div className="today-menu">
         <div className="menu-card">
           <div className="no-plan">
-            <p>Bạn chưa có lộ trình ăn chay nào.</p>
-            <p>Hãy bắt đầu tạo lộ trình của bạn!</p>
+            <p className="title">Chưa có lộ trình</p>
+            <p className="description">Hãy tạo lộ trình ăn chay cá nhân hóa để bắt đầu hành trình của bạn!</p>
+            <button 
+              className="btn-create-plan"
+              onClick={() => navigate('/plan-selection')}
+            >
+              Tạo lộ trình ngay
+            </button>
           </div>
         </div>
       </div>

@@ -192,7 +192,7 @@ const RecipeLibrary = () => {
                   {selectedRecipe.instructions.map((step, index) => (
                     <div key={index} className="step-item">
                       <div className="step-number-badge">{index + 1}</div>
-                      <p>{step}</p>
+                      <p style={{ textAlign: 'left' }}>{step}</p>
                     </div>
                   ))}
                 </div>

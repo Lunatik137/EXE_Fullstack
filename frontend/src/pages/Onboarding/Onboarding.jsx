@@ -49,6 +49,24 @@ const Onboarding = () => {
   const handleMultiSelect = (name, value) => {
     setFormData(prev => {
       const currentValues = prev[name] || [];
+      
+      // Special handling for health conditions: "normal" is mutually exclusive
+      if (name === 'healthConditions') {
+        if (value === 'normal') {
+          // If selecting "normal", clear all other selections
+          return { ...prev, [name]: ['normal'] };
+        } else {
+          // If selecting any other condition, remove "normal" if it exists
+          const filteredValues = currentValues.filter(v => v !== 'normal');
+          if (filteredValues.includes(value)) {
+            return { ...prev, [name]: filteredValues.filter(v => v !== value) };
+          } else {
+            return { ...prev, [name]: [...filteredValues, value] };
+          }
+        }
+      }
+      
+      // Default behavior for other multi-selects
       if (currentValues.includes(value)) {
         return { ...prev, [name]: currentValues.filter(v => v !== value) };
       } else {
@@ -64,8 +82,8 @@ const Onboarding = () => {
           toast.error('Vui lòng điền đầy đủ thông tin!');
           return false;
         }
-        if (formData.age < 10 || formData.age > 90) {
-          toast.error('Tuổi phải từ 10 đến 90!');
+        if (formData.age < 6 || formData.age > 90) {
+          toast.error('Tuổi phải từ 6 đến 90!');
           return false;
         }
         return true;
@@ -143,8 +161,8 @@ const Onboarding = () => {
         localStorage.setItem('hasCompletedOnboarding', 'true');
         setHasCompletedOnboarding(true);
         
-        toast.success('Hoàn thành! Bây giờ hãy chọn gói lộ trình của bạn.');
-        navigate('/plan-selection');
+        toast.success('Hoàn thành! Bây giờ hãy chọn gói của bạn.');
+        navigate('/plan-price');
       } else {
         toast.error(response.data.message);
       }
@@ -171,7 +189,7 @@ const Onboarding = () => {
               />
             </div>
             <div className="form-group">
-              <label>Tuổi * (10-90)</label>
+              <label>Tuổi *</label>
               <input
                 type="number"
                 name="age"
@@ -208,7 +226,7 @@ const Onboarding = () => {
           <div className="onboarding-step">
             <h2 className="step-title">Cơ thể</h2>
             <div className="form-group">
-              <label>Chiều cao (cm) * (100-230)</label>
+              <label>Chiều cao (cm) *</label>
               <input
                 type="number"
                 name="height"
@@ -221,7 +239,7 @@ const Onboarding = () => {
               />
             </div>
             <div className="form-group">
-              <label>Cân nặng (kg) * (25-250)</label>
+              <label>Cân nặng (kg) *</label>
               <input
                 type="number"
                 name="weight"
@@ -265,7 +283,7 @@ const Onboarding = () => {
             {(formData.goal === 'Lose' || formData.goal === 'Gain') && (
               <>
                 <div className="form-group">
-                  <label>Bạn muốn {formData.goal === 'Lose' ? 'giảm' : 'tăng'} bao nhiêu kg? * (1-50)</label>
+                  <label>Bạn muốn {formData.goal === 'Lose' ? 'giảm' : 'tăng'} bao nhiêu kg? *</label>
                   <input
                     type="number"
                     name="targetWeight"
@@ -307,7 +325,6 @@ const Onboarding = () => {
         return (
           <div className="onboarding-step">
             <h2 className="step-title">Sức khỏe</h2>
-            <p className="disclaimer">⚠️ Thông tin này không thay thế tư vấn y tế chuyên nghiệp</p>
             <div className="form-group">
               <label>Tình trạng sức khỏe (chọn nhiều nếu có)</label>
               <div className="checkbox-group">
@@ -384,7 +401,7 @@ const Onboarding = () => {
           <div className="onboarding-step">
             <h2 className="step-title">Hạn chế / Dị ứng</h2>
             <div className="form-group">
-              <label>Dị ứng / Hạn chế (chọn nhiều nếu có)</label>
+              <label>Bạn có Dị ứng / Hạn chế không? (chọn nhiều nếu có)</label>
               <div className="checkbox-group">
                 {[
                   { value: 'peanut', label: 'Đậu phộng' },
@@ -459,6 +476,55 @@ const Onboarding = () => {
         );
 
       case 8:
+        const getGenderLabel = (value) => {
+          const labels = {
+            'Male': 'Nam',
+            'Female': 'Nữ',
+            'Other': 'Khác',
+            'Prefer not to say': 'Không muốn tiết lộ'
+          };
+          return labels[value] || value;
+        };
+
+        const getGoalLabel = (value) => {
+          const labels = {
+            'Maintain': 'Duy trì',
+            'Lose': 'Giảm cân',
+            'Gain': 'Tăng cân'
+          };
+          return labels[value] || value;
+        };
+
+        const getDietTypeLabel = (value) => {
+          const labels = {
+            'vegan': 'Thuần chay (Vegan)',
+            'ovo': 'Chay có trứng (Ovo)',
+            'lacto': 'Chay có sữa (Lacto)',
+            'lacto-ovo': 'Chay có sữa + trứng (Lacto-ovo)'
+          };
+          return labels[value] || value;
+        };
+
+        const getActivityLabel = (value) => {
+          const labels = {
+            'sedentary': 'Ít vận động (sedentary)',
+            'light': 'Nhẹ (1-3 buổi/tuần)',
+            'moderate': 'Vừa (3-5 buổi/tuần)',
+            'active': 'Nặng (6-7 buổi/tuần)',
+            'very_active': 'Vận động nhiều/lao động nặng'
+          };
+          return labels[value] || value;
+        };
+
+        const getDurationLabel = (value) => {
+          const labels = {
+            '1m': '1 tháng',
+            '3m': '3 tháng',
+            '6m': '6 tháng'
+          };
+          return labels[value] || value;
+        };
+
         return (
           <div className="onboarding-step summary-step">
             <h2 className="step-title">Xác nhận thông tin</h2>
@@ -467,7 +533,7 @@ const Onboarding = () => {
                 <h3>Thông tin cơ bản</h3>
                 <p><strong>Tên:</strong> {formData.name}</p>
                 <p><strong>Tuổi:</strong> {formData.age}</p>
-                <p><strong>Giới tính:</strong> {formData.gender}</p>
+                <p><strong>Giới tính:</strong> {getGenderLabel(formData.gender)}</p>
               </div>
               
               <div className="summary-section">
@@ -479,18 +545,18 @@ const Onboarding = () => {
               
               <div className="summary-section">
                 <h3>Mục tiêu</h3>
-                <p><strong>Mục tiêu:</strong> {formData.goal === 'Maintain' ? 'Duy trì' : formData.goal === 'Lose' ? 'Giảm cân' : 'Tăng cân'}</p>
+                <p><strong>Mục tiêu:</strong> {getGoalLabel(formData.goal)}</p>
                 {formData.targetWeight && <p><strong>Số kg:</strong> {formData.targetWeight} kg</p>}
-                {formData.targetDuration && <p><strong>Thời gian:</strong> {formData.targetDuration}</p>}
+                {formData.targetDuration && <p><strong>Thời gian:</strong> {getDurationLabel(formData.targetDuration)}</p>}
               </div>
               
               <div className="summary-section">
                 <h3>Chế độ ăn & Sức khỏe</h3>
-                <p><strong>Chế độ ăn:</strong> {formData.dietType}</p>
-                <p><strong>Mức độ vận động:</strong> {formData.activityLevel}</p>
+                <p><strong>Chế độ ăn:</strong> {getDietTypeLabel(formData.dietType)}</p>
+                <p><strong>Mức độ vận động:</strong> {getActivityLabel(formData.activityLevel)}</p>
               </div>
               
-              <p className="edit-note">💡 Bạn có thể chỉnh sửa thông tin này sau trong phần cài đặt</p>
+              <p className="edit-note">Bạn có thể chỉnh sửa thông tin này sau trong phần cài đặt</p>
             </div>
           </div>
         );
@@ -526,7 +592,7 @@ const Onboarding = () => {
             </button>
           ) : (
             <button className="btn-primary" onClick={handleSubmit}>
-              🚀 Tạo lộ trình
+              Tạo lộ trình
             </button>
           )}
         </div>

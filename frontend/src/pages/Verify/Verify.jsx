@@ -19,7 +19,7 @@ const Verify = () => {
             toast.success("Order Placed Successfully");
         }else{
             toast.error("Something went wrong");
-            navigate("/");
+            navigate("/home");
         }
     }
     useEffect(()=>{

@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect, useCallback } from 'react';
 import './Community.css';
 import FilterSidebar from '../../components/FilterSidebar/FilterSidebar';
 import CreatePost from '../../components/CreatePost/CreatePost';
@@ -8,7 +8,6 @@ import RecipeDetailModal from '../../components/RecipeDetailModal/RecipeDetailMo
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
 
-/* TEMPORARILY COMMENTED OUT - Helper functions
 const formatTimeAgo = (date) => {
   const now = new Date();
   const postDate = new Date(date);
@@ -20,9 +19,7 @@ const formatTimeAgo = (date) => {
   if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} ngày trước`;
   return `${Math.floor(diffInSeconds / 604800)} tuần trước`;
 };
-*/
 
-/* TEMPORARILY COMMENTED OUT
 const transformPostData = (apiPost) => {
   return {
     id: apiPost._id,
@@ -42,97 +39,16 @@ const transformPostData = (apiPost) => {
     hashtags: apiPost.hashtags || []
   };
 };
-*/
 
 const Community = () => {
   const { url, token } = useContext(StoreContext);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState(null);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [filterType, setFilterType] = useState('all');
   const [selectedHashtag, setSelectedHashtag] = useState(null);
-
-  // Hardcoded posts for testing
-  const [posts] = useState([
-    {
-      id: 1,
-      author: 'Minh Anh',
-      avatar: 'https://ui-avatars.com/api/?name=Minh+Anh&background=10b981&color=fff',
-      time: '2 giờ trước',
-      content: 'Hôm nay mình đã thử làm món phở chay mới! Ngon tuyệt vời, ai muốn công thức không?',
-      image: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=500',
-      hasRecipe: true,
-      verified: true,
-      likes: 124,
-      likesArray: [],
-      comments: 15,
-      commentsData: [
-        {
-          userId: { name: 'Hoàng Nam' },
-          content: 'Trông ngon quá! Cho mình xin công thức với ạ!'
-        },
-        {
-          userId: { name: 'Thu Hà' },
-          content: 'Phở này nhìn hấp dẫn thật! Mình cũng muốn thử làm.'
-        }
-      ],
-      type: 'recipe',
-      hashtags: ['phở chay', 'healthy'],
-      recipe: {
-        title: 'Phở chay',
-        image: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=800',
-        author: 'Minh Anh',
-        authorAvatar: 'https://ui-avatars.com/api/?name=Minh+Anh&background=10b981&color=fff',
-        authorHandle: 'minhanh',
-        location: 'Nha Trang',
-        ingredients: [
-          { name: 'Bánh phở', amount: '200g' },
-          { name: 'Nấm hương', amount: '100g' },
-          { name: 'Rau thơm', amount: '50g' }
-        ],
-        instructions: [
-          'Ngâm bánh phở trong nước ấm',
-          'Nấu nước dùng từ nấm và gia vị',
-          'Cho bánh phở vào tô, chan nước dùng'
-        ],
-        cookingTime: '30',
-        servings: '2',
-        difficulty: 'easy'
-      }
-    },
-    {
-      id: 2,
-      author: 'Tuấn Kiệt',
-      avatar: 'https://ui-avatars.com/api/?name=Tuan+Kiet&background=f59e0b&color=fff',
-      time: '5 giờ trước',
-      content: 'Mình vừa ăn chay được 1 tháng rồi, cảm thấy cơ thể nhẹ nhàng hơn hẳn. Các bạn có tips gì để duy trì không?',
-      likes: 87,
-      likesArray: [],
-      comments: 23,
-      commentsData: [
-        {
-          userId: { name: 'Mai Linh' },
-          content: 'Tuyệt vời! Mình ăn chay được 6 tháng rồi, cảm thấy rất tốt!'
-        }
-      ],
-      type: 'normal',
-      hashtags: ['ăn chay', 'healthy lifestyle']
-    },
-    {
-      id: 3,
-      author: 'Lan Hương',
-      avatar: 'https://ui-avatars.com/api/?name=Lan+Huong&background=ef4444&color=fff',
-      time: '1 ngày trước',
-      content: 'Review quán chay mới ở quận 1: Quán Chay Tịnh Tâm. Món ăn ngon, giá cả hợp lý, không gian thoáng mát. Nhất định sẽ quay lại!',
-      image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500',
-      likes: 156,
-      likesArray: [],
-      comments: 8,
-      commentsData: [],
-      type: 'review',
-      hashtags: ['review quán chay', 'quận 1']
-    }
-  ]);
-
-  /* API FETCH - TEMPORARILY COMMENTED OUT
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const fetchPosts = useCallback(async () => {
     try {
       setLoading(true);
@@ -164,11 +80,33 @@ const Community = () => {
   useEffect(() => {
     fetchPosts();
   }, [fetchPosts]);
-  */
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      if (!token) {
+        setCurrentUserId(null);
+        return;
+      }
+      try {
+        const response = await axios.post(
+          `${url}/api/user/profile`,
+          {},
+          { headers: { token } }
+        );
+        if (response.data.success) {
+          setCurrentUserId(response.data.user?._id || null);
+        }
+      } catch (error) {
+        console.error('Error fetching current user:', error);
+        setCurrentUserId(null);
+      }
+    };
+
+    fetchCurrentUser();
+  }, [token, url]);
 
   const handlePostCreated = () => {
-    // fetchPosts(); // Commented out
-    console.log('Post created - refresh disabled for hardcoded data');
+    fetchPosts();
   };
 
   const handleHashtagClick = (hashtag) => {
@@ -201,9 +139,7 @@ const Community = () => {
       );
 
       if (response.data.success) {
-        console.log('Post liked successfully');
-        // Update disabled for hardcoded data
-        // setPosts would update here in production
+        fetchPosts();
       }
     } catch (error) {
       console.error('Error liking post:', error);
@@ -230,9 +166,7 @@ const Community = () => {
       );
 
       if (response.data.success) {
-        console.log('Comment posted successfully');
-        // Update disabled for hardcoded data
-        // setPosts would update here in production
+        fetchPosts();
         return true;
       }
     } catch (error) {
@@ -245,7 +179,7 @@ const Community = () => {
   return (
     <>
       <div className="community-page">
-        <FilterSidebar onFilterChange={handleFilterChange} currentFilter={filterType} />
+        <FilterSidebar onFilterChange={handleFilterChange} currentFilter={filterType} isOpen={sidebarOpen} />
         <div className="community-feed">
           {selectedHashtag && (
             <div className="active-filter-banner">
@@ -254,8 +188,12 @@ const Community = () => {
             </div>
           )}
           <CreatePost onPostCreated={handlePostCreated} />
-          
-          {posts.length === 0 ? (
+
+          {loading ? (
+            <div className="no-posts">
+              <p>Đang tải bài viết...</p>
+            </div>
+          ) : posts.length === 0 ? (
             <div className="no-posts">
               <p>Chưa có bài viết nào. Hãy là người đầu tiên chia sẻ!</p>
             </div>
@@ -267,6 +205,7 @@ const Community = () => {
                 onViewRecipe={handleViewRecipe}
                 onLikePost={handleLikePost}
                 onCommentPost={handleCommentPost}
+                currentUserId={currentUserId}
               />
             ))
           )}

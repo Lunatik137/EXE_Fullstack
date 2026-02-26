@@ -93,14 +93,20 @@ const generateMealPlan = async (req, res) => {
       console.log(" Gemini AI response received");
     } catch (error) {
       // If Gemini API fails, use fallback
+      const errorMessage = error.message || '';
       const shouldUseFallback = 
         process.env.NODE_ENV === 'development' ||
-        error.message.includes('not configured') ||
-        error.message.includes('No compatible Gemini model') ||
-        error.message.includes('API keys exhausted') ||
-        error.message.includes('API key permissions') ||
-        error.message.includes('configuration error') ||
-        error.message.includes('Must provide a model name');
+        errorMessage.includes('not configured') ||
+        errorMessage.includes('No compatible Gemini model') ||
+        errorMessage.includes('API keys exhausted') ||
+        errorMessage.includes('API key permissions') ||
+        errorMessage.includes('configuration error') ||
+        errorMessage.includes('Must provide a model name') ||
+        errorMessage.includes('503') ||
+        errorMessage.includes('UNAVAILABLE') ||
+        errorMessage.includes('high demand') ||
+        errorMessage.includes('quota') ||
+        errorMessage.includes('429');
       
       if (shouldUseFallback) {
         console.log(" Gemini API unavailable, using fallback meal selection...");
@@ -159,7 +165,16 @@ const generateMealPlan = async (req, res) => {
     });
   } catch (error) {
     console.error(" Error generating meal plan:", error);
-    res.json({ success: false, message: error.message || "Error generating meal plan" });
+    
+    // Extract message from various error formats
+    let errorMessage = "Error generating meal plan";
+    if (error.message) {
+      errorMessage = typeof error.message === 'string' ? error.message : JSON.stringify(error.message);
+    } else if (error.error?.message) {
+      errorMessage = error.error.message;
+    }
+    
+    res.json({ success: false, message: errorMessage });
   }
 };
 
@@ -169,6 +184,15 @@ const confirmMealPlan = async (req, res) => {
     const userId = req.body.userId;
     const { mealPlanId } = req.body;
 
+    console.log('🔵 confirmMealPlan called:');
+    console.log('   userId:', userId);
+    console.log('   mealPlanId:', mealPlanId);
+
+    if (!mealPlanId) {
+      console.log('❌ ERROR: mealPlanId is missing!');
+      return res.json({ success: false, message: "mealPlanId is required" });
+    }
+
     // Deactivate all other active meal plans for this user
     await MealPlan.updateMany(
       { userId, status: 'active' },
@@ -176,14 +200,21 @@ const confirmMealPlan = async (req, res) => {
     );
 
     // Activate the new meal plan
-    await MealPlan.findByIdAndUpdate(mealPlanId, {
+    const updateResult = await MealPlan.findByIdAndUpdate(mealPlanId, {
       status: 'active',
       startDate: new Date()
     });
 
+    console.log('🔵 Update result:', updateResult);
+
+    if (!updateResult) {
+      console.log('❌ ERROR: Meal plan not found by ID');
+      return res.json({ success: false, message: "Meal plan not found" });
+    }
+
     res.json({ success: true, message: "Meal plan activated successfully" });
   } catch (error) {
-    console.log(error);
+    console.error('❌ Error in confirmMealPlan:', error);
     res.json({ success: false, message: "Error confirming meal plan" });
   }
 };
@@ -203,6 +234,39 @@ const getActiveMealPlan = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: "Error fetching meal plan" });
+  }
+};
+
+// Get draft meal plan for user (for preview page refresh)
+const getDraftMealPlan = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    console.log('\n📥 [getDraftMealPlan] Request received');
+    console.log('   userId from middleware:', userId);
+    console.log('   token from headers:', req.headers.token ? `Present (${req.headers.token.substring(0, 20)}...)` : 'MISSING');
+
+    if (!userId) {
+      console.log('   ❌ userId is undefined!');
+      return res.json({ success: false, message: "Unauthorized - no userId" });
+    }
+
+    const mealPlan = await MealPlan.findOne({ userId, status: 'draft' });
+    console.log('   🔍 Query: { userId:', userId, ', status: "draft" }');
+    console.log('   📊 Meal plans found:', mealPlan ? 1 : 0);
+    
+    if (!mealPlan) {
+      console.log('   ❌ No draft meal plan exists');
+      return res.json({ success: false, message: "No draft meal plan found" });
+    }
+
+    console.log('   ✅ Draft meal plan found');
+    console.log('      - ID:', mealPlan._id);
+    console.log('      - Duration:', mealPlan.duration);
+    console.log('      - Days:', mealPlan.days.length);
+    res.json({ success: true, mealPlan });
+  } catch (error) {
+    console.log('   ❌ Error in getDraftMealPlan:', error.message);
+    res.json({ success: false, message: "Error fetching draft meal plan" });
   }
 };
 
@@ -257,83 +321,35 @@ function buildGeminiPrompt(user, onboardingData, calorieTarget, duration, recipe
   const riceRecipes = recipes.filter(r => r.isRice || r.category === 'staple');
   const dishRecipes = recipes.filter(r => !r.isRice && r.category !== 'staple');
   
-  const riceList = riceRecipes.map((r, idx) => {
-    return `${idx + 1}. ${r.name} - ${r.calories}kcal | ${r.riceAmount} gạo chưa nấu`;
-  }).join('\n');
-
   const recipeList = recipes.map((r, idx) => {
-    const cookingTimeline = (r.preparationTime || 0) + (r.cookingTime || 0);
-    const riceInfo = r.isRice ? ` | ${r.riceAmount} gạo` : '';
-    return `${idx + 1}. ${r.name} - ${r.calories}kcal | Cooking: ${r.cookingMethod} | Protein: ${r.protein}g${riceInfo}`;
+    return `${idx + 1}. ${r.name} - ${r.calories}kcal (P: ${r.protein}g)${r.isRice ? ` [RICE]` : ''}`;
   }).join('\n');
 
-  return `You are a professional Vietnamese nutritionist creating a ${duration}-day personalized meal plan for a vegan client.
+  return `Create a ${duration}-day vegan meal plan.
 
-USER PROFILE:
-- Age: ${onboardingData.age}, Gender: ${onboardingData.gender}
-- Current Weight: ${onboardingData.weight}kg, Height: ${onboardingData.height}cm
-- Goal: ${onboardingData.goal}${onboardingData.targetWeight ? ` (target ${onboardingData.targetWeight}kg)` : ''}
-- Activity Level: ${onboardingData.activityLevel}
-- Daily Calorie Target: ${calorieTarget} calories/day
-- Health Conditions: ${toCommaSeparated(onboardingData.healthConditions)}
-- Diet Type: ${onboardingData.dietType || 'Vegan'}
-- Allergies: ${toCommaSeparated(onboardingData.allergies)}
-- Dislikes: ${toCommaSeparated(onboardingData.dislikes)}
+USER: Age ${onboardingData.age}, ${onboardingData.gender}, ${onboardingData.weight}kg, Goal: ${onboardingData.goal}
+Daily target: ${calorieTarget} cal | Allergies: ${toCommaSeparated(onboardingData.allergies)} | Dislikes: ${toCommaSeparated(onboardingData.dislikes)}
 
-AVAILABLE RECIPES:
+RECIPES (by index):
 ${recipeList}
 
-MEAL STRUCTURE REQUIREMENTS:
-1. **BREAKFAST**: Choose 1 single recipe (light, easy-to-digest)
-   - Target: ~${Math.round(calorieTarget * 0.3)} cal
+MEAL STRUCTURE:
+- Breakfast: 1 recipe (~30% cal)
+- Lunch: 1 rice + 2-3 dishes (~40% cal, protein 15-20g)
+- Dinner: 1 rice + 2-3 dishes (~30% cal, lighter)
 
-2. **LUNCH** (COMBO MEAL): Choose 1 rice portion + 2-3 dishes
-   - Rice options (indices 1-${riceRecipes.length}): Choose based on calorie needs
-     ${riceList}
-   - Dishes: Choose 2-3 complementary dishes (mix cooking methods)
-   - Total target: ~${Math.round(calorieTarget * 0.4)} cal (40% of daily intake)
-   - Balance: Ensure adequate protein (15-20g) and variety
+RULES: Variety daily, balanced nutrition, total ${calorieTarget}±100 cal
 
-3. **DINNER** (COMBO MEAL): Choose 1 rice portion + 2-3 dishes
-   - Rice options: Same as lunch (choose appropriate portion)
-   - Dishes: Choose 2-3 different dishes (lighter than lunch)
-   - Total target: ~${Math.round(calorieTarget * 0.3)} cal (30% of daily intake)
-   - Prefer: Include soup (canh) or steamed dish (hấp) for easier digestion
-
-IMPORTANT GUIDELINES:
-- Total daily calories: ${calorieTarget}±100 calories
-- Provide VARIETY: Don't repeat dishes within same day or consecutive days
-- Balance cooking methods: xào, luộc, nướng, kho, canh, trộn, hấp, chiên
-- Mix difficulty levels for busy/relaxed days
-- Use recipe INDEX numbers (1-${recipes.length}) from the list above
-
-RESPONSE FORMAT (strict JSON, no markdown):
+JSON format (strict):
 {
   "days": [
-    {
-      "day": 1,
-      "breakfast": { "recipeIndex": 85 },
-      "lunch": {
-        "rice": { "recipeIndex": 2 },
-        "dishes": [
-          { "recipeIndex": 45 },
-          { "recipeIndex": 67 },
-          { "recipeIndex": 23 }
-        ]
-      },
-      "dinner": {
-        "rice": { "recipeIndex": 1 },
-        "dishes": [
-          { "recipeIndex": 34 },
-          { "recipeIndex": 78 }
-        ]
-      }
-    }
+    {"day": 1, "breakfast": {"recipeIndex": 5}, "lunch": {"rice": {"recipeIndex": 1}, "dishes": [{"recipeIndex": 10}, {"recipeIndex": 12}]}, "dinner": {"rice": {"recipeIndex": 2}, "dishes": [{"recipeIndex": 8}]}}
   ]
 }
 
-Generate the ${duration}-day meal plan in pure JSON format now:`;
+Generate ${duration}-day plan as JSON only:`;
 }
+
 
 // Helper function: Parse Gemini AI response
 function parseGeminiResponse(response, recipes) {
@@ -592,4 +608,4 @@ function recipeToMealObject(recipe) {
   };
 }
 
-export { generateMealPlan, confirmMealPlan, getActiveMealPlan };
+export { generateMealPlan, confirmMealPlan, getActiveMealPlan, getDraftMealPlan };

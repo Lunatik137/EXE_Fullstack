@@ -6,7 +6,7 @@ const Premium = () => {
     <div className="premium-page">
       <div className="premium-container">
         <div className="premium-header-section">
-          <h1>Nâng cấp Greenpath Premium</h1>
+          <h1>Nâng cấp GreenPath Premium</h1>
           <p className="premium-subtitle">Mở khoá toàn bộ tiềm năng sức khoẻ của bạn với chi phí bằng một cốc cà phê.</p>
         </div>
 

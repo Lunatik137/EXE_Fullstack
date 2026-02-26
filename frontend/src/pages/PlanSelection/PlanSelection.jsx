@@ -1,12 +1,41 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { StoreContext } from '../../context/StoreContext';
+import axios from 'axios';
 import './PlanSelection.css';
 
 const PlanSelection = () => {
   const navigate = useNavigate();
-  const [selectedPlan, setSelectedPlan] = useState('free');
-  const [selectedDuration, setSelectedDuration] = useState('3');
+  const { url, token } = useContext(StoreContext);
+  const [selectedDuration, setSelectedDuration] = useState('7');
+  const [userPlan, setUserPlan] = useState('free');
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Get user's current plan from backend
+  useEffect(() => {
+    const fetchUserPlan = async () => {
+      try {
+        const response = await axios.get(
+          `${url}/api/users/current-plan`,
+          { headers: { token } }
+        );
+        if (response.data.success) {
+          setUserPlan(response.data.planType || 'free');
+          // Set default duration based on plan
+          setSelectedDuration(response.data.planType === 'premium' ? '30' : '7');
+        }
+      } catch (error) {
+        console.log('Could not fetch user plan, defaulting to free');
+        setUserPlan('free');
+        setSelectedDuration('7');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserPlan();
+  }, [url, token]);
 
   const handleContinue = () => {
     if (!selectedDuration) {
@@ -14,125 +43,55 @@ const PlanSelection = () => {
       return;
     }
 
-    // Navigate to meal plan generation with selected options
+    // Navigate to meal plan generation
     navigate('/generate-plan', {
       state: {
-        planType: selectedPlan,
+        planType: userPlan,
         duration: parseInt(selectedDuration)
       }
     });
   };
 
-  const freeDurations = [
-    { value: '3', label: '3 ngày', recommended: true },
-    { value: '7', label: '7 ngày' }
-  ];
+  const durations = userPlan === 'free' 
+    ? [{ value: '7', label: '7 ngày', recommended: true }]
+    : [
+        { value: '14', label: '14 ngày (2 tuần)' },
+        { value: '30', label: '30 ngày (1 tháng)', recommended: true },
+        { value: '60', label: '60 ngày (2 tháng)' },
+        { value: '90', label: '90 ngày (3 tháng)' }
+      ];
 
-  const premiumDurations = [
-    { value: '14', label: '14 ngày (2 tuần)' },
-    { value: '30', label: '30 ngày (1 tháng)', recommended: true },
-    { value: '60', label: '60 ngày (2 tháng)' },
-    { value: '90', label: '90 ngày (3 tháng)' }
-  ];
-
-  const currentDurations = selectedPlan === 'free' ? freeDurations : premiumDurations;
+  if (isLoading) {
+    return (
+      <div className="plan-selection-container">
+        <div className="loading">Đang tải...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="plan-selection-container">
       <div className="plan-selection-content">
+        <button 
+          className="btn-close"
+          onClick={() => navigate('/home')}
+          title="Đóng"
+        >
+          ✕
+        </button>
+
         <div className="plan-header">
-          <h1>Chọn gói lộ trình của bạn</h1>
-          <p>Chúng tôi sẽ tạo lộ trình ăn chay cá nhân hóa dựa trên thông tin của bạn</p>
-        </div>
-
-        <div className="plans-grid">
-          {/* Free Plan */}
-          <div 
-            className={`plan-card ${selectedPlan === 'free' ? 'selected' : ''}`}
-            onClick={() => {
-              setSelectedPlan('free');
-              setSelectedDuration('3');
-            }}
-          >
-            <div className="plan-badge">Miễn phí</div>
-            <h2 className="plan-title">Free Plan</h2>
-            <div className="plan-price">
-              <span className="price">0đ</span>
-            </div>
-            
-            <ul className="plan-features">
-              <li className="feature-item">
-                <span className="check-icon">✓</span>
-                <span>Lộ trình 3 hoặc 7 ngày</span>
-              </li>
-              <li className="feature-item">
-                <span className="check-icon">✓</span>
-                <span>3 bữa mỗi ngày (sáng, trưa, tối)</span>
-              </li>
-              <li className="feature-item">
-                <span className="check-icon">✓</span>
-                <span>Recipe pool cơ bản</span>
-              </li>
-              <li className="feature-item disabled">
-                <span className="check-icon">✗</span>
-                <span>Không chỉnh macro chi tiết</span>
-              </li>
-              <li className="feature-item disabled">
-                <span className="check-icon">✗</span>
-                <span>Không có AI coach</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Premium Plan */}
-          <div 
-            className={`plan-card premium ${selectedPlan === 'premium' ? 'selected' : ''}`}
-            onClick={() => {
-              setSelectedPlan('premium');
-              setSelectedDuration('30');
-            }}
-          >
-            <div className="plan-badge premium-badge">Phổ biến nhất</div>
-            <h2 className="plan-title">Premium Plan</h2>
-            <div className="plan-price">
-              <span className="price">30,000đ</span>
-              <span className="period">/tháng</span>
-            </div>
-            
-            <ul className="plan-features">
-              <li className="feature-item">
-                <span className="check-icon">✓</span>
-                <span>Lộ trình 14-90 ngày</span>
-              </li>
-              <li className="feature-item">
-                <span className="check-icon">✓</span>
-                <span>3 bữa mỗi ngày (sáng, trưa, tối)</span>
-              </li>
-              <li className="feature-item">
-                <span className="check-icon">✓</span>
-                <span>Recipe pool đầy đủ</span>
-              </li>
-              <li className="feature-item">
-                <span className="check-icon">✓</span>
-                <span>Cá nhân hóa macro, thời gian nấu</span>
-              </li>
-              <li className="feature-item">
-                <span className="check-icon">✓</span>
-                <span>AI coach & tùy chỉnh món ăn</span>
-              </li>
-              <li className="feature-item">
-                <span className="check-icon">✓</span>
-                <span>Theo dõi tiến độ chi tiết</span>
-              </li>
-            </ul>
-          </div>
+          <h1>Chọn thời lượng lộ trình</h1>
+          <p>Bạn sẽ nhận được lộ trình ăn chay cá nhân hóa</p>
+          <p className="plan-badge-info">
+            Gói hiện tại: <span className="badge">{userPlan === 'free' ? 'Cơ Bản' : 'Premium'}</span>
+          </p>
         </div>
 
         {/* Duration Selection */}
         <div className="duration-section">
-          <h3>Chọn thời lượng lộ trình</h3>
           <div className="duration-grid">
-            {currentDurations.map(duration => (
+            {durations.map(duration => (
               <label 
                 key={duration.value}
                 className={`duration-option ${selectedDuration === duration.value ? 'selected' : ''}`}
@@ -145,10 +104,10 @@ const PlanSelection = () => {
                   onChange={(e) => setSelectedDuration(e.target.value)}
                 />
                 <div className="duration-content">
-                  <span className="duration-label">{duration.label}</span>
                   {duration.recommended && (
-                    <span className="recommended-tag">Được đề xuất</span>
+                    <span className="recommended-tag">Đề xuất</span>
                   )}
+                  <span className="duration-label">{duration.label}</span>
                 </div>
               </label>
             ))}
@@ -158,22 +117,18 @@ const PlanSelection = () => {
         {/* Action Buttons */}
         <div className="action-buttons">
           <button 
-            className="btn-back"
-            onClick={() => navigate('/onboarding')}
+            className="btn-cancel"
+            onClick={() => navigate('/home')}
           >
-            ← Quay lại
+            Hủy
           </button>
           <button 
             className="btn-continue"
             onClick={handleContinue}
           >
-            Tạo lộ trình ngay →
+            Tạo lộ trình →
           </button>
         </div>
-
-        <p className="note-text">
-          💡 Bạn có thể thay đổi gói và điều chỉnh lộ trình sau trong phần cài đặt
-        </p>
       </div>
     </div>
   );

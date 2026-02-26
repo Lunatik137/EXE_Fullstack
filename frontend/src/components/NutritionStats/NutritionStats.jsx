@@ -208,7 +208,7 @@ const NutritionStats = ({ todayMeal, loading }) => {
       {/* Nutrition Overview Section */}
       <div className="stats-section">
         <div className="section-header">
-          <h3 className="section-title">Tổng quan về Dinh dưỡng</h3>
+          <h5 className="section-title">Tổng quan về Dinh dưỡng</h5>
         </div>
         <div className="stats-grid">
           {nutritionOverview.map((item, index) => (

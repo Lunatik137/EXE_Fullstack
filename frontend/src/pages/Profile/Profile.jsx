@@ -2,6 +2,97 @@ import { useState, useEffect, useContext } from 'react';
 import './Profile.css';
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+
+// Helper functions for Vietnamese translations
+const getGenderLabel = (gender) => {
+  if (gender === 'Male') return 'Nam';
+  if (gender === 'Female') return 'Nữ';
+  if (gender === 'Other') return 'Khác';
+  if (gender === 'Prefer not to say') return 'Không muốn tiết lộ';
+  return 'N/A';
+};
+
+const getGoalLabel = (goal) => {
+  if (goal === 'Lose') return 'Giảm cân';
+  if (goal === 'Gain') return 'Tăng cân';
+  if (goal === 'Maintain') return 'Duy trì';
+  return 'N/A';
+};
+
+const getDietTypeLabel = (dietType) => {
+  const mapping = {
+    'vegan': 'Thuần chay (Vegan)',
+    'ovo': 'Chay có trứng (Ovo)',
+    'lacto': 'Chay có sữa (Lacto)',
+    'lacto-ovo': 'Chay có sữa + trứng (Lacto-ovo)'
+  };
+  return mapping[dietType] || dietType || 'N/A';
+};
+
+const getHealthConditionsLabel = (conditions) => {
+  if (!conditions || conditions.length === 0) return 'Không có';
+  
+  if (Array.isArray(conditions)) {
+    const mapping = {
+      'normal': 'Bình thường',
+      'stomach': 'Dạ dày/tiêu hóa nhạy cảm',
+      'diabetes': 'Tiểu đường/tiền tiểu đường',
+      'blood_pressure': 'Huyết áp',
+      'gout': 'Gout/axit uric',
+      'cholesterol': 'Mỡ máu',
+      'pregnancy': 'Thai kỳ/cho con bú'
+    };
+    return conditions.map(c => mapping[c] || c).join(', ');
+  }
+  
+  if (conditions === 'normal') return 'Bình thường';
+  return conditions;
+};
+
+const getAllergiesLabel = (allergies) => {
+  if (!allergies || allergies.length === 0) return 'Không có';
+  
+  if (Array.isArray(allergies)) {
+    const mapping = {
+      'peanut': 'Đậu phộng',
+      'soy': 'Đậu nành',
+      'gluten': 'Gluten',
+      'dairy': 'Sữa',
+      'egg': 'Trứng',
+      'seafood': 'Hải sản',
+      'sesame': 'Mè (sesame)',
+      'tree_nuts': 'Tree nuts (hạt điều/hạnh nhân...)'
+    };
+    return allergies.map(a => mapping[a] || a).join(', ');
+  }
+  
+  return allergies;
+};
+
+const getTargetDurationLabel = (duration) => {
+  if (!duration) return 'N/A';
+  if (duration.endsWith('m')) {
+    const months = duration.replace('m', '');
+    return `${months} tháng`;
+  }
+  if (duration.endsWith('y')) {
+    const years = duration.replace('y', '');
+    return `${years} năm`;
+  }
+  return duration;
+};
+
+const getActivityLevelLabel = (level) => {
+  const mapping = {
+    'sedentary': 'Ít vận động',
+    'light': 'Nhẹ',
+    'moderate': 'Vừa phải',
+    'active': 'Nặng',
+    'very_active': 'Vận động nhiều/lao động nặng'
+  };
+  return mapping[level] || level || 'N/A';
+};
 
 const Profile = () => {
   const { url, token } = useContext(StoreContext);
@@ -14,10 +105,20 @@ const Profile = () => {
   const [editedProfile, setEditedProfile] = useState({
     name: '',
     age: '',
+    gender: '',
     height: '',
+    weight: '',
     targetWeight: '',
+    targetDuration: '',
     goal: '',
-    activityLevel: ''
+    activityLevel: '',
+    dietType: '',
+    dietTypeOther: '',
+    healthConditions: [],
+    healthConditionsOther: '',
+    allergies: [],
+    allergiesOther: '',
+    dislikes: ''
   });
 
   useEffect(() => {
@@ -37,10 +138,20 @@ const Profile = () => {
         setEditedProfile({
           name: response.data.user.name,
           age: response.data.user.onboardingData?.age || '',
+          gender: response.data.user.onboardingData?.gender || '',
           height: response.data.user.onboardingData?.height || '',
+          weight: response.data.user.onboardingData?.weight || '',
           targetWeight: response.data.user.onboardingData?.targetWeight || '',
+          targetDuration: response.data.user.onboardingData?.targetDuration || '',
           goal: response.data.user.onboardingData?.goal || '',
-          activityLevel: response.data.user.onboardingData?.activityLevel || ''
+          activityLevel: response.data.user.onboardingData?.activityLevel || '',
+          dietType: response.data.user.onboardingData?.dietType || '',
+          dietTypeOther: response.data.user.onboardingData?.dietTypeOther || '',
+          healthConditions: response.data.user.onboardingData?.healthConditions || [],
+          healthConditionsOther: response.data.user.onboardingData?.healthConditionsOther || '',
+          allergies: response.data.user.onboardingData?.allergies || [],
+          allergiesOther: response.data.user.onboardingData?.allergiesOther || '',
+          dislikes: response.data.user.onboardingData?.dislikes || ''
         });
       }
     } catch (error) {
@@ -63,6 +174,17 @@ const Profile = () => {
     }
   };
 
+  const toggleMultiSelect = (field, value) => {
+    setEditedProfile((prev) => {
+      const current = prev[field] || [];
+      const exists = current.includes(value);
+      return {
+        ...prev,
+        [field]: exists ? current.filter((item) => item !== value) : [...current, value]
+      };
+    });
+  };
+
   const handleSaveProfile = async () => {
     try {
       const response = await axios.post(`${url}/api/user/update-profile`, {
@@ -70,10 +192,20 @@ const Profile = () => {
         onboardingData: {
           ...user.onboardingData,
           age: editedProfile.age,
+          gender: editedProfile.gender,
           height: editedProfile.height,
+          weight: editedProfile.weight,
           targetWeight: editedProfile.targetWeight,
+          targetDuration: editedProfile.targetDuration,
           goal: editedProfile.goal,
-          activityLevel: editedProfile.activityLevel
+          activityLevel: editedProfile.activityLevel,
+          dietType: editedProfile.dietType,
+          dietTypeOther: editedProfile.dietTypeOther,
+          healthConditions: editedProfile.healthConditions,
+          healthConditionsOther: editedProfile.healthConditionsOther,
+          allergies: editedProfile.allergies,
+          allergiesOther: editedProfile.allergiesOther,
+          dislikes: editedProfile.dislikes
         }
       }, {
         headers: { token }
@@ -82,17 +214,17 @@ const Profile = () => {
       if (response.data.success) {
         setUser(response.data.user);
         setIsEditing(false);
-        alert('Cập nhật thành công!');
+        toast.success('Cập nhật thành công!');
       }
     } catch (error) {
       console.error('Error updating profile:', error);
-      alert('Có lỗi xảy ra khi cập nhật!');
+      toast.error('Có lỗi xảy ra khi cập nhật!');
     }
   };
 
   const handleAddWeight = async () => {
     if (!newWeight || newWeight <= 0) {
-      alert('Vui lòng nhập cân nặng hợp lệ!');
+      toast.error('Vui lòng nhập cân nặng hợp lệ!');
       return;
     }
 
@@ -109,11 +241,11 @@ const Profile = () => {
         setShowWeightModal(false);
         fetchUserProfile();
         fetchWeightHistory();
-        alert('Đã cập nhật cân nặng!');
+        toast.success('Đã cập nhật cân nặng!');
       }
     } catch (error) {
       console.error('Error adding weight:', error);
-      alert('Có lỗi xảy ra!');
+      toast.error('Có lỗi xảy ra!');
     }
   };
 
@@ -179,7 +311,7 @@ const Profile = () => {
 
   // Get weight progress
   const getWeightProgress = () => {
-    if (weightHistory.length < 2) return [];
+    if (weightHistory.length === 0) return [];
     
     return weightHistory
       .slice(0, 10)
@@ -229,9 +361,66 @@ const Profile = () => {
                 </div>
                 <div className="profile-info">
                   <h2>{user.name}</h2>
-                  <p className="profile-age">{user.onboardingData?.age || 'N/A'} tuổi</p>
                 </div>
-              </div>  
+              </div>
+              
+              {/* User Info Grid - 2 columns */}
+              <div className="user-info-grid">
+                <div className="info-item">
+                  <span className="info-label">Tuổi:</span>
+                  <span className="info-value">{user.onboardingData?.age || 'N/A'} tuổi</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Giới tính:</span>
+                  <span className="info-value">{getGenderLabel(user.onboardingData?.gender)}</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Chiều cao:</span>
+                  <span className="info-value">{user.onboardingData?.height || 'N/A'} cm</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Cân nặng hiện tại:</span>
+                  <span className="info-value">{user.onboardingData?.weight || 'N/A'} kg</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Cân nặng mục tiêu:</span>
+                  <span className="info-value">{user.onboardingData?.targetWeight || 'N/A'} kg</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Thời gian mục tiêu:</span>
+                  <span className="info-value">{getTargetDurationLabel(user.onboardingData?.targetDuration)}</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Mục tiêu:</span>
+                  <span className="info-value">{getGoalLabel(user.onboardingData?.goal)}</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Mức độ hoạt động:</span>
+                  <span className="info-value">{getActivityLevelLabel(user.onboardingData?.activityLevel)}</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Chế độ ăn:</span>
+                  <span className="info-value">{getDietTypeLabel(user.onboardingData?.dietType || user.onboardingData?.dietTypeOther)}</span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Tình trạng sức khỏe:</span>
+                  <span className="info-value">
+                    {getHealthConditionsLabel(user.onboardingData?.healthConditions)}
+                    {user.onboardingData?.healthConditionsOther && `, ${user.onboardingData.healthConditionsOther}`}
+                  </span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Dị ứng:</span>
+                  <span className="info-value">
+                    {getAllergiesLabel(user.onboardingData?.allergies)}
+                    {user.onboardingData?.allergiesOther && `, ${user.onboardingData.allergiesOther}`}
+                  </span>
+                </div>
+                <div className="info-item">
+                  <span className="info-label">Món không thích:</span>
+                  <span className="info-value">{user.onboardingData?.dislikes || 'Không có'}</span>
+                </div>
+              </div>
 
               <button className="settings-btn" onClick={() => setIsEditing(true)}>
                 Chỉnh sửa
@@ -260,12 +449,56 @@ const Profile = () => {
               </div>
 
               <div className="form-group">
+                <label>Giới tính</label>
+                <div className="radio-group">
+                  {[
+                    { value: 'Male', label: 'Nam' },
+                    { value: 'Female', label: 'Nữ' },
+                    { value: 'Other', label: 'Khác' },
+                    { value: 'Prefer not to say', label: 'Không muốn tiết lộ' }
+                  ].map(option => (
+                    <label key={option.value} className="radio-label">
+                      <input
+                        type="radio"
+                        name="gender"
+                        value={option.value}
+                        checked={editedProfile.gender === option.value}
+                        onChange={(e) => setEditedProfile({...editedProfile, gender: e.target.value})}
+                      />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="form-group">
                 <label>Chiều cao (cm)</label>
                 <input 
                   type="number" 
                   value={editedProfile.height}
                   onChange={(e) => setEditedProfile({...editedProfile, height: e.target.value})}
                 />
+              </div>
+
+              <div className="form-group">
+                <label>Cân nặng hiện tại (kg)</label>
+                <input 
+                  type="number" 
+                  value={editedProfile.weight}
+                  onChange={(e) => setEditedProfile({...editedProfile, weight: e.target.value})}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Mục tiêu</label>
+                <select 
+                  value={editedProfile.goal}
+                  onChange={(e) => setEditedProfile({...editedProfile, goal: e.target.value})}
+                >
+                  <option value="Maintain">Duy trì</option>
+                  <option value="Lose">Giảm cân</option>
+                  <option value="Gain">Tăng cân</option>
+                </select>
               </div>
 
               <div className="form-group">
@@ -278,14 +511,15 @@ const Profile = () => {
               </div>
 
               <div className="form-group">
-                <label>Mục tiêu</label>
+                <label>Thời gian mục tiêu</label>
                 <select 
-                  value={editedProfile.goal}
-                  onChange={(e) => setEditedProfile({...editedProfile, goal: e.target.value})}
+                  value={editedProfile.targetDuration}
+                  onChange={(e) => setEditedProfile({...editedProfile, targetDuration: e.target.value})}
                 >
-                  <option value="lose">Giảm cân</option>
-                  <option value="maintain">Duy trì</option>
-                  <option value="gain">Tăng cân</option>
+                  <option value="">Chọn thời gian</option>
+                  <option value="1m">1 tháng</option>
+                  <option value="3m">3 tháng</option>
+                  <option value="6m">6 tháng</option>
                 </select>
               </div>
 
@@ -297,10 +531,111 @@ const Profile = () => {
                 >
                   <option value="sedentary">Ít vận động</option>
                   <option value="light">Nhẹ (1-3 ngày/tuần)</option>
-                  <option value="moderate">Trung bình (3-5 ngày/tuần)</option>
-                  <option value="active">Hoạt động (6-7 ngày/tuần)</option>
-                  <option value="very_active">Rất năng động</option>
+                  <option value="moderate">Vừa (3-5 buổi/tuần)</option>
+                  <option value="active">Nặng (6-7 buổi/tuần)</option>
+                  <option value="very_active">Vận động nhiều/lao động nặng</option>
                 </select>
+              </div>
+
+              <div className="form-group">
+                <label>Chế độ ăn</label>
+                <div className="radio-group">
+                  {[
+                    { value: 'vegan', label: 'Thuần chay (Vegan)' },
+                    { value: 'ovo', label: 'Chay có trứng (Ovo)' },
+                    { value: 'lacto', label: 'Chay có sữa (Lacto)' },
+                    { value: 'lacto-ovo', label: 'Chay có sữa + trứng (Lacto-ovo)' }
+                  ].map(option => (
+                    <label key={option.value} className="radio-label">
+                      <input
+                        type="radio"
+                        name="dietType"
+                        value={option.value}
+                        checked={editedProfile.dietType === option.value}
+                        onChange={(e) => setEditedProfile({...editedProfile, dietType: e.target.value})}
+                      />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  value={editedProfile.dietTypeOther}
+                  onChange={(e) => setEditedProfile({...editedProfile, dietTypeOther: e.target.value})}
+                  placeholder="Khác (ghi chi tiết)"
+                  className="mt-2"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Tình trạng sức khỏe (chọn nhiều nếu có)</label>
+                <div className="checkbox-group">
+                  {[
+                    { value: 'normal', label: 'Bình thường' },
+                    { value: 'stomach', label: 'Dạ dày/tiêu hóa nhạy cảm' },
+                    { value: 'diabetes', label: 'Tiểu đường/tiền tiểu đường' },
+                    { value: 'blood_pressure', label: 'Huyết áp' },
+                    { value: 'gout', label: 'Gout/axit uric' },
+                    { value: 'cholesterol', label: 'Mỡ máu' },
+                    { value: 'pregnancy', label: 'Thai kỳ/cho con bú' }
+                  ].map(option => (
+                    <label key={option.value} className="checkbox-label">
+                      <input
+                        type="checkbox"
+                        checked={editedProfile.healthConditions.includes(option.value)}
+                        onChange={() => toggleMultiSelect('healthConditions', option.value)}
+                      />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  value={editedProfile.healthConditionsOther}
+                  onChange={(e) => setEditedProfile({...editedProfile, healthConditionsOther: e.target.value})}
+                  placeholder="Khác (ghi chi tiết)"
+                  className="mt-2"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Dị ứng / Hạn chế (chọn nhiều nếu có)</label>
+                <div className="checkbox-group">
+                  {[
+                    { value: 'peanut', label: 'Đậu phộng' },
+                    { value: 'soy', label: 'Đậu nành' },
+                    { value: 'gluten', label: 'Gluten' },
+                    { value: 'dairy', label: 'Sữa' },
+                    { value: 'egg', label: 'Trứng' },
+                    { value: 'seafood', label: 'Hải sản' },
+                    { value: 'sesame', label: 'Mè (sesame)' },
+                    { value: 'tree_nuts', label: 'Tree nuts (hạt điều/hạnh nhân...)' }
+                  ].map(option => (
+                    <label key={option.value} className="checkbox-label">
+                      <input
+                        type="checkbox"
+                        checked={editedProfile.allergies.includes(option.value)}
+                        onChange={() => toggleMultiSelect('allergies', option.value)}
+                      />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  value={editedProfile.allergiesOther}
+                  onChange={(e) => setEditedProfile({...editedProfile, allergiesOther: e.target.value})}
+                  placeholder="Khác (ghi chi tiết)"
+                  className="mt-2"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Món không thích</label>
+                <textarea
+                  value={editedProfile.dislikes}
+                  onChange={(e) => setEditedProfile({...editedProfile, dislikes: e.target.value})}
+                />
               </div>
 
               <div className="edit-actions">
@@ -379,7 +714,7 @@ const Profile = () => {
             <div className="weight-chart">
               <div className="chart-area">
                 <svg className="chart-lines" width="100%" height="100%">
-                  {weightProgress.map((point, index) => {
+                  {weightProgress.length > 1 && weightProgress.map((point, index) => {
                     if (index === weightProgress.length - 1) return null;
                     const maxWeight = Math.max(...weightProgress.map(p => p.weight));
                     const minWeight = Math.min(...weightProgress.map(p => p.weight));
@@ -407,15 +742,18 @@ const Profile = () => {
                   const maxWeight = Math.max(...weightProgress.map(p => p.weight));
                   const minWeight = Math.min(...weightProgress.map(p => p.weight));
                   const range = maxWeight - minWeight || 1;
-                  const bottom = ((point.weight - minWeight) / range) * 80 + 10;
+                  const isSinglePoint = weightProgress.length === 1;
+                  const bottom = isSinglePoint ? 50 : ((point.weight - minWeight) / range) * 80 + 10;
+                  const left = isSinglePoint ? 0 : (index / (weightProgress.length - 1)) * 100;
                   
                   return (
                     <div 
                       key={index} 
                       className="chart-point"
                       style={{
-                        left: `${(index / (weightProgress.length - 1)) * 100}%`,
-                        bottom: `${bottom}%`
+                        left: `${left}%`,
+                        bottom: `${bottom}%`,
+                        transform: isSinglePoint ? 'translate(0, 50%)' : 'translate(-50%, 50%)'
                       }}
                     >
                       <div className="point-dot"></div>

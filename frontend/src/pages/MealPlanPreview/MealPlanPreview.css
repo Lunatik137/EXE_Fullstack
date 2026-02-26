@@ -117,24 +117,67 @@
   margin: 4px 0 0;
 }
 
+/* Week Navigation */
+.week-navigation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-radius: 12px;
+  border: 2px solid #10b981;
+}
+
+.week-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.week-navigation-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.week-nav-btn {
+  background: white;
+  border: 2px solid #10b981;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #059669;
+  transition: all 0.2s;
+}
+
+.week-nav-btn:hover:not(:disabled) {
+  background: #10b981;
+  color: white;
+  transform: scale(1.05);
+}
+
+.week-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 /* Days Preview */
 .days-preview {
   margin-bottom: 40px;
-}
-
-.days-preview > h2 {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1f2937;
-  margin: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .day-card {
   background: #f9fafb;
   border-radius: 16px;
   padding: 24px;
-  margin-bottom: 24px;
   border: 2px solid #e5e7eb;
+  width: 100%;
 }
 
 .day-header {
@@ -164,9 +207,28 @@
 }
 
 .meals-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: flex;
   gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.meals-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.meals-grid::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 3px;
+}
+
+.meals-grid::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+.meals-grid::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
 }
 
 .meal-item {
@@ -177,6 +239,8 @@
   display: flex;
   flex-direction: column;
   min-height: 160px;
+  min-width: 280px;
+  flex-shrink: 0;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -363,6 +427,12 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .meal-item {
+    min-width: 250px;
+  }
+}
+
 @media (max-width: 768px) {
   .meal-plan-preview-content {
     padding: 32px 24px;
@@ -376,8 +446,22 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .meals-grid {
-    grid-template-columns: 1fr;
+  .week-navigation-header {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .week-title h2 {
+    font-size: 20px !important;
+  }
+
+  .week-title p {
+    font-size: 14px !important;
+  }
+
+  .meal-item {
+    min-width: 240px;
   }
 
   .action-buttons {

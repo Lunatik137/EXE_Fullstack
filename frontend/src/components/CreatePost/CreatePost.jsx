@@ -9,7 +9,6 @@ const CreatePost = ({ onPostCreated }) => {
   const { url, token } = useContext(StoreContext);
   const [postType, setPostType] = useState('normal');
   const [content, setContent] = useState('');
-  const [hashtags, setHashtags] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
   
   // Recipe fields
@@ -108,10 +107,9 @@ const CreatePost = ({ onPostCreated }) => {
     }
 
     try {
-      const hashtagArray = hashtags
-        .split('#')
-        .filter(tag => tag.trim())
-        .map(tag => tag.trim());
+      // Extract hashtags from content (words starting with #)
+      const hashtagRegex = /#\w+/g;
+      const hashtagArray = (content.match(hashtagRegex) || []).map(tag => tag.substring(1));
 
       const postData = {
         type: postType,
@@ -131,7 +129,6 @@ const CreatePost = ({ onPostCreated }) => {
         toast.success('Đăng bài thành công!');
         // Reset form
         setContent('');
-        setHashtags('');
         setIsExpanded(false);
         setRecipeData({
           title: '',
@@ -341,18 +338,6 @@ const CreatePost = ({ onPostCreated }) => {
               </div>
             </div>
           )}
-
-          {/* Hashtags */}
-          <div className="form-group">
-            <label>Hashtags</label>
-            <input
-              type="text"
-              placeholder="#chay #healthy #nutrition (phân cách bằng #)"
-              value={hashtags}
-              onChange={(e) => setHashtags(e.target.value)}
-              className="hashtag-input"
-            />
-          </div>
 
           {/* Action Buttons */}
           <div className="create-post-actions">

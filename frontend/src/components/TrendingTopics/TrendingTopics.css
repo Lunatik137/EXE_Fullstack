@@ -7,6 +7,7 @@
   height: fit-content;
   position: sticky;
   top: 20px;
+  margin-left: auto;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 

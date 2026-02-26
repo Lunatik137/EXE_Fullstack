@@ -24,7 +24,7 @@ const Welcome = () => {
               <path d="M25 18L22 20L25 22L28 20L25 18Z" fill="white"/>
             </svg>
           </div>
-          <h1 className="app-title">Greenpath</h1>
+          <h1 className="app-title">GreenPath</h1>
           <p className="app-description">
             Chúng mình sẽ giúp bạn ăn chay bền vững,<br />
             dễ dàng và đầy cảm hứng.

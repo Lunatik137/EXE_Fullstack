@@ -26,7 +26,11 @@ const userSchema = new mongoose.Schema(
       allergiesOther: { type: String },
       dislikes: { type: String },
       activityLevel: { type: String },
-    }
+    // Plan/Subscription fields
+    planType: { type: String, enum: ['free', 'premium'], default: 'free' },
+    subscriptionStatus: { type: String, enum: ['active', 'expired', 'cancelled'], default: 'active' },
+    subscriptionStartDate: { type: Date },
+    subscriptionEndDate: { type: Date },
   },
   { minimize: false }
 );

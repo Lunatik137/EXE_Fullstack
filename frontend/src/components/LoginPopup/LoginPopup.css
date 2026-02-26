@@ -56,6 +56,12 @@
     gap: 16px;
 }
 
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+    display: block;
+}
+
 .login-popup-inputs input{
     outline: none;
     border: 1.5px solid #e5e7eb;
@@ -64,6 +70,50 @@
     font-size: 15px;
     transition: all 0.2s ease;
     background-color: #fafafa;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.password-input-wrapper input {
+    padding-right: 48px;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none !important;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: #1f2937 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 10;
+    pointer-events: all;
+    width: auto;
+    height: auto;
+}
+
+.password-toggle-btn:hover {
+    color: #000000 !important;
+    transform: translateY(-50%) !important;
+    box-shadow: none !important;
+    background: none !important;
+}
+
+.password-toggle-btn svg {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    width: 20px;
+    height: 20px;
 }
 
 .login-popup-inputs input:focus {
