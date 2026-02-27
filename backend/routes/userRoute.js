@@ -7,6 +7,7 @@ const userRouter = express.Router();
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
 userRouter.post("/onboarding", authMiddleware, saveOnboarding);
+userRouter.get("/profile", authMiddleware, getUserProfile);
 userRouter.post("/profile", authMiddleware, getUserProfile);
 userRouter.post("/update-profile", authMiddleware, updateProfile);
 

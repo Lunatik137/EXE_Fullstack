@@ -1,11 +1,13 @@
 import './TodayMenu.css';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import notificationService from '../../services/notificationService';
+import { useEffect, useContext } from 'react';
+import NotificationService from '../../services/notificationService';
+import { StoreContext } from '../../context/StoreContext';
 
 const TodayMenu = ({ mealPlan, todayMeal, loading }) => {
   const navigate = useNavigate();
+  const { url } = useContext(StoreContext);
 
   const handleRecipeClick = (recipeId) => {
     if (recipeId) {
@@ -18,36 +20,24 @@ const TodayMenu = ({ mealPlan, todayMeal, loading }) => {
     if (!todayMeal) return;
 
     const setupMealReminders = async () => {
-      // Request permission first
-      const hasPermission = await notificationService.requestPermission();
-      if (!hasPermission) return; // Skip reminders if permission denied
-      
-      // Subscribe to push notifications
-      await notificationService.subscribe();
+      try {
+        const notificationService = new NotificationService(url);
+        const initialized = await notificationService.init();
+        if (!initialized) return;
 
-      // Set reminders for each meal at 30 min before (simplified)
-      const mealTimes = [
-        { name: 'Bữa sáng', time: '07:00', offset: 7 * 60 },
-        { name: 'Bữa trưa', time: '12:00', offset: 12 * 60 },
-        { name: 'Bữa tối', time: '18:00', offset: 18 * 60 }
-      ];
-
-      const now = new Date();
-      const currentMinutes = now.getHours() * 60 + now.getMinutes();
-
-      mealTimes.forEach(meal => {
-        if (todayMeal[meal.name.toLowerCase().replace('ữa ', '')] && currentMinutes < meal.offset - 30) {
-          const timeUntilReminder = (meal.offset - 30 - currentMinutes) * 60 * 1000;
-          
-          setTimeout(() => {
-            notificationService.notifyMealSchedule(meal.name, meal.time);
-          }, timeUntilReminder);
+        // Request permission first
+        const hasPermission = await notificationService.requestPermission();
+        if (hasPermission) {
+          // Subscribe to push notifications
+          await notificationService.subscribe();
         }
-      });
+      } catch (error) {
+        console.error('Meal reminder setup error:', error);
+      }
     };
 
     setupMealReminders();
-  }, [todayMeal]);
+  }, [todayMeal, url]);
 
   if (loading) {
     return (

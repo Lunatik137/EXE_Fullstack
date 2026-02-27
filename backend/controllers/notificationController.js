@@ -1,182 +1,252 @@
-import notificationSubscriptionModel from "../models/notificationSubscriptionModel.js";
-import webpush from "web-push";
-import "dotenv/config";
+import webpush from 'web-push';
+import NotificationSubscription from '../models/notificationSubscriptionModel.js';
+import notificationModel from '../models/notificationModel.js';
 
-// Configure web-push with VAPID keys
-const vapidPublicKey = process.env.VAPID_PUBLIC_KEY;
-const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
-const vapidSubject = process.env.VAPID_SUBJECT || "mailto:example@example.com";
-
-if (vapidPublicKey && vapidPrivateKey) {
-  webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
+if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY && process.env.VAPID_SUBJECT) {
+  webpush.setVapidDetails(
+    process.env.VAPID_SUBJECT,
+    process.env.VAPID_PUBLIC_KEY,
+    process.env.VAPID_PRIVATE_KEY
+  );
 }
 
-// Subscribe to push notifications
 const subscribeUser = async (req, res) => {
   try {
-    const userId = req.body.userId;
-    const subscription = req.body.subscription;
+    console.log('📝 subscribeUser called');
+    const { subscription } = req.body;
+    const userId = req.body.userId.toString();
+    console.log('   userId:', userId, 'type:', typeof userId);
+    console.log('   endpoint:', subscription.endpoint.substring(0, 50) + '...');
 
-    if (!userId || !subscription || !subscription.endpoint) {
-      return res.json({
-        success: false,
-        message: "Invalid subscription data"
-      });
-    }
-
-    // Check if subscription already exists
-    let notificationSub = await notificationSubscriptionModel.findOne({
+    const existingSubscription = await NotificationSubscription.findOne({
       endpoint: subscription.endpoint
     });
 
-    if (!notificationSub) {
-      notificationSub = new notificationSubscriptionModel({
-        userId,
-        endpoint: subscription.endpoint,
-        keys: subscription.keys,
-        userAgent: req.headers["user-agent"]
-      });
-      await notificationSub.save();
+    if (existingSubscription) {
+      console.log('   ℹ️ Subscription already exists');
+      console.log('   Existing userId:', existingSubscription.userId, 'type:', typeof existingSubscription.userId);
+      // Update userId if different
+      if (existingSubscription.userId !== userId) {
+        console.log('   🔄 Updating userId');
+        existingSubscription.userId = userId;
+        await existingSubscription.save();
+      }
+      return res.json({ success: true, message: 'Already subscribed' });
     }
 
-    res.json({
-      success: true,
-      message: "Subscribed to notifications"
+    const newSub = await NotificationSubscription.create({
+      userId,
+      endpoint: subscription.endpoint,
+      keys: subscription.keys,
+      userAgent: req.headers['user-agent']
     });
+    console.log('   ✅ Subscription saved:', newSub._id);
+    console.log('   Saved userId:', newSub.userId, 'type:', typeof newSub.userId);
+
+    res.json({ success: true, message: 'Subscribed successfully' });
   } catch (error) {
-    console.error("Subscription error:", error);
-    res.json({
-      success: false,
-      message: "Error subscribing to notifications",
-      error: error.message
-    });
+    console.error('❌ Subscribe error:', error.message);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
-// Unsubscribe from push notifications
 const unsubscribeUser = async (req, res) => {
   try {
-    const subscription = req.body.subscription;
+    const { endpoint } = req.body;
+    const userId = req.body.userId;
 
-    if (!subscription || !subscription.endpoint) {
-      return res.json({
-        success: false,
-        message: "Invalid subscription data"
-      });
+    await NotificationSubscription.deleteOne({ userId, endpoint });
+
+    res.json({ success: true, message: 'Unsubscribed successfully' });
+  } catch (error) {
+    console.error('Unsubscribe error:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+const sendNotificationToUser = async (userId, payload) => {
+  try {
+    console.log('📤 sendNotificationToUser called');
+    const userIdStr = userId.toString();
+    console.log('   userId:', userIdStr);
+    console.log('   payload:', payload);
+    
+    const subscriptions = await NotificationSubscription.find({ userId: userIdStr });
+    console.log('   Found subscriptions:', subscriptions.length);
+    if (subscriptions.length > 0) {
+      console.log('   Subscription details:', subscriptions.map(s => ({ userId: s.userId, endpoint: s.endpoint.substring(0, 30) })));
     }
 
-    await notificationSubscriptionModel.deleteOne({
-      endpoint: subscription.endpoint
-    });
+    if (subscriptions.length === 0) {
+      console.log('   ⚠️ No subscriptions found for user');
+      return;
+    }
+
+    for (const sub of subscriptions) {
+      try {
+        console.log('   📨 Sending to endpoint:', sub.endpoint.substring(0, 50) + '...');
+        await webpush.sendNotification(
+          {
+            endpoint: sub.endpoint,
+            keys: sub.keys
+          },
+          JSON.stringify(payload)
+        );
+        console.log('   ✅ Notification sent');
+      } catch (error) {
+        console.log('   ❌ Send error:', error.statusCode, error.message);
+        if (error.statusCode === 410) {
+          // Subscription expired
+          console.log('   🗑️ Deleting expired subscription');
+          await NotificationSubscription.deleteOne({ _id: sub._id });
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Send notification error:', error);
+  }
+};
+
+const notifyNewComment = async (userId, commenterName, postPreview) => {
+  // Ensure userId is string for consistency
+  const userIdStr = userId.toString();
+  
+  const payload = {
+    title: 'Bình luận mới',
+    body: `${commenterName} đã bình luận: ${postPreview}`,
+    icon: '/icon-192x192.png',
+    badge: '/badge-72x72.png',
+    tag: 'comment-notification',
+    requireInteraction: false
+  };
+  
+  // Save to DB for in-app notifications
+  await notificationModel.create({
+    userId: userIdStr,
+    title: payload.title,
+    body: payload.body,
+    type: 'comment'
+  });
+  
+  // Send push notification
+  await sendNotificationToUser(userIdStr, payload);
+};
+
+const notifyNewLike = async (userId, likerName, postPreview) => {
+  // Ensure userId is string for consistency
+  const userIdStr = userId.toString();
+  
+  const payload = {
+    title: 'Lượt thích mới',
+    body: `${likerName} đã thích bài viết của bạn`,
+    icon: '/icon-192x192.png',
+    badge: '/badge-72x72.png',
+    tag: 'like-notification',
+    requireInteraction: false
+  };
+  
+  // Save to DB for in-app notifications
+  await notificationModel.create({
+    userId: userIdStr,
+    title: payload.title,
+    body: payload.body,
+    type: 'like'
+  });
+  
+  // Send push notification
+  await sendNotificationToUser(userIdStr, payload);
+};
+
+const notifyMealSchedule = async (userId, mealName, mealTime) => {
+  const payload = {
+    title: 'Nhắc nhở bữa ăn',
+    body: `Đã đến lúc ăn ${mealName} lúc ${mealTime}`,
+    icon: '/icon-192x192.png',
+    badge: '/badge-72x72.png',
+    tag: 'meal-reminder',
+    requireInteraction: true
+  };
+  
+  // Save to DB for in-app notifications
+  await notificationModel.create({
+    userId,
+    title: payload.title,
+    body: payload.body,
+    type: 'meal'
+  });
+  
+  // Send push notification
+  await sendNotificationToUser(userId, payload);
+};
+
+const getUserNotifications = async (req, res) => {
+  try {
+    console.log('📬 getUserNotifications called');
+    const userId = req.body.userId.toString();
+    console.log('   userId:', userId);
+    const limit = parseInt(req.query.limit) || 20;
+    const skip = parseInt(req.query.skip) || 0;
+
+    const notifications = await notificationModel
+      .find({ userId })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await notificationModel.countDocuments({ userId });
+    console.log('   Found notifications:', notifications.length);
 
     res.json({
       success: true,
-      message: "Unsubscribed from notifications"
+      notifications,
+      total,
+      unreadCount: await notificationModel.countDocuments({ userId, read: false })
     });
   } catch (error) {
-    console.error("Unsubscription error:", error);
-    res.json({
-      success: false,
-      message: "Error unsubscribing from notifications"
-    });
+    console.error('Get notifications error:', error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
-// Send notification to user
-const sendNotificationToUser = async (userId, notificationData) => {
+const markNotificationAsRead = async (req, res) => {
   try {
-    const subscriptions = await notificationSubscriptionModel.find({ userId });
+    const { notificationId } = req.params;
+    const userId = req.body.userId.toString();
 
-    if (subscriptions.length === 0) {
-      console.log("No subscriptions found for user:", userId);
-      return false;
+    const notification = await notificationModel.findById(notificationId);
+    
+    if (!notification || notification.userId !== userId) {
+      return res.json({ success: false, message: 'Notification not found' });
     }
 
-    const payload = JSON.stringify(notificationData);
+    notification.read = true;
+    await notification.save();
 
-    const results = await Promise.allSettled(
-      subscriptions.map(subscription =>
-        webpush.sendNotification(
-          {
-            endpoint: subscription.endpoint,
-            keys: subscription.keys
-          },
-          payload
-        )
-      )
-    );
-
-    // Remove failed subscriptions
-    for (let i = 0; i < results.length; i++) {
-      if (results[i].status === "rejected") {
-        console.log("Push failed for subscription:", subscriptions[i]._id);
-        await notificationSubscriptionModel.deleteOne({
-          _id: subscriptions[i]._id
-        });
-      }
-    }
-
-    return true;
+    res.json({ success: true, message: 'Notification marked as read' });
   } catch (error) {
-    console.error("Error sending notification:", error);
-    return false;
+    console.error('Mark as read error:', error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
-// Notify when someone comments on user's post
-const notifyNewComment = async (userId, userName, postId, postContent) => {
-  const notificationData = {
-    title: "💬 Bình luận mới",
-    body: `${userName} đã bình luận: ${postContent.substring(0, 50)}...`,
-    icon: "/logo.png",
-    badge: "/logo.png",
-    tag: "comment-notification",
-    data: {
-      type: "comment",
-      postId,
-      userName,
-      postContent
+const deleteNotification = async (req, res) => {
+  try {
+    const { notificationId } = req.params;
+    const userId = req.body.userId.toString();
+
+    const notification = await notificationModel.findById(notificationId);
+    
+    if (!notification || notification.userId !== userId) {
+      return res.json({ success: false, message: 'Notification not found' });
     }
-  };
 
-  return sendNotificationToUser(userId, notificationData);
-};
+    await notificationModel.deleteOne({ _id: notificationId });
 
-// Notify when someone likes user's post
-const notifyNewLike = async (userId, userName, postId, postContent) => {
-  const notificationData = {
-    title: "❤️ Có người thích bài viết",
-    body: `${userName} thích: ${postContent.substring(0, 50)}...`,
-    icon: "/logo.png",
-    badge: "/logo.png",
-    tag: "like-notification",
-    data: {
-      type: "like",
-      postId,
-      userName,
-      postContent
-    }
-  };
-
-  return sendNotificationToUser(userId, notificationData);
-};
-
-// Notify meal schedule
-const notifyMealSchedule = async (userId, mealName, mealTime) => {
-  const notificationData = {
-    title: "🍽️ Nhắc nhở bữa ăn",
-    body: `Đã đến lúc ${mealName} lúc ${mealTime}`,
-    icon: "/logo.png",
-    badge: "/logo.png",
-    tag: "meal-notification",
-    data: {
-      type: "meal",
-      mealName,
-      mealTime
-    }
-  };
-
-  return sendNotificationToUser(userId, notificationData);
+    res.json({ success: true, message: 'Notification deleted' });
+  } catch (error) {
+    console.error('Delete notification error:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
 
 export {
@@ -185,5 +255,8 @@ export {
   sendNotificationToUser,
   notifyNewComment,
   notifyNewLike,
-  notifyMealSchedule
+  notifyMealSchedule,
+  getUserNotifications,
+  markNotificationAsRead,
+  deleteNotification
 };

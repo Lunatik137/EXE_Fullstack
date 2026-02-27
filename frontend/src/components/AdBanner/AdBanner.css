@@ -1,0 +1,54 @@
+.ad-banner {
+  margin: 16px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-in-out;
+  width: 100%;
+  max-width: 320px;
+  height: 100px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ad-banner a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+.ad-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.ad-banner:hover img {
+  transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+  .ad-banner {
+    max-width: 728px;
+    height: 90px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ad-banner {
+    max-width: 970px;
+    height: 90px;
+  }
+}

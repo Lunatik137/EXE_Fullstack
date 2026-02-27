@@ -19,7 +19,7 @@ const Payment = () => {
 
       // Save premium status to backend
       const response = await axios.post(
-        `${url}/api/users/confirm-premium`,
+        `${url}/api/user/confirm-premium`,
         { planType: 'premium' },
         { headers: { token } }
       );

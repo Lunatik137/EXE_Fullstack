@@ -93,8 +93,22 @@ const PostCard = ({
     }
   }, [post.commentsData]);
 
+  const ensurePushSubscription = async () => {
+    try {
+      const hasPermission = await notificationService.requestPermission();
+      if (hasPermission) {
+        await notificationService.subscribe(token);
+      }
+    } catch (error) {
+      console.error('Push subscription error:', error);
+    }
+  };
+
   const handleLike = async () => {
     if (isLiking) return;
+
+    // Ensure push subscription before action
+    await ensurePushSubscription();
 
     // Optimistic update
     const wasLiked = isLiked;
@@ -104,16 +118,6 @@ const PostCard = ({
     setIsLiking(true);
     try {
       await onLikePost(post.id);
-      
-      // Send notification if user just liked (not unliked)
-      if (!wasLiked) {
-        // Request permission just before sending notification
-        const hasPermission = await notificationService.requestPermission();
-        if (hasPermission) {
-          await notificationService.subscribe();
-          notificationService.notifyNewLike('User', post.content.substring(0, 50));
-        }
-      }
     } catch (error) {
       // Revert on error
       setIsLiked(wasLiked);
@@ -125,19 +129,15 @@ const PostCard = ({
   const handleCommentSubmit = async () => {
     if (isCommenting || !commentText.trim()) return;
 
+    // Ensure push subscription before action
+    await ensurePushSubscription();
+
     setIsCommenting(true);
     const success = await onCommentPost(post.id, commentText);
     if (success) {
       setCommentText("");
       // Refresh comments after posting
       fetchComments();
-      
-      // Send notification for new comment
-      const hasPermission = await notificationService.requestPermission();
-      if (hasPermission) {
-        await notificationService.subscribe();
-        notificationService.notifyNewComment('User', post.content.substring(0, 50));
-      }
     }
     setIsCommenting(false);
   };

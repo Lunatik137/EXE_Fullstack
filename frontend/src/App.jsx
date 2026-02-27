@@ -6,6 +6,7 @@ import RecipeLibrary from "./pages/RecipeLibrary/RecipeLibrary";
 import Profile from "./pages/Profile/Profile";
 import Community from "./pages/Community/Community";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
+import NotificationSetup from "./components/NotificationSetup/NotificationSetup";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "./components/Sidebar/Sidebar";
@@ -17,11 +18,13 @@ import Payment from "./pages/Payment/Payment";
 import PlanSelection from "./pages/PlanSelection/PlanSelection";
 import MealPlanPreview from "./pages/MealPlanPreview/MealPlanPreview";
 import { StoreContext } from "./context/StoreContext";
-import notificationService from "./services/notificationService";
+import { NotificationContext } from "./context/NotificationContext";
+import NotificationService from "./services/notificationService";
 import "./App.css";
 
 const App = () => {
   const { showLogin, setShowLogin, token, hasCompletedOnboarding } = useContext(StoreContext);
+  const { addNotification } = useContext(NotificationContext);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,7 +35,8 @@ const App = () => {
   useEffect(() => {
     const initNotifications = async () => {
       try {
-        await notificationService.init();
+        await NotificationService.init();
+        NotificationService.setNotificationCallback(addNotification);
         // Just initialize service worker, don't request permission or subscribe yet
         // Permission will be requested only when user performs an action that uses notifications
       } catch (error) {
@@ -41,8 +45,10 @@ const App = () => {
       }
     };
 
-    initNotifications();
-  }, []);
+    if (token) {
+      initNotifications();
+    }
+  }, [token, addNotification]);
 
 
 
@@ -177,6 +183,7 @@ const App = () => {
         <Sidebar isCollapsed={sidebarCollapsed} setIsCollapsed={setSidebarCollapsed} />
         <div className={`dashboard-main ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
           <Header />
+          <NotificationSetup />
           <div className="dashboard-content">
             <Routes>
               <Route path="/home" element={<Home />} />

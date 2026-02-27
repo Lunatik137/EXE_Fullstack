@@ -57,9 +57,9 @@ class GeminiService {
           `🚀 Calling Gemini | Model: ${modelName} | Key index: ${GeminiKeyManager.getCurrentIndex()}`
         );
 
-        // Wrap the call with a timeout (60 seconds)
+        // Wrap the call with a timeout (180 seconds / 3 minutes)
         const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error("Gemini API timeout after 60 seconds")), 60000)
+          setTimeout(() => reject(new Error("Gemini API timeout after 180 seconds")), 180000)
         );
 
         const result = await Promise.race([

@@ -1,65 +1,52 @@
-// Service Worker for handling push notifications
+console.log('🔧 Service Worker loaded');
 
-// Handle push notifications
 self.addEventListener('push', (event) => {
-  if (!event.data) {
-    console.log('Push notification received but no data');
-    return;
-  }
-
-  try {
-    const data = event.data.json();
-    const options = {
-      body: data.body || 'You have a new notification',
-      icon: '/food-icon.png',
-      badge: '/food-badge.png',
+  console.log('📨 Push event received:', event);
+  const data = event.data ? event.data.json() : {};
+  console.log('   Data:', data);
+  
+  event.waitUntil(
+    self.registration.showNotification(data.title || 'Thông báo', {
+      body: data.body || 'Bạn có thông báo mới',
+      icon: data.icon || '/icon-192x192.png',
+      badge: data.badge || '/badge-72x72.png',
       tag: data.tag || 'notification',
-      requireInteraction: true,
-      data: data.data || {}
-    };
-
-    event.waitUntil(
-      self.registration.showNotification(data.title || 'Food Delivery', options)
-    );
-  } catch (error) {
-    console.error('Error handling push notification:', error);
-  }
+      requireInteraction: data.requireInteraction || false,
+      data: {
+        url: data.url || '/'
+      }
+    }).then(() => {
+      console.log('   ✅ Notification shown');
+    }).catch(err => {
+      console.error('   ❌ Error showing notification:', err);
+    })
+  );
 });
 
-// Handle notification clicks
 self.addEventListener('notificationclick', (event) => {
+  console.log('🖱️ Notification clicked:', event.notification.tag);
   event.notification.close();
-
-  const notificationData = event.notification.data || {};
-  let urlToOpen = '/';
-
-  // Route to different pages based on notification type
-  if (notificationData.type === 'comment' || notificationData.type === 'like') {
-    // Route to community page with post ID
-    urlToOpen = `/community?post=${notificationData.postId || ''}`;
-  } else if (notificationData.type === 'meal') {
-    // Route to home page for meal reminders
-    urlToOpen = '/home';
-  }
-
+  
   event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-      // Check if there's already a window/tab open
-      for (let i = 0; i < clientList.length; i++) {
-        const client = clientList[i];
-        if (client.url === urlToOpen && 'focus' in client) {
+    clients.matchAll({ type: 'window' }).then((clientList) => {
+      for (let client of clientList) {
+        if (client.url === '/' && 'focus' in client) {
           return client.focus();
         }
       }
-      // If not, open a new window/tab
       if (clients.openWindow) {
-        return clients.openWindow(urlToOpen);
+        return clients.openWindow(event.notification.data.url);
       }
     })
   );
 });
 
-// Handle notification close
-self.addEventListener('notificationclose', (event) => {
-  console.log('Notification closed:', event.notification.tag);
+self.addEventListener('install', (event) => {
+  console.log('📦 Service Worker installing');
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  console.log('✅ Service Worker activated');
+  event.waitUntil(clients.claim());
 });

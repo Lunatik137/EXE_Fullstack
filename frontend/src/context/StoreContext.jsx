@@ -12,6 +12,7 @@ const StoreContextProvider = (props) => {
   const [food_list, setFoodList] = useState([]);
   const [showLogin, setShowLogin] = useState({ show: false, mode: 'login' });
   const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(true);
+  const [userData, setUserData] = useState(null);
 
   const addToCart = async (itemId) => {
     if (!cartItems[itemId]) {
@@ -78,12 +79,29 @@ const StoreContextProvider = (props) => {
     setCartItems(response.data.cartData);
   };
 
+  const loadUserData = async (token) => {
+    try {
+      const response = await axios.post(
+        url + "/api/user/profile",
+        {},
+        { headers: { token } }
+      );
+      if (response.data.success) {
+        setUserData(response.data.user);
+      }
+    } catch (error) {
+      console.error("Error loading user data:", error);
+    }
+  };
+
   useEffect(() => {
     async function loadData() {
       await fetchFoodList();
       if (localStorage.getItem("token")) {
-        setToken(localStorage.getItem("token"));
-        await loadCartData(localStorage.getItem("token"));
+        const token = localStorage.getItem("token");
+        setToken(token);
+        await loadCartData(token);
+        await loadUserData(token);
         // Load onboarding status from localStorage
         const onboardingStatus = localStorage.getItem("hasCompletedOnboarding");
         setHasCompletedOnboarding(onboardingStatus === "true");
@@ -106,6 +124,8 @@ const StoreContextProvider = (props) => {
     setShowLogin,
     hasCompletedOnboarding,
     setHasCompletedOnboarding,
+    userData,
+    setUserData,
   };
   return (
     <StoreContext.Provider value={contextValue}>

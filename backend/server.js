@@ -8,6 +8,7 @@ import recipeRouter from "./routes/recipeRoute.js";
 import weightRouter from "./routes/weightRoute.js";
 import postRouter from "./routes/postRoute.js";
 import notificationRouter from "./routes/notificationRoute.js";
+import { startMealReminderCron } from "./jobs/mealReminderCron.js";
 import "dotenv/config";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
@@ -22,6 +23,9 @@ app.use(cors());
 
 // DB connection
 connectDB();
+
+// Start meal reminder cron job
+startMealReminderCron();
 
 // api endpoints
 app.use("/api/food", foodRouter);

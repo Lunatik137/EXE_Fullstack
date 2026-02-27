@@ -4,6 +4,7 @@ import DatePicker from '../../components/DatePicker/DatePicker'
 import TodayMenu from '../../components/TodayMenu/TodayMenu'
 import NutritionStats from '../../components/NutritionStats/NutritionStats'
 import ProgressTracker from '../../components/ProgressTracker/ProgressTracker'
+import AdPopup from '../../components/AdPopup/AdPopup'
 import { StoreContext } from '../../context/StoreContext'
 import axios from 'axios'
 
@@ -54,6 +55,7 @@ const Home = () => {
 
   return (
     <div className="home-page">
+      <AdPopup />
       <div className="home-content">
         <div className="left-column">
           <DatePicker 

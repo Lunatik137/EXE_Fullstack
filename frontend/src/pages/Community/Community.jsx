@@ -24,7 +24,7 @@ const transformPostData = (apiPost) => {
   return {
     id: apiPost._id,
     author: apiPost.userId?.name || 'Người dùng ẩn danh',
-    avatar: apiPost.userId?.avatar || 'https://via.placeholder.com/50',
+    avatar: apiPost.userId?.avatar || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"%3E%3Crect fill="%23ddd" width="50" height="50"/%3E%3Ctext x="50%" y="50%" font-size="24" fill="%23999" text-anchor="middle" dy=".3em" font-family="Arial"%3EU%3C/text%3E%3C/svg%3E',
     time: formatTimeAgo(apiPost.createdAt),
     content: apiPost.content,
     image: apiPost.media?.[0] || null,

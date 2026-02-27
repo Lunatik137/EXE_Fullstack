@@ -36,7 +36,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
     const fetchUserPlan = async () => {
       try {
         const response = await axios.get(
-          `${url}/api/users/current-plan`,
+          `${url}/api/user/current-plan`,
           { headers: { token } }
         );
         if (response.data.success) {

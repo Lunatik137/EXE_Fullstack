@@ -241,13 +241,16 @@ const likePost = async (req, res) => {
 
     // Send notification to post creator if liked
     if (wasLiked && userId !== post.userId.toString()) {
+      console.log('🔔 Sending like notification');
+      console.log('   Post creator:', post.userId.toString());
+      console.log('   Liker:', userId);
       const likeUser = await userModel.findById(userId);
       const likeUserName = likeUser?.name || "Someone";
+      console.log('   Liker name:', likeUserName);
       await notifyNewLike(
-        post.userId,
+        post.userId.toString(),
         likeUserName,
-        post._id,
-        post.content
+        post.content.substring(0, 50)
       );
     }
 
@@ -290,13 +293,16 @@ const addComment = async (req, res) => {
 
     // Send notification to post creator if commenter is not the post creator
     if (userId !== post.userId.toString()) {
+      console.log('🔔 Sending comment notification');
+      console.log('   Post creator:', post.userId.toString());
+      console.log('   Commenter:', userId);
       const commentUser = await userModel.findById(userId);
       const commentUserName = commentUser?.name || "Someone";
+      console.log('   Commenter name:', commentUserName);
       await notifyNewComment(
-        post.userId,
+        post.userId.toString(),
         commentUserName,
-        post._id,
-        post.content
+        post.content.substring(0, 50)
       );
     }
 
