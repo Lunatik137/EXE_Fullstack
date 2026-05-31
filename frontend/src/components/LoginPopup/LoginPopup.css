@@ -1,0 +1,254 @@
+.login-popup{
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: grid;
+    top: 0;
+    left: 0;
+}
+
+.login-popup-container{
+    place-self: center;
+    width: max(23vw, 400px);
+    color: #4b5563;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px 40px;
+    border-radius: 16px;
+    font-size: 15px;
+    animation: fadeIn 0.3s;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.login-popup-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.login-popup-title h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #047857;
+    margin: 0;
+}
+
+.login-popup-title img{
+    width: 24px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.login-popup-title img:hover {
+    opacity: 1;
+}
+
+.login-popup-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+    display: block;
+}
+
+.login-popup-inputs input{
+    outline: none;
+    border: 1.5px solid #e5e7eb;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.2s ease;
+    background-color: #fafafa;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.password-input-wrapper input {
+    padding-right: 48px;
+}
+
+/* Hide Edge/IE default password reveal/clear controls to avoid double icons */
+.password-input-wrapper input[type="password"]::-ms-reveal,
+.password-input-wrapper input[type="password"]::-ms-clear {
+    display: none;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none !important;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: #1f2937 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 10;
+    pointer-events: all;
+    width: auto;
+    height: auto;
+}
+
+.password-toggle-btn:hover {
+    color: #000000 !important;
+    transform: translateY(-50%) !important;
+    box-shadow: none !important;
+    background: none !important;
+}
+
+.password-toggle-btn svg {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    width: 20px;
+    height: 20px;
+}
+
+.login-popup-inputs input:focus {
+    border-color: #10b981;
+    background-color: white;
+}
+
+.login-popup-container button{
+    border: none;
+    padding: 14px 24px;
+    border-radius: 10px;
+    color: white;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 8px;
+}
+
+.login-popup-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
+
+.switch-text {
+    text-align: center;
+    color: #6b7280;
+    margin: 0;
+}
+
+.switch-text span{
+    color: #10b981;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.login-error-msg {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    animation: fadeIn 0.2s ease;
+}
+
+.login-error-msg svg {
+    flex-shrink: 0;
+    stroke: #dc2626;
+}
+
+.switch-text span:hover {
+    color: #059669;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 640px) {
+    .login-popup {
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+    }
+
+    .login-popup-container {
+        width: 100%;
+        max-width: 380px;
+        padding: 28px 24px 24px;
+        gap: 18px;
+        border-radius: 20px;
+        animation: slideFadeIn 0.3s ease;
+    }
+
+    .login-popup-title h2 {
+        font-size: 26px;
+    }
+
+    .login-popup-title img {
+        width: 22px;
+    }
+
+    .login-popup-inputs {
+        gap: 14px;
+    }
+
+    .login-popup-inputs input {
+        padding: 13px 14px;
+        font-size: 15px;
+        border-radius: 12px;
+    }
+
+    .password-input-wrapper input {
+        padding-right: 46px;
+    }
+
+    .login-popup-container button[type="submit"] {
+        padding: 14px;
+        font-size: 16px;
+        border-radius: 12px;
+        margin-top: 4px;
+    }
+
+    .switch-text {
+        font-size: 14px;
+    }
+}
+
+@keyframes slideFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

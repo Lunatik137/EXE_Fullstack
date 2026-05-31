@@ -1,0 +1,39 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "server": "nodemon server.js",
+    "server:debug": "nodemon --inspect server.js",
+    "seed": "node scripts/seedRecipes.js",
+    "seed:referrals": "node scripts/seedReferralCodes.js",
+    "recipes:set-free": "node scripts/setFreeRecipes.js",
+    "training:audit": "node scripts/auditTrainingMealPlans.js",
+    "training:migrate-status": "node scripts/auditTrainingMealPlans.js --apply=true",
+    "train:mealplans": "node training/mealPlanTrainingRunner.js",
+    "train:mealplans:exe-dev": "node training/runExeDevTrainingPreset.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^1.42.0",
+    "@google/generative-ai": "^0.24.1",
+    "@payos/node": "^2.0.5",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.5.2",
+    "multer": "^1.4.5-lts.1",
+    "ngrok": "^5.0.0-beta.2",
+    "nodemailer": "^8.0.3",
+    "nodemon": "^3.1.4",
+    "stripe": "^16.6.0",
+    "validator": "^13.12.0",
+    "web-push": "^3.6.7"
+  }
+}

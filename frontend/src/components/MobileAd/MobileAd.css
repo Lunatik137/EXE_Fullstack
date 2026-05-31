@@ -1,0 +1,212 @@
+.mobile-ad-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 2000;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  /* Only meant for mobile — hidden on desktop */
+}
+
+@media (min-width: 769px) {
+  .mobile-ad-overlay {
+    display: none;
+  }
+}
+
+.mobile-ad-card {
+  width: 100%;
+  max-width: 480px;
+  background: linear-gradient(165deg, #0f2027 0%, #1a3a3a 55%, #132b24 100%);
+  border-radius: 0;
+  padding: 0 0 28px;
+  position: relative;
+  min-height: 100vh;
+  animation: slideUpAd 0.35s cubic-bezier(0.34, 1.1, 0.64, 1);
+}
+
+@keyframes slideUpAd {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Skip / countdown row ── */
+.mobile-ad-skip-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 16px 0;
+  min-height: 38px;
+}
+
+.mobile-ad-countdown {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  line-height: 1;
+}
+
+.mobile-ad-skip-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mobile-ad-skip-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* ── Ad label ── */
+.mobile-ad-label {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* ── Body ── */
+.mobile-ad-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 22px;
+  min-height: calc(100vh - 46px);
+}
+
+.mobile-ad-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 22px rgba(16, 185, 129, 0.45);
+}
+
+.mobile-ad-icon svg {
+  display: block;
+  width: 36px;
+  height: 36px;
+  transform: translate(1px, 1px);
+}
+
+.mobile-ad-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.mobile-ad-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  text-align: center;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+/* ── Perks list ── */
+.mobile-ad-perks {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-ad-perks li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ad-check {
+  color: #34d399;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── Price ── */
+.mobile-ad-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.mobile-ad-price {
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.mobile-ad-period {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ── CTA ── */
+.mobile-ad-cta {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+  margin-bottom: 10px;
+}
+
+.mobile-ad-cta:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ── Dismiss text ── */
+.mobile-ad-dismiss-text {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.mobile-ad-dismiss-text:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 768px) {
+  .mobile-ad-card {
+    max-width: none;
+  }
+}

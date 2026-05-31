@@ -1,0 +1,827 @@
+.today-menu {
+  margin-bottom: 0;
+  display: flex;
+  flex: 1;
+}
+
+.menu-card {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.25);
+  position: relative;
+  overflow: visible;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.menu-card::after {
+  content: '🥗';
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  font-size: 120px;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.menu-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.menu-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 6px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.day-badge {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.streak-summary-card {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+}
+
+.streak-summary-main {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.streak-summary-label {
+  margin: 0 0 4px 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.streak-summary-value {
+  margin: 0;
+  font-size: 22px;
+  color: #ffffff;
+}
+
+.streak-summary-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.streak-summary-note {
+  margin: 12px 0 0 0;
+  font-size: 12px;
+  color: #fef3c7;
+}
+
+.meals-container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1350px) {
+  .meals-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.meal-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 20px;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 12px;
+  min-height: 160px;
+}
+
+.meal-card:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.meal-confirmation-panel {
+  margin-top: auto;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meal-confirmation-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meal-confirmation-window,
+.meal-confirmed-tag,
+.meal-confirmation-hint {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.meal-confirmation-window {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.meal-confirmed-tag {
+  color: #d1fae5;
+  font-weight: 700;
+}
+
+.meal-confirmation-button {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #ffffff;
+  color: #047857;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+  touch-action: manipulation;
+}
+
+@media (hover: hover) {
+  .meal-confirmation-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.meal-confirmation-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.meal-confirmation-button.confirmed {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.meal-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.breakfast-label {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.lunch-label {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.dinner-label {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.meal-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.meal-card-title.clickable {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.meal-card-title.clickable:hover {
+  color: #fbbf24;
+  text-decoration: underline;
+}
+
+.combo-meals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.combo-meal-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.combo-meal-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.combo-meal-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.combo-meal-item .meal-bullet {
+  color: #fbbf24;
+  font-size: 16px;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.combo-meal-item .meal-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.combo-meal-item:hover .meal-text {
+  color: #fbbf24;
+  text-decoration: underline;
+}
+
+.item-nutrition-text {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 3px;
+  font-style: italic;
+}
+
+.meal-stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #059669;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.stat-icon {
+  font-size: 14px;
+}
+
+.loading-skeleton,
+.no-plan,
+.no-meal {
+  padding: 60px 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+.no-plan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 60px 30px;
+}
+
+.no-plan .title {
+  font-weight: 700;
+  color: white;
+  margin: 0 0 0.5rem 0;
+  font-size: 18px;
+}
+
+.no-plan .description {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  max-width: 300px;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.btn-create-plan {
+  background-color: white;
+  color: #10b981;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  margin-top: 0.5rem;
+}
+
+.btn-create-plan:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.no-plan p:first-child {
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.loading-skeleton p {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+}
+
+.todaymenu-premium-mobile-action {
+  display: none;
+}
+
+/* Meal Selection Card Styles */
+.meal-card-header-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.meal-selection-count {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.selected-meals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.manual-combo-meals-list {
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.manual-combo-meal-wrapper {
+  gap: 4px;
+}
+
+.manual-combo-meal-item {
+  align-items: center;
+  gap: 8px;
+  padding: 2px 2px;
+  border-radius: 8px;
+}
+
+.manual-combo-meal-item .meal-bullet {
+  margin-top: 0;
+}
+
+.manual-meal-text {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.btn-remove-inline {
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.btn-remove-inline:hover {
+  background: rgba(255, 76, 76, 0.6);
+  transform: scale(1.08);
+}
+
+.manual-day-confirm-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #ffffff;
+  color: #047857;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.manual-day-confirm-btn-standalone {
+  display: block;
+  margin: auto 0 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.manual-day-confirm-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.14);
+}
+
+.manual-day-confirm-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
+.manual-day-confirm-btn.saved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.selected-meal-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.2s ease;
+}
+
+.selected-meal-item:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.meal-item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.meal-item-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  word-break: break-word;
+}
+
+.meal-item-name:hover {
+  opacity: 0.85;
+}
+
+.meal-item-nutrition {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-remove-meal {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-remove-meal:hover {
+  background: rgba(255, 76, 76, 0.6);
+  transform: scale(1.1);
+}
+
+.no-meal-selected {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 8px 0;
+  font-style: italic;
+}
+
+.btn-add-meal {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.btn-add-meal:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-add-meal:active {
+  transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .today-menu {
+    justify-content: center;
+  }
+
+  .menu-card {
+    width: 94%;
+    margin: 0 auto;
+    padding: 24px 20px;
+  }
+
+  .menu-title {
+    font-size: 20px;
+  }
+
+  .meals-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .streak-summary-main {
+    grid-template-columns: 1fr;
+  }
+
+  .streak-summary-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .meal-card {
+    min-height: 140px;
+  }
+
+  .day-badge {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+
+  .todaymenu-premium-mobile-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .todaymenu-premium-mobile-action .btn-create-plan {
+    width: 100%;
+    max-width: 320px;
+    margin-top: 0;
+  }
+
+  .manual-day-confirm-btn-standalone {
+    margin: auto 0 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-card {
+    width: 92%;
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .menu-card::after {
+    font-size: 80px;
+    bottom: 10px;
+    right: 15px;
+  }
+
+  .menu-title {
+    font-size: 18px;
+  }
+
+  .menu-subtitle {
+    font-size: 12px;
+  }
+
+  .meal-card {
+    padding: 16px;
+    min-height: 130px;
+  }
+
+  .meal-label {
+    font-size: 9px;
+  }
+
+  .meal-card-title {
+    font-size: 15px;
+  }
+
+  .combo-meal-item .meal-text {
+    font-size: 13px;
+  }
+
+  .item-nutrition-text {
+    font-size: 9px;
+  }
+
+  .stat-item {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+}
+
+/* ========== Free User Mode ========== */
+
+.free-no-pick {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+  font-style: italic;
+  margin: 0;
+  flex: 1;
+}
+
+.free-pick-section {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.free-recipe-select {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.free-recipe-select:focus {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.free-recipe-select option {
+  background: #047857;
+  color: white;
+}
+
+.free-upsell-banner {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+  margin-top: 4px;
+}
+
+.free-upsell-banner p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.future-manual-note {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+  padding: 14px 18px;
+  position: relative;
+  z-index: 1;
+  margin-top: 4px;
+}
+
+.future-manual-note p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.btn-upgrade-premium {
+  background: white;
+  color: #047857;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.btn-upgrade-premium:hover {
+  background: #f0fdf4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 480px) {
+  .free-upsell-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .btn-upgrade-premium {
+    width: 100%;
+  }
+}

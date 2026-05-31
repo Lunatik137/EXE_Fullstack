@@ -1,0 +1,2911 @@
+/* =========================================================
+   DARK MODE OVERRIDES
+   Applied via html.dark class — excludes landing & legal pages
+   ========================================================= */
+
+/* ---------- Base ---------- */
+html.dark body {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+/* ---------- App layout ---------- */
+html.dark .app {
+  background-color: #0f172a;
+}
+
+html.dark .dashboard-main {
+  background-color: #0f172a;
+}
+
+html.dark .dashboard-main.sidebar-collapsed {
+  background-color: #0f172a;
+}
+
+html.dark .dashboard-content {
+  background-color: #0f172a;
+}
+
+/* ---------- Sidebar ---------- */
+html.dark .sidebar {
+  background-color: #1e293b;
+  border-right-color: #334155;
+}
+
+html.dark .nav-item {
+  color: #94a3b8;
+}
+
+html.dark .nav-item:hover {
+  background-color: #293548;
+  color: #e2e8f0;
+}
+
+html.dark .nav-item.active {
+  background-color: #064e3b;
+  color: #34d399;
+}
+
+html.dark .toggle-sidebar-btn,
+html.dark .expand-sidebar-btn {
+  color: #475569;
+}
+
+html.dark .toggle-sidebar-btn:hover,
+html.dark .expand-sidebar-btn:hover {
+  color: #34d399;
+}
+
+/* Profile dropdown in sidebar */
+html.dark .profile-dropdown {
+  background-color: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .profile-dropdown-item {
+  color: #94a3b8;
+}
+
+html.dark .profile-dropdown-item:hover {
+  background-color: #293548;
+  color: #e2e8f0;
+}
+
+/* Premium modal in sidebar */
+html.dark .premium-modal-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+html.dark .premium-modal-content {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+
+html.dark .modal-discount-info {
+  color: #fbbf24;
+}
+
+/* ---------- Header ---------- */
+html.dark .header {
+  background-color: #1e293b;
+  border-bottom: 1px solid #334155;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+
+html.dark .mobile-search-filter-tab {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .mobile-search-filter-tab:hover {
+  background: #334155;
+}
+
+html.dark .mobile-search-filter-tab.active {
+  background: #059669;
+  border-color: #059669;
+  color: #ffffff;
+}
+
+html.dark .search-container {
+  background-color: #293548;
+  border: 1px solid #334155;
+}
+
+html.dark .search-input {
+  color: #e2e8f0;
+  background: transparent;
+}
+
+html.dark .search-input::placeholder {
+  color: #64748b;
+}
+
+html.dark .search-icon,
+html.dark .search-icon-btn {
+  color: #64748b;
+}
+
+html.dark .search-icon-btn:hover {
+  color: #94a3b8;
+}
+
+html.dark .notification-trigger {
+  color: #94a3b8;
+}
+
+html.dark .notification-trigger:hover {
+  color: #e2e8f0;
+}
+
+html.dark .notification-badge {
+  border-color: #1e293b;
+}
+
+/* Mobile streak icon button */
+html.dark .header-streak-trigger {
+  background: radial-gradient(circle at 30% 20%, #1f3b32 0%, #152b24 72%);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(74, 222, 128, 0.24);
+}
+
+html.dark .header-streak-trigger-icon {
+  filter: brightness(1.16) saturate(1.1);
+}
+
+html.dark .notification-dropdown {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .notification-dropdown-header {
+  border-bottom-color: #334155;
+}
+
+html.dark .notification-dropdown-header h4 {
+  color: #f1f5f9;
+}
+
+html.dark .notification-item {
+  background: #1e293b;
+  border-bottom-color: #334155;
+  color: #cbd5e1;
+}
+
+html.dark .notification-item:hover {
+  background: #293548;
+}
+
+html.dark .notification-item.read {
+  background: #1a2538;
+}
+
+html.dark .notification-title {
+  color: #e2e8f0;
+}
+
+html.dark .notification-body {
+  color: #94a3b8;
+}
+
+html.dark .notification-time {
+  color: #64748b;
+}
+
+html.dark .notification-empty {
+  color: #64748b;
+}
+
+html.dark .notification-view-more {
+  background: #293548;
+  color: #94a3b8;
+}
+
+html.dark .notification-view-more:hover {
+  background: #334155;
+}
+
+html.dark .search-results-dropdown {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .search-section-label {
+  background: #0f172a;
+  color: #64748b;
+  border-bottom-color: #334155;
+}
+
+html.dark .search-result-item {
+  color: #cbd5e1;
+  border-bottom-color: #1e293b;
+}
+
+html.dark .search-result-item:hover {
+  background: #293548;
+}
+
+html.dark .result-post-icon {
+  background: #293548;
+}
+
+html.dark .result-name {
+  color: #e2e8f0;
+}
+
+html.dark .result-description {
+  color: #94a3b8;
+}
+
+html.dark .result-label {
+  color: #64748b;
+  background: #293548;
+}
+
+html.dark .search-view-all-btn {
+  background: #293548;
+  color: #94a3b8;
+}
+
+html.dark .search-view-all-btn:hover {
+  background: #334155;
+}
+
+html.dark .navbar-profile ul {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .navbar-profile ul li {
+  color: #cbd5e1;
+}
+
+html.dark .navbar-profile ul li:hover {
+  background: #293548;
+}
+
+html.dark .signin-btn {
+  background: #064e3b;
+  color: #34d399;
+  border-color: #064e3b;
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.dark-mode-toggle:hover {
+  color: #111827;
+  background: #f3f4f6;
+}
+
+html.dark .dark-mode-toggle {
+  color: #94a3b8;
+}
+
+html.dark .dark-mode-toggle:hover {
+  color: #e2e8f0;
+  background: #293548;
+}
+
+/* ---------- Home Page ---------- */
+html.dark .home-page {
+  background-color: #0f172a;
+}
+
+/* ---------- Community Page ---------- */
+html.dark .community-page {
+  background-color: #0f172a;
+}
+
+html.dark .community-feed {
+  background-color: #0f172a;
+}
+
+/* Search results banner "Kết quả tìm kiếm: ..." */
+html.dark .active-filter-banner {
+  background: linear-gradient(135deg, #065f46, #047857);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Section containers (QUÁN ĂN / MỌI NGƯỜI) */
+html.dark .search-user-results {
+  background: #1e293b;
+  box-shadow: none;
+}
+
+/* Section title labels (QUÁN ĂN / MỌI NGƯỜI) */
+html.dark .search-user-results-title {
+  background: #243447;
+  border-bottom-color: #334155;
+  color: #64748b;
+}
+
+/* Individual user/restaurant cards */
+html.dark .search-user-card {
+  background: #1e293b;
+  border-bottom-color: #334155;
+}
+
+html.dark .search-user-card:hover {
+  background: #243447;
+}
+
+html.dark .search-user-name {
+  color: #f1f5f9;
+}
+
+html.dark .search-user-stats {
+  color: #94a3b8;
+}
+
+/* Follow button in search results */
+html.dark .search-user-follow-btn {
+  border-color: #34d399;
+  color: #34d399;
+}
+
+html.dark .search-user-follow-btn:hover {
+  background: #065f46;
+  color: #d1fae5;
+}
+
+html.dark .search-user-follow-btn.following {
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+html.dark .search-user-follow-btn.following:hover {
+  background: #293548;
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+/* "Hôm nay bạn ăn gì?" compose bar */
+html.dark .create-post {
+  background: #1e293b;
+  box-shadow: none;
+}
+
+html.dark .create-post-input {
+  background-color: #293548;
+  color: #e2e8f0;
+}
+
+html.dark .create-post-input:focus {
+  background-color: #334155;
+}
+
+html.dark .create-post-input::placeholder {
+  color: #64748b;
+}
+
+/* "Tạo bài viết" modal */
+html.dark .create-post-modal {
+  background: #1e293b;
+}
+
+html.dark .create-post-modal-header {
+  border-bottom-color: #334155;
+}
+
+html.dark .create-post-modal-header h3 {
+  color: #f1f5f9;
+}
+
+html.dark .create-post-modal-close {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .create-post-modal-username {
+  color: #f1f5f9;
+}
+
+html.dark .create-post-modal-textarea {
+  background: transparent;
+  color: #e2e8f0;
+}
+
+html.dark .create-post-modal-textarea::placeholder {
+  color: #64748b;
+}
+
+/* Category tabs (Chia sẻ cảm nghĩ / Hỏi đáp / Review) */
+html.dark .post-type-tab {
+  background: #293548;
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+html.dark .post-type-tab:hover {
+  border-color: #34d399;
+  color: #34d399;
+}
+
+html.dark .post-type-tab.active {
+  background: #065f46;
+  border-color: #34d399;
+  color: #d1fae5;
+}
+
+/* Expanded section separator */
+html.dark .create-post-expanded {
+  border-top-color: #334155;
+}
+
+/* Upload button */
+html.dark .upload-btn {
+  background: #0f2d1f;
+  color: #34d399;
+  border-color: #1a4535;
+}
+
+html.dark .upload-btn:hover {
+  background: #1a4535;
+}
+
+/* Cancel button */
+html.dark .cancel-btn {
+  background: #293548;
+  color: #94a3b8;
+}
+
+html.dark .cancel-btn:hover {
+  background: #334155;
+}
+
+/* Form inputs inside modal */
+html.dark .form-group label {
+  color: #94a3b8;
+}
+
+html.dark .form-group input,
+html.dark .form-group textarea,
+html.dark .form-group select {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+/* Restaurant dropdown inside modal */
+html.dark .restaurant-dropdown {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .restaurant-dropdown-item {
+  border-bottom-color: #334155;
+}
+
+html.dark .restaurant-dropdown-item:hover {
+  background: #293548;
+}
+
+html.dark .restaurant-dropdown-name {
+  color: #e2e8f0;
+}
+
+html.dark .restaurant-dropdown-location {
+  color: #64748b;
+}
+
+html.dark .community-user-profile-header {
+  background: #1e293b;
+  border: 1px solid #334155;
+  box-shadow: none;
+}
+
+html.dark .community-user-profile-name {
+  color: #f1f5f9;
+}
+
+html.dark .community-user-profile-followers {
+  color: #94a3b8;
+}
+
+/* Back button in header */
+html.dark .header-community-back-btn {
+  background: #293548;
+  color: #e2e8f0;
+}
+
+html.dark .header-community-back-btn:hover {
+  background: #334155;
+}
+
+/* create-post border */
+html.dark .create-post {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+/* ── Mobile community — filter tabs ── */
+html.dark .mobile-search-filter-tab {
+  background: #293548;
+  border-color: #475569;
+  color: #cbd5e1;
+}
+
+html.dark .mobile-search-filter-tab:hover {
+  background: #334155;
+}
+
+html.dark .mobile-search-filter-tab.active {
+  background: #059669;
+  border-color: #059669;
+  color: #ffffff;
+}
+
+/* ── Mobile community — compose row filter button ── */
+html.dark .mobile-filter-toggle-btn {
+  background: #293548;
+  color: #e2e8f0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .mobile-filter-toggle-btn:hover {
+  background: #334155;
+}
+
+html.dark .mobile-filter-dot {
+  border-color: #1e293b;
+}
+
+/* ── Mobile community — filter bottom sheet ── */
+html.dark .mobile-filter-overlay {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+html.dark .mobile-filter-sheet {
+  background: #1e293b;
+}
+
+html.dark .mobile-filter-header {
+  border-bottom-color: #334155;
+}
+
+html.dark .mobile-filter-title {
+  color: #f1f5f9;
+}
+
+html.dark .mobile-filter-close {
+  color: #94a3b8;
+}
+
+html.dark .mobile-filter-close:hover {
+  background: #293548;
+}
+
+html.dark .mobile-filter-option {
+  color: #e2e8f0;
+}
+
+html.dark .mobile-filter-option:hover {
+  background: #293548;
+}
+
+html.dark .mobile-filter-option.active {
+  background: #064e3b;
+  color: #34d399;
+}
+
+html.dark .mobile-filter-option.active svg {
+  color: #34d399;
+}
+
+/* ── Mobile community — sort bar ── */
+html.dark .mobile-sort-bar {
+  border-bottom-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .mobile-sort-bar:hover {
+  color: #34d399;
+}
+
+html.dark .mobile-sort-bar svg {
+  color: #94a3b8;
+}
+
+/* Sort bottom sheet */
+html.dark .mobile-sort-option {
+  border-bottom-color: #334155;
+}
+
+html.dark .mobile-sort-option:hover {
+  background: #293548;
+}
+
+html.dark .mobile-sort-option.active {
+  background: #064e3b;
+}
+
+html.dark .mobile-sort-option-label {
+  color: #f1f5f9;
+}
+
+html.dark .mobile-sort-option.active .mobile-sort-option-label {
+  color: #34d399;
+}
+
+html.dark .mobile-sort-option-desc {
+  color: #94a3b8;
+}
+
+html.dark .mobile-sort-radio {
+  border-color: #475569;
+}
+
+html.dark .mobile-sort-radio.active {
+  border-color: #34d399;
+}
+
+/* ── Mobile search results (QUÁN ĂN / MỌI NGƯỜI) ── */
+html.dark .search-user-results {
+  border-top-color: #334155;
+}
+
+html.dark .search-restaurant-icon {
+  background: #293548;
+}
+
+/* ---------- Profile Page ---------- */
+html.dark .profile-page {
+  background-color: #0f172a;
+}
+
+/* Main cards */
+html.dark .profile-header-card,
+html.dark .goals-card,
+html.dark .weight-chart-card,
+html.dark .edit-profile-card {
+  background: #1e293b;
+  box-shadow: none;
+}
+
+/* Card headings */
+html.dark .profile-info h2,
+html.dark .goals-card h3,
+html.dark .weight-chart-card h3,
+html.dark .chart-header h3,
+html.dark .edit-profile-card h3,
+html.dark .edit-profile-form h3 {
+  color: #f1f5f9;
+}
+
+/* Info grid (age, height, weight…) */
+html.dark .user-info-grid {
+  background: #0f172a;
+}
+
+html.dark .info-label {
+  color: #94a3b8;
+}
+
+html.dark .info-value {
+  color: #f1f5f9;
+}
+
+/* Stats row (TDEE, duy trì, mục tiêu) */
+html.dark .stat-item {
+  background: #0f172a;
+}
+
+html.dark .stat-label {
+  color: #94a3b8;
+}
+
+html.dark .stat-value {
+  color: #f1f5f9;
+}
+
+/* Goals grid */
+html.dark .goal-item {
+  background: #0f172a;
+}
+
+html.dark .goal-label {
+  color: #94a3b8;
+}
+
+html.dark .goal-value {
+  color: #f1f5f9;
+}
+
+/* Meal reminder panel */
+html.dark .meal-reminder-panel {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+html.dark .meal-reminder-title {
+  color: #f1f5f9;
+}
+
+html.dark .meal-reminder-subtitle {
+  color: #94a3b8;
+}
+
+html.dark .meal-time-item label {
+  color: #94a3b8;
+}
+
+html.dark .meal-time-item input {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+/* Weight chart */
+html.dark .chart-area {
+  background: linear-gradient(to bottom, #0d2b1e 0%, #0f172a 100%);
+}
+
+html.dark .point-label {
+  background: #293548;
+  color: #34d399;
+  box-shadow: none;
+}
+
+html.dark .x-label {
+  color: #64748b;
+}
+
+/* Couple share card */
+html.dark .couple-share-card {
+  background: #0d2b1e;
+  border-color: #065f46;
+}
+
+html.dark .couple-share-card h3 {
+  color: #34d399;
+}
+
+html.dark .couple-share-subtext,
+html.dark .couple-share-expiry {
+  color: #6ee7b7;
+}
+
+html.dark .couple-share-code {
+  background: #064e3b;
+  color: #a7f3d0;
+}
+
+html.dark .couple-code-input {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+/* Edit profile form */
+html.dark .form-group label {
+  color: #94a3b8;
+}
+
+html.dark .form-group input,
+html.dark .form-group select {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .form-group input:focus,
+html.dark .form-group select:focus {
+  border-color: #34d399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.12);
+}
+
+html.dark .cancel-btn {
+  background: #293548;
+  color: #94a3b8;
+}
+
+html.dark .cancel-btn:hover {
+  background: #334155;
+}
+
+/* Plan badge */
+html.dark .plan-badge--free {
+  background: #293548;
+  color: #94a3b8;
+  border-color: #334155;
+}
+
+html.dark .plan-expiry {
+  color: #94a3b8;
+}
+
+html.dark .profile-age {
+  color: #94a3b8;
+}
+
+/* "Lưu cài đặt bữa ăn" — mute bright sky-blue */
+html.dark .save-reminder-btn {
+  background: #0369a1;
+  color: #e0f2fe;
+}
+
+html.dark .save-reminder-btn:hover:not(:disabled) {
+  background: #075985;
+}
+
+/* "Chỉnh sửa" (settings-btn) & "+ Cập nhật cân nặng" */
+html.dark .settings-btn {
+  background: #059669;
+  color: #d1fae5;
+}
+
+html.dark .settings-btn:hover {
+  background: #047857;
+}
+
+html.dark .add-weight-btn {
+  background: #059669;
+  color: #d1fae5;
+}
+
+html.dark .add-weight-btn:hover {
+  background: #047857;
+}
+
+/* Modal */
+html.dark .modal-content {
+  background: #1e293b;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+html.dark .modal-content h3 {
+  color: #f1f5f9;
+}
+
+/* generic inputs used inside profile page */
+html.dark .profile-page input[type="text"],
+html.dark .profile-page input[type="email"],
+html.dark .profile-page input[type="number"],
+html.dark .profile-page input[type="password"],
+html.dark .profile-page input[type="time"],
+html.dark .profile-page select,
+html.dark .profile-page textarea {
+  background-color: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .profile-page input::placeholder,
+html.dark .profile-page textarea::placeholder {
+  color: #64748b;
+}
+
+/* ---------- Recipe Library ---------- */
+html.dark .recipe-library,
+html.dark .recipe-library-page {
+  background-color: #0f172a;
+}
+
+/* Sidebar + main content card */
+html.dark .library-sidebar,
+html.dark .recipe-detail-section {
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
+html.dark .library-header h1,
+html.dark .popular-section h2 {
+  color: #f1f5f9;
+}
+
+/* Search box */
+html.dark .search-box input {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .search-box input::placeholder {
+  color: #64748b;
+}
+
+/* Category filter buttons — desktop */
+html.dark .category-btn {
+  background-color: #243447;
+  border-color: transparent;
+}
+
+html.dark .category-btn:hover {
+  background-color: #2e4460;
+}
+
+html.dark .category-btn.active {
+  background-color: #064e3b;
+  border-color: #34d399;
+}
+
+html.dark .category-name {
+  color: #cbd5e1;
+}
+
+html.dark .category-btn.active .category-name {
+  color: #6ee7b7;
+}
+
+html.dark .category-icon {
+  color: #34d399;
+}
+
+/* Category filter buttons — mobile grid layout */
+@media (max-width: 768px) {
+  html.dark .category-btn {
+    background: transparent;
+    border: none;
+  }
+
+  html.dark .category-btn:hover {
+    background: transparent;
+  }
+
+  html.dark .category-btn.active {
+    background: transparent;
+    border: none;
+  }
+
+  html.dark .category-icon {
+    background: #243447;
+    color: #34d399;
+  }
+
+  html.dark .category-btn.active .category-icon {
+    background: #059669;
+    color: #ffffff;
+  }
+
+  html.dark .category-name {
+    color: #94a3b8;
+  }
+
+  html.dark .category-btn.active .category-name {
+    color: #34d399;
+    font-weight: 700;
+  }
+}
+
+/* Recipe cards */
+html.dark .recipe-card-item {
+  background: #1e293b;
+  box-shadow: none;
+}
+
+html.dark .recipe-card-item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .recipe-card-item .recipe-content h3 {
+  color: #f1f5f9;
+}
+
+html.dark .recipe-card-item .recipe-meta {
+  color: #64748b;
+}
+
+/* Pagination */
+html.dark .page-num {
+  background: #1e293b;
+  color: #94a3b8;
+  border-color: #334155;
+}
+
+html.dark .page-num.active {
+  background: #065f46;
+  color: #d1fae5;
+  border-color: #065f46;
+}
+
+html.dark .page-num:hover:not(.active) {
+  background: #293548;
+}
+
+/* Free banner */
+html.dark .free-library-banner {
+  background: #1e2d1e;
+  border-color: #4b5563;
+  color: #d1fae5;
+}
+
+/* Generic recipe card / item */
+html.dark .recipe-card,
+html.dark .recipe-item {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: none;
+}
+
+html.dark .recipe-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .recipe-title,
+html.dark .recipe-card h3 {
+  color: #f1f5f9;
+}
+
+html.dark .recipe-description,
+html.dark .recipe-card p {
+  color: #94a3b8;
+}
+
+/* ---------- Modals ---------- */
+html.dark .modal-overlay,
+html.dark .modal-backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+html.dark .modal-content,
+html.dark .modal-box {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .modal-content h2,
+html.dark .modal-content h3,
+html.dark .modal-box h2,
+html.dark .modal-box h3 {
+  color: #f1f5f9;
+}
+
+html.dark .modal-content p,
+html.dark .modal-box p {
+  color: #94a3b8;
+}
+
+/* ---------- Recipe Detail Modal — Premium Dark Navy ---------- */
+html.dark .recipe-modal-overlay {
+  background: rgba(2, 8, 20, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+html.dark .recipe-modal {
+  background: #111c2d;
+  border-color: rgba(52, 211, 153, 0.1);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(52, 211, 153, 0.06),
+    0 0 80px rgba(52, 211, 153, 0.04);
+  color: #e2e8f0;
+}
+
+html.dark .recipe-modal-content {
+  background: #111c2d;
+  scrollbar-color: rgba(52, 211, 153, 0.2) transparent;
+}
+
+html.dark .recipe-modal-content::-webkit-scrollbar-thumb {
+  background: rgba(52, 211, 153, 0.2);
+}
+
+html.dark .recipe-modal .modal-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+}
+
+html.dark .recipe-modal .modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #f1f5f9;
+}
+
+/* Side card */
+html.dark .recipe-side-card {
+  background: rgba(15, 38, 25, 0.55);
+  border-color: rgba(52, 211, 153, 0.12);
+  backdrop-filter: blur(10px);
+}
+
+html.dark .recipe-main-image {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Section titles */
+html.dark .recipe-info-box h3,
+html.dark .recipe-nutrition h3 {
+  color: #34d399;
+}
+
+html.dark .recipe-steps h3 {
+  color: #34d399;
+}
+
+html.dark .comments-section h3 {
+  color: #f1f5f9;
+}
+
+/* Title & author */
+html.dark .recipe-title {
+  color: #f1f5f9;
+}
+
+html.dark .recipe-author .author-name,
+html.dark .comment-author {
+  color: #f1f5f9;
+}
+
+html.dark .recipe-author img {
+  border-color: rgba(52, 211, 153, 0.3);
+}
+
+html.dark .recipe-author .author-handle,
+html.dark .recipe-author .author-location {
+  color: #64748b;
+}
+
+html.dark .recipe-description {
+  color: #94a3b8;
+}
+
+html.dark .recipe-duration {
+  color: #64748b;
+}
+
+/* Meta tags (time / difficulty) */
+html.dark .recipe-meta span {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.09);
+  color: #94a3b8;
+}
+
+html.dark .recipe-meta span:hover {
+  background: rgba(52, 211, 153, 0.08);
+  border-color: rgba(52, 211, 153, 0.2);
+  color: #cbd5e1;
+}
+
+/* Ingredients */
+html.dark .ingredient-item:hover {
+  background: rgba(52, 211, 153, 0.06);
+}
+
+html.dark .ingredient-amount {
+  color: #34d399;
+}
+
+html.dark .ingredient-name {
+  color: #cbd5e1;
+}
+
+html.dark .ingredients-note {
+  color: #64748b;
+}
+
+/* Nutrition divider */
+html.dark .recipe-nutrition {
+  border-top-color: rgba(52, 211, 153, 0.12);
+}
+
+/* Step circles — green gradient, soft glow */
+html.dark .recipe-step .step-number {
+  background: linear-gradient(135deg, #065f46, #059669);
+  color: #ecfdf5;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.28);
+  border-color: rgba(52, 211, 153, 0.22);
+}
+
+/* Step timeline connector */
+html.dark .recipe-step:not(:last-child)::after {
+  background: linear-gradient(to bottom, rgba(52, 211, 153, 0.35), rgba(52, 211, 153, 0.04));
+}
+
+/* Step text */
+html.dark .step-text {
+  color: #cbd5e1;
+}
+
+/* Action buttons */
+html.dark .recipe-actions {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+html.dark .action-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+}
+
+html.dark .action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #f1f5f9;
+}
+
+html.dark .save-btn {
+  border-color: rgba(52, 211, 153, 0.35) !important;
+  color: #34d399 !important;
+  background: rgba(52, 211, 153, 0.07) !important;
+}
+
+html.dark .save-btn:hover {
+  background: rgba(52, 211, 153, 0.15) !important;
+  border-color: rgba(52, 211, 153, 0.5) !important;
+  color: #6ee7b7 !important;
+}
+
+/* Tabs */
+html.dark .recipe-tab {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #64748b;
+}
+
+html.dark .recipe-tab.active {
+  background: rgba(52, 211, 153, 0.12);
+  border-color: rgba(52, 211, 153, 0.3);
+  color: #34d399;
+}
+
+html.dark .recipe-tab:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.07);
+  color: #94a3b8;
+}
+
+/* Nutrition tab */
+html.dark .nutrition-tab h3 {
+  color: #f1f5f9;
+}
+
+html.dark .nutrition-item {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+html.dark .nutrition-label {
+  color: #64748b;
+}
+
+html.dark .nutrition-value {
+  color: #34d399;
+}
+
+/* Footer */
+html.dark .recipe-footer {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+html.dark .cooksnap-promo {
+  color: #64748b;
+}
+
+/* Comments */
+html.dark .comment-time {
+  color: #64748b;
+}
+
+html.dark .comment-text {
+  color: #94a3b8;
+}
+
+html.dark .comment-reply {
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.3);
+}
+
+html.dark .comment-reply:hover {
+  background: rgba(52, 211, 153, 0.08);
+}
+
+html.dark .step-images img {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Other recipe modal variants */
+html.dark .recipe-detail-modal {
+  background: #111c2d;
+  color: #e2e8f0;
+}
+
+html.dark .recipe-detail-modal h2,
+html.dark .recipe-detail-modal h3 {
+  color: #f1f5f9;
+}
+
+html.dark .recipe-detail-modal p,
+html.dark .recipe-detail-modal li {
+  color: #94a3b8;
+}
+
+html.dark .recipe-detail-tab {
+  color: #64748b;
+  border-bottom-color: #334155;
+}
+
+html.dark .recipe-detail-tab.active {
+  color: #34d399;
+  border-bottom-color: #34d399;
+}
+
+html.dark .recipe-detail-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+html.dark .recipe-modal-shell {
+  background: #111c2d;
+  border-color: rgba(52, 211, 153, 0.12);
+}
+
+html.dark .recipe-comment-input {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+html.dark .recipe-comment-input::placeholder {
+  color: #64748b;
+}
+
+/* ---------- Post Detail / Comment Modal ---------- */
+html.dark .post-detail-modal-overlay {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+html.dark .post-detail-modal {
+  background: #1e293b;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+html.dark .post-detail-header {
+  border-bottom-color: #334155;
+}
+
+html.dark .post-detail-header h2 {
+  color: #f1f5f9;
+}
+
+html.dark .close-btn {
+  color: #94a3b8;
+}
+
+html.dark .close-btn:hover {
+  background: #293548;
+  color: #f1f5f9;
+}
+
+html.dark .post-detail-post {
+  background: #1e293b;
+}
+
+html.dark .post-detail-author h4,
+html.dark .post-detail-author-link {
+  color: #f1f5f9;
+}
+
+html.dark .post-detail-time {
+  color: #94a3b8;
+}
+
+html.dark .post-detail-text {
+  color: #e2e8f0;
+}
+
+html.dark .post-detail-stat-item {
+  color: #94a3b8;
+}
+
+/* Comment items */
+html.dark .post-detail-comment-item:hover {
+  background: #293548;
+}
+
+html.dark .post-detail-comment-author,
+html.dark .post-detail-comment-author-link {
+  color: #f1f5f9;
+}
+
+html.dark .post-detail-comment-time {
+  color: #64748b;
+}
+
+html.dark .post-detail-comment-text {
+  background: #293548;
+  color: #e2e8f0;
+}
+
+html.dark .post-detail-comment-menu-btn {
+  color: #64748b;
+}
+
+html.dark .post-detail-comment-menu-btn:hover {
+  color: #e2e8f0;
+}
+
+/* Comment 3-dot dropdown */
+html.dark .post-detail-comment-menu {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .post-detail-comment-menu-item {
+  color: #e2e8f0;
+}
+
+html.dark .post-detail-comment-menu-item:hover {
+  background: #293548;
+}
+
+html.dark .post-detail-comment-menu-item.danger {
+  color: #f87171;
+}
+
+html.dark .post-detail-comment-menu-item.danger:hover {
+  background: rgba(239, 68, 68, 0.15);
+}
+
+/* Edit input */
+html.dark .post-detail-comment-edit-input {
+  background: #293548;
+  border-color: #34d399;
+  color: #e2e8f0;
+}
+
+html.dark .post-detail-comment-action-btn {
+  background: #293548;
+  color: #e2e8f0;
+}
+
+html.dark .post-detail-comment-action-btn:first-child:hover {
+  background: #334155;
+}
+
+/* Sticky input bar at bottom */
+html.dark .post-detail-comment-input-section {
+  background: #1e293b;
+  border-top-color: #334155;
+  box-shadow: 0 -8px 16px rgba(15, 23, 42, 0.9);
+}
+
+html.dark .post-detail-comment-input {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .post-detail-comment-input::placeholder {
+  color: #64748b;
+}
+
+html.dark .post-detail-comment-input:focus {
+  border-color: #34d399;
+}
+
+/* Submit button — keep green brand color */
+html.dark .post-detail-comment-submit-btn {
+  background: #059669;
+}
+
+html.dark .post-detail-comment-submit-btn:hover:not(:disabled) {
+  background: #047857;
+}
+
+/* Inner scrollbar */
+html.dark .post-detail-content::-webkit-scrollbar-thumb {
+  background: #3a3b3c;
+}
+
+html.dark .post-detail-content::-webkit-scrollbar-thumb:hover {
+  background: #4e4f50;
+}
+
+/* Delete confirm dialog inside modal */
+html.dark .post-detail-confirm {
+  background: #1e293b;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+html.dark .post-detail-confirm-title {
+  color: #f1f5f9;
+}
+
+html.dark .post-detail-confirm-text {
+  color: #94a3b8;
+}
+
+html.dark .post-detail-confirm-btn {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .post-detail-confirm-btn:hover {
+  background: #334155;
+}
+
+/* ---------- Post Card ---------- */
+html.dark .post-card {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: none;
+}
+
+html.dark .post-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Author name — class is .post-author not .post-author-name */
+html.dark .post-author,
+html.dark .post-author-name,
+html.dark .post-author-link {
+  color: #f1f5f9;
+}
+
+html.dark .post-author-separator {
+  color: #64748b;
+}
+
+html.dark .post-time {
+  color: #94a3b8;
+}
+
+html.dark .post-content {
+  color: #e2e8f0;
+}
+
+/* Stat buttons (like, comment counts) */
+html.dark .stat-btn {
+  color: #94a3b8;
+}
+
+html.dark .stat-btn:hover {
+  background: #293548;
+}
+
+html.dark .post-share-btn,
+html.dark .post-menu-btn {
+  color: #94a3b8;
+}
+
+/* Follow button */
+html.dark .follow-btn {
+  border-color: #34d399;
+  color: #34d399;
+}
+
+html.dark .follow-btn-following {
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+html.dark .follow-btn-following:hover {
+  background: #293548;
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+/* 3-dot dropdown menu */
+html.dark .post-menu-dropdown {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .post-menu-item {
+  color: #e2e8f0;
+}
+
+html.dark .post-menu-item:hover {
+  background: #293548;
+}
+
+html.dark .post-menu-item.danger {
+  color: #f87171;
+}
+
+/* Post footer border */
+html.dark .post-footer {
+  border-top-color: #334155;
+}
+
+/* Media grid gap color */
+html.dark .post-media-grid {
+  background: #0f172a;
+}
+
+/* Comment input */
+html.dark .comment-input-section {
+  border-top-color: #334155;
+}
+
+html.dark .comment-input {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .comment-input::placeholder {
+  color: #64748b;
+}
+
+html.dark .post-action-btn {
+  color: #64748b;
+}
+
+html.dark .post-action-btn:hover {
+  color: #34d399;
+}
+
+html.dark .post-comment-section {
+  background: #293548;
+  border-top-color: #334155;
+}
+
+html.dark .post-comment-input-area {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .comment-text {
+  color: #e2e8f0;
+}
+
+html.dark .comment-author,
+html.dark .comment-author-link {
+  color: #f1f5f9;
+}
+
+html.dark .comment-time {
+  color: #94a3b8;
+}
+
+/* Restaurant name tooltip */
+html.dark .restaurant-name-tooltip {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+/* Edit input */
+html.dark .post-edit-input {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+/* Save button */
+html.dark .post-save-btn {
+  color: #94a3b8;
+}
+
+html.dark .post-save-btn:hover {
+  background: #293548;
+}
+
+/* ---------- Filter / Sidebar widgets ---------- */
+html.dark .filter-sidebar,
+html.dark .sidebar-widget {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+/* Heading: "Sắp xếp" / "Bộ lọc" */
+html.dark .filter-title,
+html.dark .filter-sidebar h3,
+html.dark .sidebar-widget h3 {
+  color: #f1f5f9;
+}
+
+/* Filter items */
+html.dark .filter-item {
+  color: #e2e8f0;
+}
+
+html.dark .filter-item:hover {
+  background-color: #293548;
+  color: #f1f5f9;
+}
+
+html.dark .filter-item.active {
+  background-color: #064e3b;
+  color: #34d399;
+}
+
+html.dark .filter-tag {
+  background: #293548;
+  color: #94a3b8;
+  border-color: #334155;
+}
+
+html.dark .filter-tag.active,
+html.dark .filter-tag:hover {
+  background: #064e3b;
+  color: #34d399;
+  border-color: #065f46;
+}
+
+/* ---------- Cards & Surfaces ---------- */
+html.dark .card,
+html.dark .stat-card,
+html.dark .info-card,
+html.dark .summary-card {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: none;
+}
+
+html.dark .card h3,
+html.dark .stat-card h3,
+html.dark .card h4,
+html.dark .stat-card h4 {
+  color: #f1f5f9;
+}
+
+html.dark .card p,
+html.dark .stat-card p {
+  color: #94a3b8;
+}
+
+/* ---------- Buttons (generic) ---------- */
+html.dark .btn-secondary,
+html.dark .btn-outline {
+  background: #293548;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+html.dark .btn-secondary:hover,
+html.dark .btn-outline:hover {
+  background: #334155;
+}
+
+/* ---------- Meal Plan / Plan pages ---------- */
+html.dark .meal-plan-section,
+html.dark .meal-card,
+html.dark .plan-card {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .meal-card h3,
+html.dark .plan-card h3 {
+  color: #f1f5f9;
+}
+
+html.dark .meal-card p,
+html.dark .plan-card p {
+  color: #94a3b8;
+}
+
+/* ---------- Consultation Page ---------- */
+html.dark .consultation-page,
+html.dark .consultation-detail-page {
+  background: #0f172a;
+}
+
+/* Headings */
+html.dark .consultation-header h1 {
+  color: #f1f5f9;
+}
+
+html.dark .consultation-header p {
+  color: #94a3b8;
+}
+
+/* Doctor grid cards */
+html.dark .doctor-card {
+  background: #1e293b;
+  box-shadow: none;
+}
+
+html.dark .doctor-card-img-wrap,
+html.dark .doctor-card-img-placeholder {
+  background: #293548;
+}
+
+html.dark .doctor-card-name {
+  color: #f1f5f9;
+}
+
+html.dark .doctor-card-bio {
+  color: #94a3b8;
+}
+
+/* Doctor detail card (left panel) */
+html.dark .doctor-detail-card {
+  background: #1e293b;
+  box-shadow: none;
+}
+
+html.dark .doctor-detail-header {
+  border-bottom-color: #334155;
+}
+
+html.dark .doctor-detail-img {
+  background: #293548;
+}
+
+html.dark .doctor-detail-name {
+  color: #f1f5f9;
+}
+
+html.dark .doctor-bio-text {
+  color: #cbd5e1;
+}
+
+html.dark .doctor-list li {
+  color: #cbd5e1;
+}
+
+/* Consultation form card (right panel) */
+html.dark .consultation-form-card {
+  background: #1e293b;
+  box-shadow: none;
+}
+
+html.dark .form-title {
+  color: #f1f5f9;
+}
+
+html.dark .form-subtitle {
+  color: #94a3b8;
+}
+
+html.dark .form-group label {
+  color: #94a3b8;
+}
+
+html.dark .form-group input,
+html.dark .form-group select,
+html.dark .form-group textarea {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .form-group input:focus,
+html.dark .form-group select:focus,
+html.dark .form-group textarea:focus {
+  border-color: #34d399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.12);
+}
+
+html.dark .form-group input::placeholder,
+html.dark .form-group textarea::placeholder {
+  color: #64748b;
+}
+
+/* Existing booking info panel */
+html.dark .existing-booking-info {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+html.dark .booking-info-row {
+  border-bottom-color: #334155;
+}
+
+html.dark .booking-info-label {
+  color: #64748b;
+}
+
+html.dark .booking-info-value {
+  color: #e2e8f0;
+}
+
+html.dark .existing-booking-note {
+  color: #64748b;
+}
+
+/* Success state */
+html.dark .consultation-success h3 {
+  color: #f1f5f9;
+}
+
+html.dark .consultation-success p {
+  color: #94a3b8;
+}
+
+/* Gate card (non-premium) */
+html.dark .consultation-gate-card {
+  background: #1e293b;
+  box-shadow: none;
+}
+
+html.dark .consultation-gate-card h2 {
+  color: #f1f5f9;
+}
+
+html.dark .consultation-gate-card p {
+  color: #94a3b8;
+}
+
+/* Coming Soon panel */
+html.dark .cs-icon-body        { fill: #0f2d1f; stroke: #34d399; }
+html.dark .cs-icon-header      { fill: #065f46; }
+html.dark .cs-icon-pin         { fill: #047857; }
+html.dark .cs-icon-dot         { fill: #14532d; }
+html.dark .cs-icon-dot-active  { fill: #34d399; }
+html.dark .coming-soon-title   { color: #f1f5f9; }
+html.dark .coming-soon-desc    { color: #94a3b8; }
+
+html.dark .community-coming-soon-icon    { background: #1e3a5f; }
+html.dark .community-coming-soon-icon svg { fill: #7eaafc; }
+html.dark .community-coming-soon-title   { color: #f1f5f9; }
+html.dark .community-coming-soon-desc    { color: #94a3b8; }
+html.dark .community-coming-soon-desc strong { color: #7eaafc; }
+html.dark .community-coming-soon-badge   { background: #2e4a8a; color: #a5c0ff; }
+html.dark .coming-soon-features li {
+  background: #0f2d1f;
+  border-color: #1a4d35;
+  color: #d1fae5;
+}
+html.dark .coming-soon-inline-badge {
+  background: #0f2d1f;
+  color: #34d399;
+  border-color: #1a4d35;
+}
+
+/* ---------- Trending Topics ---------- */
+html.dark .trending-topics,
+html.dark .trending-widget {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+/* Heading: "Chủ đề nổi bật" */
+html.dark .trending-title,
+html.dark .trending-topics h3,
+html.dark .trending-widget h3 {
+  color: #f1f5f9;
+}
+
+/* Hashtag text */
+html.dark .trending-hashtag {
+  color: #e2e8f0;
+}
+
+/* Post count */
+html.dark .trending-count {
+  color: #94a3b8;
+}
+
+/* Row hover */
+html.dark .trending-item:hover {
+  background-color: #293548;
+}
+
+/* Empty/loading text */
+html.dark .trending-loading,
+html.dark .trending-empty {
+  color: #64748b;
+}
+
+html.dark .trending-tag {
+  background: #293548;
+  color: #94a3b8;
+}
+
+html.dark .trending-tag:hover {
+  background: #064e3b;
+  color: #34d399;
+}
+
+/* ---------- Nutrition Stats ---------- */
+html.dark .nutrition-stats,
+html.dark .nutrition-card {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+html.dark .nutrition-stats h3 {
+  color: #f1f5f9;
+}
+
+html.dark .nutrition-label {
+  color: #94a3b8;
+}
+
+/* ---------- Dividers & Borders ---------- */
+html.dark hr,
+html.dark .divider {
+  border-color: #334155;
+}
+
+/* ---------- Scrollbar (webkit) — FB dark style ---------- */
+
+/* Root page scrollbar (html element itself) */
+html.dark::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html.dark::-webkit-scrollbar-track {
+  background: #18191a;
+}
+
+html.dark::-webkit-scrollbar-thumb {
+  background: #3a3b3c;
+  border-radius: 4px;
+  border: 2px solid #18191a;
+}
+
+html.dark::-webkit-scrollbar-thumb:hover {
+  background: #4e4f50;
+}
+
+/* All inner scrollable elements */
+html.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #18191a;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #3a3b3c;
+  border-radius: 4px;
+  border: 2px solid #18191a;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4e4f50;
+}
+
+/* Firefox */
+html.dark,
+html.dark * {
+  scrollbar-color: #3a3b3c #18191a;
+  scrollbar-width: thin;
+}
+
+/* ---------- MealPlanPreview ---------- */
+html.dark .meal-plan-preview-container {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+/* Loading screen */
+html.dark .loading-container {
+  background: #1e293b;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .loading-container h2 {
+  color: #f1f5f9;
+}
+
+html.dark .loading-container > p {
+  color: #94a3b8;
+}
+
+html.dark .loading-tips p {
+  background: #1e293b;
+  color: #6ee7b7;
+  border: 1px solid #475569;
+}
+
+html.dark .loading-spinner {
+  border-color: #334155;
+  border-top-color: #34d399;
+}
+
+/* Preview content card */
+html.dark .meal-plan-preview-content {
+  background: #1e293b;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .preview-header h1 {
+  color: #f1f5f9;
+}
+
+html.dark .preview-header p {
+  color: #94a3b8;
+}
+
+/* Summary cards */
+html.dark .summary-card {
+  background: #243447;
+  border-color: #34d399;
+}
+
+html.dark .summary-card h3 {
+  color: #34d399;
+}
+
+html.dark .summary-card p {
+  color: #94a3b8;
+}
+
+/* Week navigation */
+html.dark .week-navigation-header {
+  background: #243447;
+  border-color: #34d399;
+}
+
+html.dark .week-navigation-header h2 {
+  color: #34d399 !important;
+}
+
+html.dark .week-navigation-header p {
+  color: #94a3b8 !important;
+}
+
+html.dark .week-nav-btn {
+  background: #293548;
+  border-color: #059669;
+  color: #34d399;
+}
+
+html.dark .week-nav-btn:hover:not(:disabled) {
+  background: #059669;
+  color: #ffffff;
+}
+
+/* Day cards */
+html.dark .day-card {
+  background: #293548;
+  border-color: #334155;
+}
+
+html.dark .day-header {
+  border-bottom-color: #334155;
+}
+
+html.dark .day-header h3 {
+  color: #f1f5f9;
+}
+
+html.dark .day-calories {
+  background: #1e293b;
+  border-color: #059669;
+  color: #34d399;
+}
+
+/* Meal items */
+html.dark .meal-item {
+  background: #1e293b;
+}
+
+html.dark .meal-header strong {
+  color: #94a3b8;
+}
+
+html.dark .meal-name {
+  color: #f1f5f9;
+}
+
+html.dark .combo-item {
+  color: #e2e8f0;
+}
+
+html.dark .combo-item::before {
+  color: #34d399;
+}
+
+html.dark .meal-macros {
+  color: #94a3b8;
+  border-top-color: #334155;
+}
+
+/* More days note */
+html.dark .more-days-note {
+  background: linear-gradient(135deg, #1c1408 0%, #2d1f02 100%);
+  border-color: #92400e;
+}
+
+html.dark .more-days-note p {
+  color: #fcd34d;
+}
+
+html.dark .note-small {
+  color: #fbbf24 !important;
+}
+
+/* Action buttons */
+/* Huỷ button */
+html.dark .meal-plan-preview-container .btn-secondary,
+html.dark .loading-container .btn-secondary {
+  background: transparent;
+  color: #e2e8f0;
+  border: 2px solid #475569;
+}
+
+html.dark .meal-plan-preview-container .btn-secondary:hover,
+html.dark .loading-container .btn-secondary:hover {
+  background: #293548;
+  border-color: #94a3b8;
+  color: #f1f5f9;
+}
+
+/* Tạo lộ trình button */
+html.dark .btn-regenerate {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.25);
+}
+
+/* Xác nhận & Bắt đầu button */
+html.dark .btn-primary {
+  background: linear-gradient(135deg, #059669 0%, #34d399 100%);
+  box-shadow: 0 4px 16px rgba(52, 211, 153, 0.25);
+}
+
+/* Disclaimer */
+html.dark .disclaimer-text {
+  background: #293548;
+  color: #94a3b8;
+}
+
+html.dark .disclaimer-text strong {
+  color: #f1f5f9;
+}
+
+/* ---------- LoginPopup (accessible from public paths) ---------- */
+html.dark .login-popup {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+html.dark .login-popup-container {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+html.dark .login-popup-container h2 {
+  color: #f1f5f9;
+}
+
+html.dark .login-popup-container input {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .login-popup-container input::placeholder {
+  color: #64748b;
+}
+
+html.dark .login-popup-container p {
+  color: #94a3b8;
+}
+
+/* ---------- Confirm Dialog ---------- */
+html.dark .confirm-dialog-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+html.dark .confirm-dialog {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .confirm-dialog h3 {
+  color: #f1f5f9;
+}
+
+html.dark .confirm-dialog p {
+  color: #94a3b8;
+}
+
+/* =========================================================
+   HOME PAGE COMPONENTS
+   ========================================================= */
+
+/* ---------- DatePicker ---------- */
+html.dark .date-picker {
+  background: transparent;
+}
+
+html.dark .day-btn {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+html.dark .day-btn:hover {
+  background-color: #293548;
+}
+
+html.dark .day-btn.active {
+  background-color: #064e3b;
+  border-color: #059669;
+}
+
+html.dark .day-btn.active .day-of-week {
+  color: #34d399;
+}
+
+html.dark .day-btn.active .day-number {
+  color: #6ee7b7;
+}
+
+html.dark .day-of-week {
+  color: #94a3b8;
+}
+
+html.dark .day-number {
+  color: #e2e8f0;
+}
+
+html.dark .day-btn.locked {
+  background-color: #1e293b;
+  border-color: #334155;
+  opacity: 0.5;
+}
+
+html.dark .day-btn.locked .day-of-week,
+html.dark .day-btn.locked .day-number {
+  color: #64748b;
+}
+
+html.dark .nav-btn {
+  color: #64748b;
+}
+
+html.dark .nav-btn:hover {
+  background-color: #293548;
+  color: #34d399;
+}
+
+/* ---------- NutritionStats ---------- */
+html.dark .nutrition-stats .section-title {
+  color: #f1f5f9;
+}
+
+html.dark .progress-value {
+  color: #e2e8f0;
+}
+
+html.dark .progress-total {
+  color: #64748b;
+}
+
+html.dark .label-text {
+  color: #e2e8f0;
+}
+
+html.dark .label-unit {
+  color: #94a3b8;
+}
+
+/* ---------- ProgressTracker (right column) ---------- */
+html.dark .progress-card {
+  background: linear-gradient(135deg, #0d2d1e 0%, #0a2218 100%);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .progress-title {
+  color: #f1f5f9;
+}
+
+html.dark .progress-description {
+  color: #94a3b8;
+}
+
+html.dark .progress-label {
+  color: #94a3b8;
+}
+
+html.dark .progress-bar-container {
+  background-color: rgba(52, 211, 153, 0.15);
+}
+
+html.dark .loading-skeleton {
+  color: #64748b;
+}
+
+/* Streak summary card inside ProgressTracker — keep colorful but darken slightly */
+html.dark .progress-streak-summary-card {
+  background: radial-gradient(circle at top left, #1e3a2a 0%, #162c22 45%, #0d2218 100%);
+  border-color: rgba(52, 211, 153, 0.25);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .progress-streak-summary-card.tier-seed {
+  background: radial-gradient(circle at top left, #163224 0%, #132c21 45%, #0d2218 100%);
+  border-color: rgba(129, 199, 132, 0.3);
+}
+
+html.dark .progress-streak-summary-card.tier-sprout {
+  background: radial-gradient(circle at top left, #183528 0%, #143024 40%, #0d2218 100%);
+  border-color: rgba(110, 231, 133, 0.34);
+}
+
+html.dark .progress-streak-summary-card.tier-growth {
+  background: radial-gradient(circle at top left, #193a2a 0%, #153224 38%, #10251b 68%, #0d2218 100%);
+  border-color: rgba(74, 222, 128, 0.38);
+}
+
+html.dark .progress-streak-summary-card.tier-forest {
+  background: radial-gradient(circle at top left, #1a3f2d 0%, #163627 28%, #112a1f 56%, #0d2218 100%);
+  border-color: rgba(74, 222, 128, 0.42);
+}
+
+html.dark .progress-streak-summary-card.tier-flame {
+  background: radial-gradient(circle at top left, #1c3a2d 0%, #162f25 30%, #10261d 62%, #0b1e17 100%);
+  border-color: rgba(74, 222, 128, 0.45);
+}
+
+html.dark .progress-streak-summary-card.tier-legendary {
+  background: radial-gradient(circle at top left, #3a3118 0%, #2f2713 30%, #1c2417 62%, #132014 100%);
+  border-color: rgba(251, 191, 36, 0.45);
+}
+
+html.dark .progress-streak-kicker {
+  color: #fbbf24;
+}
+
+html.dark .progress-streak-hero {
+  color: #34d399;
+}
+
+html.dark .progress-streak-copy {
+  color: #94a3b8;
+}
+
+html.dark .progress-streak-flame {
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
+}
+
+html.dark .progress-streak-flame-icon {
+  filter: brightness(1.18) saturate(1.12);
+}
+
+html.dark .progress-streak-grid > div {
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+html.dark .progress-streak-label {
+  color: #94a3b8;
+}
+
+html.dark .progress-streak-value {
+  color: #e2e8f0;
+}
+
+html.dark .progress-streak-footer {
+  color: #64748b;
+}
+
+html.dark .progress-streak-recovery-row {
+  background: rgba(52, 211, 153, 0.08);
+}
+
+html.dark .progress-streak-recovery-title {
+  color: #34d399;
+}
+
+html.dark .progress-streak-recovery-text {
+  color: #94a3b8;
+}
+
+/* ---------- TodayMenu (green gradient card — darkened for dark mode) ---------- */
+html.dark .menu-card {
+  background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .meal-card {
+  background: rgba(16, 100, 70, 0.45);
+  border-color: rgba(52, 211, 153, 0.25);
+}
+
+html.dark .meal-card:hover {
+  background: rgba(16, 100, 70, 0.6);
+}
+
+/* Stat pills inside meal cards */
+html.dark .stat-item {
+  background: rgba(15, 23, 42, 0.6);
+  color: #34d399;
+}
+
+/* ---------- "Tạo lộ trình mới" button — TodayMenu ---------- */
+html.dark .btn-create-plan {
+  background: #065f46;
+  color: #d1fae5;
+}
+
+html.dark .btn-create-plan:hover {
+  background: #047857;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- "Tạo lộ trình mới" button in ProgressTracker ---------- */
+html.dark .progress-create-plan-btn {
+  background: #065f46;
+  color: #d1fae5;
+}
+
+html.dark .progress-create-plan-btn:hover {
+  background: #047857;
+}
+
+/* MobileAd — already dark by design, no overrides needed */
+
+/* ---------- Sidebar consultation widget (already dark green gradient, minor tweak) ---------- */
+html.dark .consultation-sidebar-section {
+  background: linear-gradient(135deg, #14532d 0%, #0d3d20 100%);
+}
+
+/* ---------- Extra generic surfaces that appear on Home ---------- */
+html.dark .section-title {
+  color: #f1f5f9;
+}
+
+html.dark .section-subtitle {
+  color: #94a3b8;
+}
+
+/* =========================================================
+   SIDEBAR EXTRAS
+   ========================================================= */
+
+/* Mobile bottom nav bar */
+html.dark .sidebar {
+  border-top-color: #334155;
+}
+
+/* Premium modal */
+html.dark .premium-modal-content {
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
+html.dark .modal-header h2 {
+  color: #f1f5f9;
+}
+
+html.dark .modal-subtitle {
+  color: #94a3b8;
+}
+
+html.dark .modal-pricing-card {
+  background: #293548;
+  border-color: #334155;
+}
+
+html.dark .modal-free-card {
+  border-color: #334155;
+}
+
+html.dark .modal-plan-label {
+  color: #94a3b8;
+}
+
+html.dark .modal-plan-price {
+  color: #f1f5f9;
+}
+
+html.dark .modal-price-period {
+  color: #64748b;
+}
+
+html.dark .modal-feature-item {
+  color: #cbd5e1;
+}
+
+html.dark .modal-current-plan-btn {
+  background-color: #334155;
+  color: #64748b;
+}
+
+/* Mobile menu toggle */
+html.dark .mobile-menu-toggle {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+html.dark .mobile-menu-toggle:hover {
+  background: #293548;
+}
+
+/* =========================================================
+   HEADER — nav profile dropdown
+   ========================================================= */
+html.dark .nav-profile-dropdown {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .nav-profile-dropdown li {
+  color: #cbd5e1;
+}
+
+html.dark .nav-profile-dropdown li p {
+  color: #cbd5e1;
+}
+
+html.dark .nav-profile-dropdown li:hover {
+  background: #293548;
+}
+
+html.dark .nav-profile-dropdown li:hover p {
+  color: #34d399;
+}
+
+/* =========================================================
+   MEAL SELECTOR MODAL (free account)
+   ========================================================= */
+html.dark .meal-selector-modal {
+  background: #1e293b;
+  border-color: rgba(52, 211, 153, 0.18);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .meal-selector-modal .modal-header {
+  background: linear-gradient(135deg, #0f2318 0%, #0d1f14 55%, #0c1e12 100%);
+  border-bottom-color: rgba(52, 211, 153, 0.2);
+}
+
+html.dark .meal-selector-modal .modal-header h3 {
+  color: #6ee7b7;
+}
+
+html.dark .selection-info {
+  color: #94a3b8;
+}
+
+html.dark .modal-close {
+  background: #293548;
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+html.dark .modal-close:hover {
+  color: #e2e8f0;
+  border-color: #475569;
+}
+
+html.dark .modal-search {
+  background: #1e293b;
+  border-bottom-color: rgba(52, 211, 153, 0.15);
+}
+
+html.dark .modal-search-input {
+  background: #293548;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .modal-search-input::placeholder {
+  color: #64748b;
+}
+
+html.dark .modal-search-input:focus {
+  border-color: #34d399;
+}
+
+html.dark .modal-recipes-list {
+  background: linear-gradient(180deg, #1e293b 0%, #1a2538 100%);
+}
+
+html.dark .recipe-column {
+  background: #293548;
+  border-color: rgba(52, 211, 153, 0.14);
+}
+
+html.dark .column-title {
+  background: #1e3a2e;
+  color: #6ee7b7;
+  border-bottom-color: rgba(52, 211, 153, 0.18);
+}
+
+html.dark .column-empty {
+  color: #64748b;
+}
+
+html.dark .no-recipes {
+  color: #64748b;
+}
+
+html.dark .recipe-item {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: none;
+}
+
+html.dark .recipe-item:hover:not(.disabled) {
+  background: #1e3a2e;
+  border-color: #34d399;
+  box-shadow: 0 4px 10px rgba(52, 211, 153, 0.1);
+}
+
+html.dark .recipe-item.selected {
+  background: linear-gradient(180deg, #1e3a2e 0%, #162e22 100%);
+  border-color: #34d399;
+  box-shadow: 0 4px 12px rgba(52, 211, 153, 0.18);
+}
+
+html.dark .recipe-checkbox {
+  background: #293548;
+  border-color: #475569;
+}
+
+html.dark .recipe-name {
+  color: #e2e8f0;
+}
+
+html.dark .rice-tag {
+  background: rgba(6, 95, 70, 0.3);
+  color: #6ee7b7;
+  border-color: rgba(52, 211, 153, 0.35);
+}
+
+html.dark .recipe-nutrients span {
+  color: #94a3b8;
+}
+
+html.dark .modal-footer {
+  background: #1a2232;
+  border-top-color: rgba(52, 211, 153, 0.15);
+}
+
+html.dark .modal-footer .btn-cancel {
+  background: #293548;
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+html.dark .modal-footer .btn-cancel:hover {
+  background: #334155;
+}
+
+html.dark .modal-recipes-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+html.dark .modal-recipes-list::-webkit-scrollbar-track {
+  background: #18191a;
+}
+
+html.dark .modal-recipes-list::-webkit-scrollbar-thumb {
+  background: #3a3b3c;
+  border-radius: 4px;
+  border: 2px solid #18191a;
+}
+
+html.dark .modal-recipes-list::-webkit-scrollbar-thumb:hover {
+  background: #4e4f50;
+}
+
+html.dark .modal-recipes-list {
+  scrollbar-color: #3a3b3c #18191a;
+  scrollbar-width: thin;
+}
+
+/* =========================================================
+   PAYMENT PAGE
+   ========================================================= */
+html.dark .payment-container {
+  background:
+    radial-gradient(circle at top left, rgba(16, 185, 129, 0.12), transparent 32%),
+    radial-gradient(circle at top right, rgba(245, 158, 11, 0.08), transparent 28%),
+    linear-gradient(135deg, #0f172a 0%, #111827 45%, #1a1f2e 100%);
+}
+
+html.dark .payment-header {
+  color: #e2e8f0;
+}
+
+html.dark .payment-kicker {
+  background: rgba(16, 185, 129, 0.18);
+  color: #34d399;
+}
+
+html.dark .payment-header h1 {
+  color: #6ee7b7;
+}
+
+html.dark .payment-header p {
+  color: #94a3b8;
+}
+
+html.dark .btn-close {
+  background: rgba(30, 41, 59, 0.9);
+  color: #6ee7b7;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .btn-close:hover:not(:disabled) {
+  background: #1e293b;
+}
+
+html.dark .payment-card {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: rgba(52, 211, 153, 0.14);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Left panel — package selector */
+html.dark .package-selector {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(17, 24, 39, 0.96) 100%);
+  border-color: rgba(52, 211, 153, 0.12);
+}
+
+html.dark .section-heading h2 {
+  color: #6ee7b7;
+}
+
+html.dark .section-heading p {
+  color: #94a3b8;
+}
+
+html.dark .package-card {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .package-card:hover:not(:disabled) {
+  border-color: rgba(52, 211, 153, 0.45);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+html.dark .package-card.selected {
+  background: linear-gradient(180deg, #1e293b 0%, #162032 100%);
+  border-color: #34d399;
+  box-shadow: 0 8px 28px rgba(52, 211, 153, 0.18);
+}
+
+html.dark .package-badge {
+  background: rgba(217, 119, 6, 0.15);
+  color: #fbbf24;
+}
+
+html.dark .package-radio {
+  border-color: #475569;
+}
+
+html.dark .package-card h3 {
+  color: #f1f5f9;
+}
+
+html.dark .package-price {
+  color: #6ee7b7;
+}
+
+html.dark .package-price span {
+  color: #64748b;
+}
+
+html.dark .package-note {
+  color: #94a3b8;
+}
+
+/* Right panel — summary (already dark in light mode, just tweak border/shadow) */
+html.dark .payment-summary-panel {
+  background: linear-gradient(180deg, #0a0f1a 0%, #111827 100%);
+  border: 1px solid rgba(52, 211, 153, 0.12);
+}
+
+html.dark .couple-redeem-divider {
+  background: #1e293b;
+  color: #94a3b8;
+}
+
+html.dark .payment-footer {
+  color: #64748b;
+}

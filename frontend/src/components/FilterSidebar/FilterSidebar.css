@@ -1,0 +1,50 @@
+.filter-sidebar {
+  width: 240px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  height: fit-content;
+  position: sticky;
+  top: 104px;
+}
+
+.filter-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 15px 0;
+}
+
+.filter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filter-item {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  user-select: none;
+}
+
+.filter-item:hover {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.filter-item.active {
+  background-color: #d4f4dd;
+  color: #059669;
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .filter-sidebar {
+    display: none;
+  }
+}

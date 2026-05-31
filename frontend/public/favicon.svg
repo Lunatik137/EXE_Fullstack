@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="GreenPath logo">
+  <!-- Leaf/teardrop shape -->
+  <path d="M50 4
+    C74 4, 96 26, 96 50
+    C96 74, 74 96, 50 96
+    C36 96, 4 82, 4 55
+    C4 28, 28 4, 50 4 Z"
+    fill="#6DD44E"/>
+  <!-- White 'g' lettermark -->
+  <circle cx="50" cy="47" r="13" fill="none" stroke="white" stroke-width="10"/>
+  <line x1="63" y1="47" x2="63" y2="62" stroke="white" stroke-width="10" stroke-linecap="round"/>
+  <line x1="63" y1="62" x2="50" y2="62" stroke="white" stroke-width="10" stroke-linecap="round"/>
+  <!-- Leaf dot on top right of 'g' -->
+  <ellipse cx="64" cy="30" rx="4" ry="6" fill="white" transform="rotate(-20 64 30)"/>
+</svg>

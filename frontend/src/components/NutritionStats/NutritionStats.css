@@ -1,0 +1,175 @@
+.nutrition-stats {
+  padding: 24px 0 0 0;
+}
+
+.stats-section {
+  margin-bottom: 0;
+}
+
+.section-header {
+  margin-bottom: 18px;
+}
+
+.nutrition-stats .section-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #111827;
+  margin: 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.circular-progress-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.circular-progress {
+  position: relative;
+  width: 90px;
+  height: 90px;
+}
+
+.progress-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.progress-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1;
+}
+
+.progress-total {
+  font-size: 12px;
+  font-weight: 500;
+  color: #9ca3af;
+  line-height: 1.2;
+}
+
+.progress-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.label-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.label-unit {
+  font-size: 10px;
+  color: #4b5563;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 768px) {
+  .nutrition-stats .section-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .stats-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    padding: 0 2px 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .stats-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .circular-progress-item {
+    min-width: 96px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    gap: 8px;
+  }
+
+  .circular-progress {
+    width: 80px;
+    height: 80px;
+  }
+
+  .circular-progress svg {
+    width: 80px;
+    height: 80px;
+  }
+
+  .progress-value {
+    font-size: 15px;
+  }
+
+  .progress-total {
+    font-size: 10px;
+  }
+
+  .label-text {
+    font-size: 11px;
+  }
+
+  .label-unit {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .circular-progress {
+    width: 75px;
+    height: 75px;
+  }
+  
+  .circular-progress svg {
+    width: 75px;
+    height: 75px;
+  }
+  
+  .progress-value {
+    font-size: 14px;
+  }
+  
+  .nutrition-stats .section-title {
+    font-size: 15px;
+    font-weight: 700;
+  }
+}
+
+.loading-skeleton,
+.no-data {
+  padding: 40px 20px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}
