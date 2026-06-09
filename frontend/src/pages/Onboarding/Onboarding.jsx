@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+﻿import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
@@ -63,10 +63,23 @@ const calculateNutritionTargets = ({ age, gender, height, weight, activityLevel,
   return { tdee, calories, protein, fat, carbs, fiber };
 };
 
+const sanitizeOnboardingData = (data) => {
+  const nextData = { ...data };
+  if (nextData.goal !== 'Lose' && nextData.goal !== 'Gain') {
+    nextData.targetWeight = '';
+    nextData.targetDuration = '';
+  }
+  return nextData;
+};
+
 const Onboarding = () => {
   const { url, token, setToken, setHasCompletedOnboarding, setNutritionTargets } = useContext(StoreContext);
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
+  const [onboardingWarnings, setOnboardingWarnings] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAssessing, setIsAssessing] = useState(false);
+  const [hasPassedAiAssessment, setHasPassedAiAssessment] = useState(false);
   const [formData, setFormData] = useState({
     // Step 1 - Basic Info
     name: '',
@@ -88,7 +101,6 @@ const Onboarding = () => {
     
     // Step 5 - Diet
     dietType: '',
-    dietTypeOther: '',
     
     // Step 6 - Allergies
     allergies: [],
@@ -99,12 +111,61 @@ const Onboarding = () => {
     activityLevel: '',
   });
 
+  const getWarningStep = (warning) => {
+    const code = String(warning?.code || '').toUpperCase();
+    const text = `${warning?.message || ''} ${warning?.detail || ''}`
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+    const explicitStep = Number(warning?.suggestedStep || 0);
+
+    if (explicitStep >= 1 && explicitStep <= 9) return explicitStep;
+
+    if (code.includes('DISLIKE') || /khong thich|khong an chay|khong an do chay/.test(text)) return 6;
+    if (code.includes('WEIGHT') || code.includes('CALORIE') || /can nang|muc tieu|kg|bmi|calo|calorie/.test(text)) return 3;
+    if (code.includes('HEALTH') || /suc khoe|benh|tieu duong|huyet ap|da day|gout|mo mau|thai ky/.test(text)) return 4;
+    if (code.includes('DIET') || code.includes('PLANT_BASED') || /che do an|an chay|thuan chay|vegan|vegetarian/.test(text)) return 5;
+    if (code.includes('ALLERGY') || code.includes('MEALPLAN') || code.includes('DISLIKE') || /di ung|han che|khong thich|meal plan|nguyen lieu/.test(text)) return 6;
+
+    return 7;
+  };
+
+  const getFieldStep = (fieldName) => {
+    if (['name', 'age', 'gender'].includes(fieldName)) return 1;
+    if (['height', 'weight'].includes(fieldName)) return 2;
+    if (['goal', 'targetWeight', 'targetDuration'].includes(fieldName)) return 3;
+    if (['healthConditions', 'healthConditionsOther'].includes(fieldName)) return 4;
+    if (['dietType'].includes(fieldName)) return 5;
+    if (['allergies', 'allergiesOther', 'dislikes'].includes(fieldName)) return 6;
+    if (['activityLevel'].includes(fieldName)) return 7;
+    return currentStep;
+  };
+
+  const clearWarningsForStep = (step) => {
+    if (onboardingWarnings.length > 0) {
+      setOnboardingWarnings(prev => prev.filter(warning => getWarningStep(warning) !== step));
+    }
+  };
+
+  const getFirstWarningStep = (warnings) => {
+    const steps = (warnings || []).map(getWarningStep).filter(Boolean);
+    return steps.length ? Math.min(...steps) : 7;
+  };
+
+  const currentStepWarnings = onboardingWarnings.filter(
+    warning => getWarningStep(warning) === currentStep
+  );
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setHasPassedAiAssessment(false);
+    clearWarningsForStep(getFieldStep(name));
+    setFormData(prev => sanitizeOnboardingData({ ...prev, [name]: value }));
   };
 
   const handleMultiSelect = (name, value) => {
+    setHasPassedAiAssessment(false);
+    clearWarningsForStep(getFieldStep(name));
     setFormData(prev => {
       const currentValues = prev[name] || [];
       
@@ -180,11 +241,54 @@ const Onboarding = () => {
     }
   };
 
-  const handleNext = () => {
-    if (validateStep()) {
-      if (currentStep < 9) {
-        setCurrentStep(prev => prev + 1);
+  const runOnboardingAssessment = async () => {
+    if (isAssessing) return false;
+
+    setIsAssessing(true);
+    setOnboardingWarnings([]);
+
+    try {
+      const response = await axios.post(
+        `${url}/api/user/onboarding`,
+        { ...sanitizeOnboardingData(formData), aiCheckOnly: true },
+        { headers: { token } }
+      );
+
+      const warnings = response.data?.onboardingAssessment?.warnings || [];
+      if (!response.data.success || warnings.length > 0) {
+        setOnboardingWarnings(warnings);
+        setHasPassedAiAssessment(false);
+        setCurrentStep(getFirstWarningStep(warnings));
+        toast.warn(response.data.message || 'AI cần bạn chỉnh lại một số thông tin trước khi tiếp tục.');
+        return false;
       }
+
+      setHasPassedAiAssessment(true);
+      return true;
+    } catch (error) {
+      setHasPassedAiAssessment(false);
+      toast.error('Không thể đánh giá onboarding bằng AI. Vui lòng thử lại!');
+      return false;
+    } finally {
+      setIsAssessing(false);
+    }
+  };
+
+  const handleNext = async () => {
+    if (!validateStep()) return;
+
+    if (currentStepWarnings.length > 0) {
+      toast.warn('Vui lòng chỉnh lại cảnh báo ở bước hiện tại trước khi tiếp tục.');
+      return;
+    }
+
+    if (currentStep === 7) {
+      const isSuitable = await runOnboardingAssessment();
+      if (!isSuitable) return;
+    }
+
+    if (currentStep < 9) {
+      setCurrentStep(prev => prev + 1);
     }
   };
 
@@ -202,28 +306,53 @@ const Onboarding = () => {
 
   const handleSubmit = async () => {
     if (!validateStep()) return;
+    if (isSubmitting) return;
+
+    if (!hasPassedAiAssessment) {
+      setCurrentStep(7);
+      toast.warn('Vui lòng hoàn tất đánh giá AI ở bước 7 trước khi xác nhận.');
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
       const response = await axios.post(
         `${url}/api/user/onboarding`,
-        formData,
+        { ...sanitizeOnboardingData(formData), skipAiAssessment: true },
         { headers: { token } }
       );
 
       if (response.data.success) {
+        const warnings = response.data?.onboardingAssessment?.warnings || [];
+
+        if (warnings.length > 0) {
+          setOnboardingWarnings(warnings);
+          setCurrentStep(getFirstWarningStep(warnings));
+          toast.warn('Hồ sơ có cảnh báo. Vui lòng xem lại trước khi tiếp tục.');
+          return;
+        }
+
         // Save nutrition targets to context immediately (without page reload)
-        setNutritionTargets(calculateNutritionTargets(formData));
+        setNutritionTargets(calculateNutritionTargets(sanitizeOnboardingData(formData)));
         // Update onboarding status in localStorage and context
         localStorage.setItem('hasCompletedOnboarding', 'true');
         setHasCompletedOnboarding(true);
-        
+
         toast.success('Hoàn thành onboarding! Chào mừng bạn về trang chủ.');
         navigate('/home');
       } else {
+        const warnings = response.data?.onboardingAssessment?.warnings || [];
+        if (warnings.length > 0) {
+          setOnboardingWarnings(warnings);
+          setCurrentStep(getFirstWarningStep(warnings));
+        }
         toast.error(response.data.message);
       }
     } catch (error) {
       toast.error('Đã có lỗi xảy ra. Vui lòng thử lại!');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -449,14 +578,6 @@ const Onboarding = () => {
                   </label>
                 ))}
               </div>
-              <input
-                type="text"
-                name="dietTypeOther"
-                value={formData.dietTypeOther}
-                onChange={handleInputChange}
-                placeholder="Khác (ghi chi tiết)"
-                className="mt-2"
-              />
             </div>
           </div>
         );
@@ -540,7 +661,7 @@ const Onboarding = () => {
         );
 
       case 8: {
-        const targets = calculateNutritionTargets(formData);
+        const targets = calculateNutritionTargets(sanitizeOnboardingData(formData));
         const bmi = (parseFloat(formData.weight) / Math.pow(parseFloat(formData.height) / 100, 2)).toFixed(1);
         const goalLabels = { Maintain: 'Duy trì', Lose: 'Giảm cân', Gain: 'Tăng cân' };
         const actLabels = {
@@ -683,6 +804,29 @@ const Onboarding = () => {
 
         {renderStep()}
 
+        {currentStepWarnings.length > 0 && (
+          <div className="onboarding-warning-panel">
+            <h3 className="warning-title">Cảnh báo từ hệ thống AI</h3>
+            <p className="warning-subtitle">
+              AI phát hiện thông tin ở bước này chưa phù hợp để tiếp tục. Vui lòng chỉnh lại trước khi sang bước tiếp theo.
+            </p>
+            <div className="warning-list">
+              {currentStepWarnings.map((warning, index) => (
+                <div
+                  key={`${warning.code || 'warning'}-${index}`}
+                  className={`warning-item warning-${warning.severity || 'medium'}`}
+                >
+                  <span className="warning-badge">{warning.severity === 'high' ? 'Cao' : 'Vừa'}</span>
+                  <div className="warning-content">
+                    <p>{warning.message}</p>
+                    {warning.detail && <p className="warning-detail">Chi tiết: {warning.detail}</p>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="button-group">
           {currentStep > 1 && (
             <button className="btn-secondary" onClick={handleBack}>
@@ -691,12 +835,12 @@ const Onboarding = () => {
           )}
           
           {currentStep < 9 ? (
-            <button className="btn-primary" onClick={handleNext}>
-              Tiếp tục →
+            <button className="btn-primary" onClick={handleNext} disabled={isAssessing}>
+              {isAssessing && currentStep === 7 ? 'AI đang đánh giá...' : 'Tiếp tục →'}
             </button>
           ) : (
-            <button className="btn-primary" onClick={handleSubmit}>
-              Xác nhận
+            <button className="btn-primary" onClick={handleSubmit} disabled={isSubmitting}>
+              {isSubmitting ? 'Đang lưu...' : 'Xác nhận'}
             </button>
           )}
         </div>

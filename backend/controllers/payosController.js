@@ -2,6 +2,7 @@ import { PayOS } from "@payos/node";
 import crypto from "crypto";
 import userModel from "../models/userModel.js";
 import voucherModel from "../models/voucherModel.js";
+import { validateVoucherForUser } from "../utils/voucherEligibility.js";
 
 // ─── Package config ───────────────────────────────────────────────────────────
 const PACKAGE_PRICES = {
@@ -181,15 +182,9 @@ const createPayment = async (req, res) => {
 
     // Validate and apply voucher discount
     if (voucherCode) {
-      const voucher = await voucherModel.findOne({
-        code: voucherCode.trim().toUpperCase(),
-        isActive: true,
-      });
-      if (
-        voucher &&
-        voucher.usedBy.length < voucher.maxUses &&
-        (!userId || !voucher.usedBy.some((id) => id.toString() === userId.toString()))
-      ) {
+      const voucherResult = await validateVoucherForUser({ code: voucherCode, userId });
+      if (voucherResult.success) {
+        const { voucher } = voucherResult;
         discountPercent = voucher.discountPercent;
         amount = Math.max(1000, Math.round(amount * (1 - discountPercent / 100)));
         appliedVoucherCode = voucher.code;

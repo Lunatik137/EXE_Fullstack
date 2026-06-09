@@ -181,16 +181,20 @@ class GeminiService {
           }
         }
 
-        // API key invalid hoặc quota exceeded (429)
+        // API key invalid, quota exceeded (429), or suspended/forbidden (403)
         if (
           error.message?.includes("API key") ||
           error.message?.includes("quota") ||
+          error.message?.includes("PERMISSION_DENIED") ||
+          error.message?.includes("suspended") ||
           errorStatus === 400 ||
+          errorStatus === 403 ||
           errorStatus === 429 ||
           error.status === 400 ||
+          error.status === 403 ||
           error.status === 429
         ) {
-          console.log("🔄 API key issue (400/429). Rotating...");
+          console.log(`🔄 API key issue (${errorStatus || error.status}). Rotating...`);
 
           const hasNext = this.rotateToNextAvailableKey();
           this.modelIndex = 0;

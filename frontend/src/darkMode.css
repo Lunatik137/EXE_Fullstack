@@ -878,6 +878,57 @@ html.dark .modal-content h3 {
   color: #f1f5f9;
 }
 
+html.dark .profile-warning-panel {
+  background: rgba(127, 29, 29, 0.2);
+  border-color: rgba(248, 113, 113, 0.45);
+  box-shadow: none;
+}
+
+html.dark .profile-warning-panel h4 {
+  color: #fecaca;
+}
+
+html.dark .profile-warning-subtitle {
+  color: #fca5a5;
+}
+
+html.dark .profile-warning-high {
+  background: rgba(127, 29, 29, 0.32);
+  border-color: rgba(248, 113, 113, 0.45);
+}
+
+html.dark .profile-warning-medium {
+  background: rgba(120, 53, 15, 0.3);
+  border-color: rgba(251, 191, 36, 0.42);
+}
+
+html.dark .profile-warning-badge {
+  background: rgba(15, 23, 42, 0.74);
+  border-color: rgba(248, 113, 113, 0.5);
+  color: #fecaca;
+}
+
+html.dark .profile-warning-medium .profile-warning-badge {
+  border-color: rgba(251, 191, 36, 0.55);
+  color: #fde68a;
+}
+
+html.dark .profile-warning-item p {
+  color: #fee2e2;
+}
+
+html.dark .profile-warning-medium p {
+  color: #fde68a;
+}
+
+html.dark .profile-warning-detail {
+  color: #fecaca !important;
+}
+
+html.dark .profile-warning-medium .profile-warning-detail {
+  color: #fcd34d !important;
+}
+
 /* generic inputs used inside profile page */
 html.dark .profile-page input[type="text"],
 html.dark .profile-page input[type="email"],
@@ -2111,7 +2162,7 @@ html.dark .loading-spinner {
 /* Preview content card */
 html.dark .meal-plan-preview-content {
   background: #1e293b;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 18px 42px rgba(2, 6, 23, 0.42);
 }
 
 html.dark .preview-header h1 {
@@ -2122,49 +2173,114 @@ html.dark .preview-header p {
   color: #94a3b8;
 }
 
-/* Summary cards */
-html.dark .summary-card {
-  background: #243447;
-  border-color: #34d399;
+/* Nutrition overview */
+html.dark .nutrition-overview-header h2 {
+  color: #f1f5f9;
 }
 
-html.dark .summary-card h3 {
-  color: #34d399;
-}
-
-html.dark .summary-card p {
+html.dark .nutrition-overview-header p {
   color: #94a3b8;
 }
 
-/* Week navigation */
-html.dark .week-navigation-header {
-  background: #243447;
-  border-color: #34d399;
+html.dark .nutrition-card {
+  background: linear-gradient(180deg, #223042 0%, #1c2735 100%);
+  border-color: #314355;
+  box-shadow: 0 12px 26px rgba(2, 6, 23, 0.28);
 }
 
-html.dark .week-navigation-header h2 {
-  color: #34d399 !important;
+html.dark .nutrition-card-primary {
+  border-color: #2db985;
+  box-shadow: 0 14px 28px rgba(16, 185, 129, 0.14);
 }
 
-html.dark .week-navigation-header p {
-  color: #94a3b8 !important;
+html.dark .nutrition-icon-calories {
+  background: linear-gradient(180deg, #4a3413 0%, #6a4a1a 100%);
+  border-color: #98703a;
 }
 
-html.dark .week-nav-btn {
-  background: #293548;
-  border-color: #059669;
-  color: #34d399;
+html.dark .nutrition-icon-protein {
+  background: linear-gradient(180deg, #4b2522 0%, #68302b 100%);
+  border-color: #8c473f;
 }
 
-html.dark .week-nav-btn:hover:not(:disabled) {
-  background: #059669;
-  color: #ffffff;
+html.dark .nutrition-icon-fat {
+  background: linear-gradient(180deg, #4c3d17 0%, #67531c 100%);
+  border-color: #8d7530;
+}
+
+html.dark .nutrition-icon-carbs {
+  background: linear-gradient(180deg, #1f334f 0%, #29486b 100%);
+  border-color: #3d6895;
+}
+
+html.dark .nutrition-icon-fiber {
+  background: linear-gradient(180deg, #123b26 0%, #175135 100%);
+  border-color: #238653;
+}
+
+html.dark .nutrition-card-calories .nutrition-value {
+  color: #f3ba59;
+}
+
+html.dark .nutrition-card-protein .nutrition-value {
+  color: #f29488;
+}
+
+html.dark .nutrition-card-fat .nutrition-value {
+  color: #f4ca68;
+}
+
+html.dark .nutrition-card-carbs .nutrition-value {
+  color: #7db0f0;
+}
+
+html.dark .nutrition-card-fiber .nutrition-value {
+  color: #6ee7b7;
+}
+
+html.dark .nutrition-label {
+  color: #cbd5e1;
+}
+
+html.dark .macro-progress-panel {
+  background: linear-gradient(180deg, #1e2a3a 0%, #192433 100%);
+  border-color: #334759;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+html.dark .macro-progress-label {
+  color: #cbd5e1;
+}
+
+html.dark .macro-progress-value {
+  color: #94a3b8;
+}
+
+html.dark .macro-progress-track {
+  background: #2b3a4b;
+}
+
+html.dark .macro-row-protein .macro-progress-fill {
+  background: linear-gradient(90deg, #e88679 0%, #c8564a 100%);
+}
+
+html.dark .macro-row-fat .macro-progress-fill {
+  background: linear-gradient(90deg, #e8c261 0%, #bf8c1c 100%);
+}
+
+html.dark .macro-row-carbs .macro-progress-fill {
+  background: linear-gradient(90deg, #78a7e6 0%, #3c73bd 100%);
+}
+
+html.dark .macro-row-fiber .macro-progress-fill {
+  background: linear-gradient(90deg, #66c58a 0%, #209a59 100%);
 }
 
 /* Day cards */
 html.dark .day-card {
-  background: #293548;
-  border-color: #334155;
+  background: linear-gradient(180deg, #273447 0%, #233142 100%);
+  border-color: #344457;
+  box-shadow: 0 14px 30px rgba(2, 6, 23, 0.26);
 }
 
 html.dark .day-header {
@@ -2183,7 +2299,13 @@ html.dark .day-calories {
 
 /* Meal items */
 html.dark .meal-item {
-  background: #1e293b;
+  background: linear-gradient(180deg, #1d2938 0%, #18222f 100%);
+  border-color: #304250;
+  box-shadow: 0 14px 28px rgba(2, 6, 23, 0.22);
+}
+
+html.dark .meal-icon {
+  background: rgba(52, 211, 153, 0.1);
 }
 
 html.dark .meal-header strong {
@@ -2239,8 +2361,9 @@ html.dark .loading-container .btn-secondary:hover {
 
 /* Tạo lộ trình button */
 html.dark .btn-regenerate {
-  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.25);
+  background: linear-gradient(135deg, #d89a24 0%, #efb446 100%);
+  color: #3f2a06;
+  box-shadow: 0 3px 10px rgba(245, 158, 11, 0.16);
 }
 
 /* Xác nhận & Bắt đầu button */
@@ -2251,12 +2374,15 @@ html.dark .btn-primary {
 
 /* Disclaimer */
 html.dark .disclaimer-text {
-  background: #293548;
-  color: #94a3b8;
+  background: #1b2638;
+  color: #cbd5e1;
+  border: 1px solid #334155;
+  border-left: 4px solid #34d399;
+  box-shadow: 0 10px 20px rgba(2, 6, 23, 0.2);
 }
 
 html.dark .disclaimer-text strong {
-  color: #f1f5f9;
+  color: #6ee7b7;
 }
 
 /* ---------- LoginPopup (accessible from public paths) ---------- */

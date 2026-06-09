@@ -1,32 +1,20 @@
 import voucherModel from "../models/voucherModel.js";
+import { validateVoucherForUser } from "../utils/voucherEligibility.js";
 
-// ─── POST /api/voucher/apply (user) ─────────────────────────────────────────
-// Validates a voucher code without consuming it
+// POST /api/voucher/apply (user)
+// Validates a voucher code without consuming it.
 const applyVoucher = async (req, res) => {
   try {
-    const { code } = req.body;
-    const userId = req.body.userId;
-
-    if (!code || !code.trim()) {
-      return res.json({ success: false, message: "Vui lòng nhập mã giảm giá" });
-    }
-
-    const voucher = await voucherModel.findOne({
-      code: code.trim().toUpperCase(),
-      isActive: true,
+    const result = await validateVoucherForUser({
+      code: req.body.code,
+      userId: req.body.userId,
     });
 
-    if (!voucher) {
-      return res.json({ success: false, message: "Mã giảm giá không hợp lệ hoặc đã hết hạn" });
+    if (!result.success) {
+      return res.json({ success: false, message: result.message });
     }
 
-    if (voucher.usedBy.length >= voucher.maxUses) {
-      return res.json({ success: false, message: "Mã giảm giá đã hết lượt sử dụng" });
-    }
-
-    if (userId && voucher.usedBy.some((id) => id.toString() === userId.toString())) {
-      return res.json({ success: false, message: "Bạn đã sử dụng mã giảm giá này rồi" });
-    }
+    const { voucher } = result;
 
     return res.json({
       success: true,
@@ -39,8 +27,7 @@ const applyVoucher = async (req, res) => {
   }
 };
 
-// ─── Admin CRUD ──────────────────────────────────────────────────────────────
-
+// Admin CRUD
 const listVouchers = async (req, res) => {
   try {
     const vouchers = await voucherModel.find().sort({ createdAt: -1 });
@@ -52,14 +39,16 @@ const listVouchers = async (req, res) => {
 
 const createVoucher = async (req, res) => {
   try {
-    const { code, discountPercent, maxUses, note } = req.body;
+    const { code, discountPercent, maxUses, note, requiresReferralCode } = req.body;
     if (!code || discountPercent === undefined || discountPercent === null) {
       return res.json({ success: false, message: "Thiếu thông tin bắt buộc (code, discountPercent)" });
     }
+
     const voucher = new voucherModel({
       code: code.trim().toUpperCase(),
       discountPercent: Number(discountPercent),
-      maxUses: Number(maxUses) || 1,
+      maxUses: requiresReferralCode ? 0 : Number(maxUses) || 1,
+      requiresReferralCode: !!requiresReferralCode,
       note: note || "",
     });
     await voucher.save();

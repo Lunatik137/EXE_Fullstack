@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useCallback } from 'react';
+﻿import { useState, useEffect, useContext, useCallback } from 'react';
 import './Profile.css';
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
@@ -155,10 +155,39 @@ const calculateBackendAlignedNutritionTargets = (onboardingData) => {
   return { tdee, calories, protein, fat, carbs, fiber };
 };
 
+const mapUserToEditedProfile = (profileUser) => ({
+  name: profileUser?.name || '',
+  age: profileUser?.onboardingData?.age || '',
+  gender: profileUser?.onboardingData?.gender || '',
+  height: profileUser?.onboardingData?.height || '',
+  weight: profileUser?.onboardingData?.weight || '',
+  targetWeight: profileUser?.onboardingData?.targetWeight || '',
+  targetDuration: profileUser?.onboardingData?.targetDuration || '',
+  goal: profileUser?.onboardingData?.goal || '',
+  activityLevel: profileUser?.onboardingData?.activityLevel || '',
+  dietType: profileUser?.onboardingData?.dietType || '',
+  healthConditions: profileUser?.onboardingData?.healthConditions || [],
+  healthConditionsOther: profileUser?.onboardingData?.healthConditionsOther || '',
+  allergies: profileUser?.onboardingData?.allergies || [],
+  allergiesOther: profileUser?.onboardingData?.allergiesOther || '',
+  dislikes: profileUser?.onboardingData?.dislikes || ''
+});
+
+const sanitizeProfileData = (data) => {
+  const nextData = { ...data };
+  if (nextData.goal !== 'Lose' && nextData.goal !== 'Gain') {
+    nextData.targetWeight = '';
+    nextData.targetDuration = '';
+  }
+  return nextData;
+};
+
 const Profile = () => {
   const { url, token, setNutritionTargets, darkMode, toggleDarkMode } = useContext(StoreContext);
   const [isEditing, setIsEditing] = useState(false);
   const [showWeightModal, setShowWeightModal] = useState(false);
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
+  const [profileWarnings, setProfileWarnings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [weightHistory, setWeightHistory] = useState([]);
@@ -181,7 +210,6 @@ const Profile = () => {
     goal: '',
     activityLevel: '',
     dietType: '',
-    dietTypeOther: '',
     healthConditions: [],
     healthConditionsOther: '',
     allergies: [],
@@ -196,24 +224,7 @@ const Profile = () => {
       });
       if (response.data.success) {
         setUser(response.data.user);
-        setEditedProfile({
-          name: response.data.user.name,
-          age: response.data.user.onboardingData?.age || '',
-          gender: response.data.user.onboardingData?.gender || '',
-          height: response.data.user.onboardingData?.height || '',
-          weight: response.data.user.onboardingData?.weight || '',
-          targetWeight: response.data.user.onboardingData?.targetWeight || '',
-          targetDuration: response.data.user.onboardingData?.targetDuration || '',
-          goal: response.data.user.onboardingData?.goal || '',
-          activityLevel: response.data.user.onboardingData?.activityLevel || '',
-          dietType: response.data.user.onboardingData?.dietType || '',
-          dietTypeOther: response.data.user.onboardingData?.dietTypeOther || '',
-          healthConditions: response.data.user.onboardingData?.healthConditions || [],
-          healthConditionsOther: response.data.user.onboardingData?.healthConditionsOther || '',
-          allergies: response.data.user.onboardingData?.allergies || [],
-          allergiesOther: response.data.user.onboardingData?.allergiesOther || '',
-          dislikes: response.data.user.onboardingData?.dislikes || ''
-        });
+        setEditedProfile(mapUserToEditedProfile(response.data.user));
         setMealReminderSettings({
           enabled:
             response.data.user.planType === 'premium' &&
@@ -254,7 +265,18 @@ const Profile = () => {
     }
   }, [token, fetchUserProfile, fetchWeightHistory]);
 
+  useEffect(() => {
+    if (!isEditing) return;
+    if (profileWarnings.length > 0) {
+      setProfileWarnings([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editedProfile]);
+
   const toggleMultiSelect = (field, value) => {
+    if (profileWarnings.length > 0) {
+      setProfileWarnings([]);
+    }
     setEditedProfile((prev) => {
       const current = prev[field] || [];
       const exists = current.includes(value);
@@ -265,34 +287,88 @@ const Profile = () => {
     });
   };
 
-  const handleSaveProfile = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('name', editedProfile.name);
-      if (avatarFile) {
-        formData.append('avatar', avatarFile);
-      }
-      formData.append('onboardingData', JSON.stringify({
-        ...user.onboardingData,
-        age: editedProfile.age,
-        gender: editedProfile.gender,
-        height: editedProfile.height,
-        weight: editedProfile.weight,
-        targetWeight: editedProfile.targetWeight,
-        targetDuration: editedProfile.targetDuration,
-        goal: editedProfile.goal,
-        activityLevel: editedProfile.activityLevel,
-        dietType: editedProfile.dietType,
-        dietTypeOther: editedProfile.dietTypeOther,
-        healthConditions: editedProfile.healthConditions,
-        healthConditionsOther: editedProfile.healthConditionsOther,
-        allergies: editedProfile.allergies,
-        allergiesOther: editedProfile.allergiesOther,
-        dislikes: editedProfile.dislikes
-      }));
+  const handleOpenEditModal = () => {
+    setEditedProfile(mapUserToEditedProfile(user));
+    setAvatarFile(null);
+    setProfileWarnings([]);
+    setIsEditing(true);
+  };
 
-      const response = await axios.post(`${url}/api/user/update-profile`, formData, {
-        headers: { 
+  const handleCloseEditModal = () => {
+    setIsEditing(false);
+    setProfileWarnings([]);
+    setAvatarFile(null);
+    setEditedProfile(mapUserToEditedProfile(user));
+  };
+
+  const buildOnboardingPayload = () => ({
+    ...user.onboardingData,
+    ...sanitizeProfileData({
+      age: editedProfile.age,
+      gender: editedProfile.gender,
+      height: editedProfile.height,
+      weight: editedProfile.weight,
+      targetWeight: editedProfile.targetWeight,
+      targetDuration: editedProfile.targetDuration,
+      goal: editedProfile.goal,
+      activityLevel: editedProfile.activityLevel,
+      dietType: editedProfile.dietType,
+      healthConditions: editedProfile.healthConditions,
+      healthConditionsOther: editedProfile.healthConditionsOther,
+      allergies: editedProfile.allergies,
+      allergiesOther: editedProfile.allergiesOther,
+      dislikes: editedProfile.dislikes
+    })
+  });
+
+  const buildProfileFormData = ({ aiCheckOnly = false, skipAiAssessment = false } = {}) => {
+    const formData = new FormData();
+    formData.append('name', editedProfile.name);
+
+    if (avatarFile && !aiCheckOnly) {
+      formData.append('avatar', avatarFile);
+    }
+
+    formData.append('onboardingData', JSON.stringify(buildOnboardingPayload()));
+
+    if (aiCheckOnly) {
+      formData.append('aiCheckOnly', 'true');
+    }
+
+    if (skipAiAssessment) {
+      formData.append('skipAiAssessment', 'true');
+    }
+
+    return formData;
+  };
+
+  const handleSaveProfile = async () => {
+    if (isSavingProfile) return;
+
+    try {
+      setIsSavingProfile(true);
+
+      const checkResponse = await axios.post(`${url}/api/user/update-profile`, buildProfileFormData({ aiCheckOnly: true }), {
+        headers: {
+          token,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      if (!checkResponse.data.success) {
+        toast.error(checkResponse.data.message || 'Không thể đánh giá dữ liệu hồ sơ');
+        return;
+      }
+
+      const warnings = checkResponse.data?.onboardingAssessment?.warnings || [];
+      if (warnings.length > 0) {
+        setProfileWarnings(warnings);
+        toast.warn('Hồ sơ có cảnh báo AI. Vui lòng chỉnh lại trước khi lưu.');
+        return;
+      }
+
+      const response = await axios.post(`${url}/api/user/update-profile`, buildProfileFormData({ skipAiAssessment: true }), {
+        headers: {
           token,
           'Content-Type': 'multipart/form-data'
         }
@@ -301,16 +377,16 @@ const Profile = () => {
       if (response.data.success) {
         setUser(response.data.user);
         setNutritionTargets(response.data.user?.nutritionTargets || null);
-        setIsEditing(false);
-        setAvatarFile(null);
+        handleCloseEditModal();
         toast.success('Cập nhật thành công!');
-        setTimeout(() => {
-          window.location.reload();
-        }, 300);
+      } else {
+        toast.error(response.data.message || 'Có lỗi xảy ra khi cập nhật!');
       }
     } catch (error) {
       console.error('Error updating profile:', error);
       toast.error('Có lỗi xảy ra khi cập nhật!');
+    } finally {
+      setIsSavingProfile(false);
     }
   };
 
@@ -586,13 +662,15 @@ const Profile = () => {
                 </div>
               )} */}
 
-              <button className="settings-btn" onClick={() => setIsEditing(true)}>
+              <button className="settings-btn" onClick={handleOpenEditModal}>
                 Chỉnh sửa
               </button>
             </>
           ) : (
-            <div className="edit-profile-form">
-              <h3>Chỉnh sửa thông tin</h3>
+            <div className="modal-overlay" onClick={handleCloseEditModal}>
+              <div className="modal-content profile-edit-modal" onClick={(e) => e.stopPropagation()}>
+                <div className="edit-profile-form">
+                  <h3>Chỉnh sửa thông tin</h3>
               
               <div className="form-group">
                 <label>Ảnh đại diện</label>
@@ -739,13 +817,6 @@ const Profile = () => {
                     </label>
                   ))}
                 </div>
-                <input
-                  type="text"
-                  value={editedProfile.dietTypeOther}
-                  onChange={(e) => setEditedProfile({...editedProfile, dietTypeOther: e.target.value})}
-                  placeholder="Khác (ghi chi tiết)"
-                  className="mt-2"
-                />
               </div>
 
               <div className="form-group">
@@ -818,9 +889,36 @@ const Profile = () => {
                 />
               </div>
 
-              <div className="edit-actions">
-                <button className="save-btn" onClick={handleSaveProfile}>Lưu</button>
-                <button className="cancel-btn" onClick={() => setIsEditing(false)}>Hủy</button>
+                  {profileWarnings.length > 0 && (
+                    <div className="profile-warning-panel">
+                      <h4>Cảnh báo từ AI</h4>
+                      <p className="profile-warning-subtitle">
+                        Thông tin hiện tại chưa phù hợp để lưu. Vui lòng chỉnh sửa rồi đánh giá lại.
+                      </p>
+                      <div className="profile-warning-list">
+                        {profileWarnings.map((warning, index) => (
+                          <div
+                            key={`${warning.code || 'warning'}-${index}`}
+                            className={`profile-warning-item profile-warning-${warning.severity || 'medium'}`}
+                          >
+                            <span className="profile-warning-badge">{warning.severity === 'high' ? 'Cao' : 'Vừa'}</span>
+                            <div>
+                              <p>{warning.message}</p>
+                              {warning.detail && <p className="profile-warning-detail">Chi tiết: {warning.detail}</p>}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="edit-actions">
+                    <button className="save-btn" disabled={isSavingProfile} onClick={handleSaveProfile}>
+                      {isSavingProfile ? 'Đang đánh giá...' : profileWarnings.length > 0 ? 'Đánh giá lại' : 'Lưu'}
+                    </button>
+                    <button className="cancel-btn" disabled={isSavingProfile} onClick={handleCloseEditModal}>Hủy</button>
+                  </div>
+                </div>
               </div>
             </div>
           )}

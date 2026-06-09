@@ -30,14 +30,12 @@ const clearSkippedMealPlanIds = () => {
 const MealPlanPreview = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { url, token } = useContext(StoreContext);
+  const { url, token, nutritionTargets } = useContext(StoreContext);
   const [loading, setLoading] = useState(true);
   const [mealPlan, setMealPlan] = useState(null);
-  const [currentWeek, setCurrentWeek] = useState(0);
   const [loadingSeconds, setLoadingSeconds] = useState(0);
   const [skippedMealPlanIds, setSkippedMealPlanIds] = useState(() => readSkippedMealPlanIds());
-  const { planType, duration } = location.state || {};
-  const displayDuration = mealPlan?.duration || duration;
+  const { planType, duration, mode } = location.state || {};
   const minLoadingSecondsRef = useRef(10 + Math.floor(Math.random() * 3));
   const pendingMealPlanRef = useRef(null);
 
@@ -65,25 +63,6 @@ const MealPlanPreview = () => {
   }, [loading, loadingSeconds]);
 
 
-
-  const handlePrevWeek = () => {
-    if (currentWeek > 0) {
-      setCurrentWeek(currentWeek - 1);
-    }
-  };
-
-  const handleNextWeek = () => {
-    const totalWeeks = Math.ceil(mealPlan.days.length / 7);
-    if (currentWeek < totalWeeks - 1) {
-      setCurrentWeek(currentWeek + 1);
-    }
-  };
-
-  const getCurrentWeekDays = () => {
-    const startIndex = currentWeek * 7;
-    const endIndex = Math.min(startIndex + 7, mealPlan.days.length);
-    return mealPlan.days.slice(startIndex, endIndex);
-  };
 
   const fetchDraftMealPlan = useCallback(async () => {
     console.log('🟥 FETCH DRAFT CALLED - START');
@@ -224,7 +203,10 @@ const MealPlanPreview = () => {
   }, [navigate, token, url]);
 
   useEffect(() => {
-    if (planType || duration) {
+    if (mode === 'generate') {
+      console.log('Generate mode state - generating new meal plan...');
+      generateMealPlan({ planTypeOverride: planType });
+    } else if (planType || duration) {
       // Arrived here from App.jsx draft recovery (has location.state) — show existing draft
       console.log('🟦 Has state — fetching existing draft...');
       fetchDraftMealPlan();
@@ -233,7 +215,7 @@ const MealPlanPreview = () => {
       console.log('🟩 No state — generating new meal plan...');
       generateMealPlan();
     }
-  }, [planType, duration, fetchDraftMealPlan, generateMealPlan]);
+  }, [planType, duration, mode, fetchDraftMealPlan, generateMealPlan]);
 
   const handleConfirm = async () => {
     try {
@@ -275,16 +257,6 @@ const MealPlanPreview = () => {
       mealPlan?.similarSourcePlanId
     ]);
     setSkippedMealPlanIds(nextSkippedIds);
-
-    try {
-      await axios.post(
-        `${url}/api/meal-plan/clear-draft`,
-        {},
-        { headers: { token } }
-      );
-    } catch (error) {
-      console.log('Could not clear draft before regenerating, continuing anyway');
-    }
 
     localStorage.removeItem('draftMealPlan');
     toast.info('Đang tạo lộ trình mới...');
@@ -336,182 +308,277 @@ const MealPlanPreview = () => {
     return null;
   }
 
+  const previewDay = mealPlan.days?.[0] || null;
+  const getMealCalories = (meal) => {
+    if (!meal) return 0;
+    if (meal.totalCalories != null) return Number(meal.totalCalories || 0);
+    return Number(meal.calories || 0);
+  };
+
+  const getMealProtein = (meal) => {
+    if (!meal) return 0;
+    if (meal.totalProtein != null) return Number(meal.totalProtein || 0);
+    return Number(meal.protein || 0);
+  };
+
+  const getMealMetric = (meal, totalField, fallbackField) => {
+    if (!meal) return 0;
+    if (meal[totalField] != null) return Number(meal[totalField] || 0);
+    return Number(meal[fallbackField] || 0);
+  };
+
+  const totalProtein = previewDay
+    ? Math.round((getMealProtein(previewDay.breakfast) + getMealProtein(previewDay.lunch) + getMealProtein(previewDay.dinner)) * 10) / 10
+    : 0;
+
+  const totalFat = previewDay
+    ? Math.round((
+      getMealMetric(previewDay.breakfast, 'totalFat', 'fat') +
+      getMealMetric(previewDay.lunch, 'totalFat', 'fat') +
+      getMealMetric(previewDay.dinner, 'totalFat', 'fat')
+    ) * 10) / 10
+    : 0;
+
+  const totalCarbs = previewDay
+    ? Math.round((
+      getMealMetric(previewDay.breakfast, 'totalCarbs', 'carbs') +
+      getMealMetric(previewDay.lunch, 'totalCarbs', 'carbs') +
+      getMealMetric(previewDay.dinner, 'totalCarbs', 'carbs')
+    ) * 10) / 10
+    : 0;
+
+  const totalFiber = previewDay
+    ? Math.round((
+      getMealMetric(previewDay.breakfast, 'totalFiber', 'fiber') +
+      getMealMetric(previewDay.lunch, 'totalFiber', 'fiber') +
+      getMealMetric(previewDay.dinner, 'totalFiber', 'fiber')
+    ) * 10) / 10
+    : 0;
+
+  const totalCalories = previewDay
+    ? Math.round(
+      Number(previewDay.totalCalories || 0) ||
+      (getMealCalories(previewDay.breakfast) + getMealCalories(previewDay.lunch) + getMealCalories(previewDay.dinner))
+    )
+    : Math.round(Number(mealPlan.avgCalories || 0));
+
+  const macroTargets = {
+    protein: nutritionTargets?.protein || 100,
+    fat: nutritionTargets?.fat || 65,
+    carbs: nutritionTargets?.carbs || 250,
+    fiber: nutritionTargets?.fiber || 30
+  };
+
+  const macroProgressRows = [
+    {
+      key: 'protein',
+      label: 'Protein',
+      value: totalProtein,
+      target: macroTargets.protein,
+      unit: 'g',
+      className: 'macro-row-protein'
+    },
+    {
+      key: 'fat',
+      label: 'Fat',
+      value: totalFat,
+      target: macroTargets.fat,
+      unit: 'g',
+      className: 'macro-row-fat'
+    },
+    {
+      key: 'carbs',
+      label: 'Carbs',
+      value: totalCarbs,
+      target: macroTargets.carbs,
+      unit: 'g',
+      className: 'macro-row-carbs'
+    },
+    {
+      key: 'fiber',
+      label: 'Fiber',
+      value: totalFiber,
+      target: macroTargets.fiber,
+      unit: 'g',
+      className: 'macro-row-fiber'
+    }
+  ].map((row) => {
+    const percent = Math.max(0, Math.round((Number(row.value || 0) / Number(row.target || 1)) * 100));
+    const barPercent = Math.min(100, percent);
+    return { ...row, percent, barPercent };
+  });
+
   return (
     <div className="meal-plan-preview-container">
       <div className="meal-plan-preview-content">
         <div className="preview-header">
-          <h1>Lộ trình của bạn đã sẵn sàng!</h1>
-          <p>Xem trước và xác nhận lộ trình {displayDuration} ngày</p>
+          <h1>Thực đơn hôm nay đã sẵn sàng</h1>
+          <p>Kế hoạch ăn chay cá nhân hóa cho riêng bạn</p>
         </div>
 
-        {/* Plan Summary */}
-        <div className="plan-summary">
-          <div className="summary-card">
-            <span className="summary-icon">📅</span>
-            <div>
-              <h3>{displayDuration} ngày</h3>
-              <p>Thời lượng</p>
+        <div className="nutrition-overview">
+          <div className="nutrition-overview-header">
+            <h2>Tổng quan dinh dưỡng</h2>
+            <p>Chỉ số dinh dưỡng cho thực đơn hôm nay</p>
+          </div>
+          <div className="nutrition-grid">
+            <div className="nutrition-card nutrition-card-primary nutrition-card-calories">
+              <span className="nutrition-icon-badge nutrition-icon-calories">
+                <span className="nutrition-icon">⚡</span>
+              </span>
+              <strong className="nutrition-value">{totalCalories || '~1800'} kcal</strong>
+              <span className="nutrition-label">Tổng năng lượng</span>
+            </div>
+            <div className="nutrition-card nutrition-card-protein">
+              <span className="nutrition-icon-badge nutrition-icon-protein">
+                <span className="nutrition-icon">💪</span>
+              </span>
+              <strong className="nutrition-value">{totalProtein || '~0'}g</strong>
+              <span className="nutrition-label">Protein</span>
+            </div>
+            <div className="nutrition-card nutrition-card-fat">
+              <span className="nutrition-icon-badge nutrition-icon-fat">
+                <span className="nutrition-icon">🥑</span>
+              </span>
+              <strong className="nutrition-value">{totalFat || '~0'}g</strong>
+              <span className="nutrition-label">Chất béo</span>
+            </div>
+            <div className="nutrition-card nutrition-card-carbs">
+              <span className="nutrition-icon-badge nutrition-icon-carbs">
+                <span className="nutrition-icon">🌾</span>
+              </span>
+              <strong className="nutrition-value">{totalCarbs || '~0'}g</strong>
+              <span className="nutrition-label">Carbs</span>
+            </div>
+            <div className="nutrition-card nutrition-card-fiber">
+              <span className="nutrition-icon-badge nutrition-icon-fiber">
+                <span className="nutrition-icon">🌿</span>
+              </span>
+              <strong className="nutrition-value">{totalFiber || '~0'}g</strong>
+              <span className="nutrition-label">Chất xơ</span>
             </div>
           </div>
-          <div className="summary-card">
-            <span className="summary-icon">🍽️</span>
-            <div>
-              <h3>{(displayDuration || 0) * 3} bữa</h3>
-              <p>Tổng số bữa ăn</p>
-            </div>
-          </div>
-          <div className="summary-card">
-            <span className="summary-icon">🥗</span>
-            <div>
-              <h3>{mealPlan.totalRecipes || 'Đa dạng'}</h3>
-              <p>Món ăn khác nhau</p>
-            </div>
-          </div>
-          <div className="summary-card">
-            <span className="summary-icon">⚡</span>
-            <div>
-              <h3>{mealPlan.avgCalories || '~1800'} kcal</h3>
-              <p>Trung bình/ngày</p>
-            </div>
-          </div>
-        </div>
 
-        {/* Sample Days Preview */}
-        <div className="week-navigation-header">
-          <div className="week-title">
-            <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#1f2937', margin: '0' }}>
-              🗓️ Tuần {currentWeek + 1}
-            </h2>
-            <p style={{ fontSize: '16px', color: '#6b7280', margin: '4px 0 0' }}>
-              Ngày {currentWeek * 7 + 1} đến {Math.min((currentWeek + 1) * 7, mealPlan.days.length)}
-            </p>
-          </div>
-          <div className="week-navigation-buttons">
-            <button 
-              className="week-nav-btn" 
-              onClick={handlePrevWeek}
-              disabled={currentWeek === 0}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-            <button 
-              className="week-nav-btn" 
-              onClick={handleNextWeek}
-              disabled={currentWeek >= Math.ceil(mealPlan.days.length / 7) - 1}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
+          <div className="macro-progress-panel" aria-label="Macro progress today">
+            {macroProgressRows.map((row) => (
+              <div key={row.key} className={`macro-progress-row ${row.className}`}>
+                <div className="macro-progress-meta">
+                  <span className="macro-progress-label">{row.label}</span>
+                  <span className="macro-progress-value">
+                    {row.value || 0}{row.unit} · {row.percent}%
+                  </span>
+                </div>
+                <div className="macro-progress-track" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.min(row.percent, 100)}>
+                  <span className="macro-progress-fill" style={{ width: `${row.barPercent}%` }} />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
         
         <div className="days-preview">
-          {getCurrentWeekDays().map((day, index) => (
-            <div key={index} className="day-card">
+          {previewDay && (
+            <div className="day-card">
               <div className="day-header">
-                <h3>Ngày {day.dayNumber}</h3>
-                <span className="day-calories">{day.totalCalories || '~1800'} kcal</span>
+                <h3>Hôm nay</h3>
               </div>
               
               <div className="meals-grid">
                 {/* Breakfast */}
-                <div className="meal-item breakfast">
+                <div className="meal-item breakfast emphasis-card">
                   <div className="meal-header">
                     <span className="meal-icon">🌅</span>
                     <strong>Bữa sáng</strong>
                   </div>
-                  {day.breakfast?.items ? (
+                  {previewDay.breakfast?.items ? (
                     <>
                       <div className="combo-items-list">
-                        {day.breakfast.items.map((item, idx) => (
+                        {previewDay.breakfast.items.map((item, idx) => (
                           <p key={idx} className="combo-item">{item.name}</p>
                         ))}
                       </div>
                       <div className="meal-macros">
-                        <span>🔥 {day.breakfast.totalCalories} kcal</span>
-                        <span>🥩 {day.breakfast.totalProtein}g protein</span>
+                        <span>🔥 {getMealCalories(previewDay.breakfast)} kcal</span>
+                        <span>🥩 {getMealProtein(previewDay.breakfast)}g protein</span>
                       </div>
                     </>
                   ) : (
                     <>
                       <div className="combo-items-list">
-                        <p className="combo-item">{day.breakfast?.name}</p>
+                        <p className="combo-item">{previewDay.breakfast?.name}</p>
                       </div>
                       <div className="meal-macros">
-                        <span>🔥 {day.breakfast?.calories} kcal</span>
-                        <span>🥩 {day.breakfast?.protein}g protein</span>
+                        <span>🔥 {getMealCalories(previewDay.breakfast)} kcal</span>
+                        <span>🥩 {getMealProtein(previewDay.breakfast)}g protein</span>
                       </div>
                     </>
                   )}
                 </div>
 
                 {/* Lunch - Combo Meal */}
-                <div className="meal-item lunch">
+                <div className="meal-item lunch emphasis-card">
                   <div className="meal-header">
                     <span className="meal-icon">☀️</span>
                     <strong>Bữa trưa</strong>
                   </div>
-                  {day.lunch.items ? (
+                  {previewDay.lunch?.items ? (
                     <>
                       <div className="combo-items-list">
-                        {day.lunch.items.map((item, idx) => (
+                        {previewDay.lunch.items.map((item, idx) => (
                           <p key={idx} className="combo-item">
                             {item.isRice ? `${item.name}` : item.name}
                           </p>
                         ))}
                       </div>
                       <div className="meal-macros">
-                        <span>🔥 {day.lunch.totalCalories} kcal</span>
-                        <span>🥩 {day.lunch.totalProtein}g protein</span>
+                        <span>🔥 {getMealCalories(previewDay.lunch)} kcal</span>
+                        <span>🥩 {getMealProtein(previewDay.lunch)}g protein</span>
                       </div>
                     </>
                   ) : (
                     <>
-                      <p className="meal-name">{day.lunch.name}</p>
+                      <p className="meal-name">{previewDay.lunch.name}</p>
                       <div className="meal-macros">
-                        <span>🔥 {day.lunch.calories} kcal</span>
-                        <span>🥩 {day.lunch.protein}g protein</span>
+                        <span>🔥 {getMealCalories(previewDay.lunch)} kcal</span>
+                        <span>🥩 {getMealProtein(previewDay.lunch)}g protein</span>
                       </div>
                     </>
                   )}
                 </div>
 
                 {/* Dinner - Combo Meal */}
-                <div className="meal-item dinner">
+                <div className="meal-item dinner emphasis-card">
                   <div className="meal-header">
                     <span className="meal-icon">🌙</span>
                     <strong>Bữa tối</strong>
                   </div>
-                  {day.dinner.items ? (
+                  {previewDay.dinner?.items ? (
                     <>
                       <div className="combo-items-list">
-                        {day.dinner.items.map((item, idx) => (
+                        {previewDay.dinner.items.map((item, idx) => (
                           <p key={idx} className="combo-item">
                             {item.isRice ? `${item.name}` : item.name}
                           </p>
                         ))}
                       </div>
                       <div className="meal-macros">
-                        <span>🔥 {day.dinner.totalCalories} kcal</span>
-                        <span>🥩 {day.dinner.totalProtein}g protein</span>
+                        <span>🔥 {getMealCalories(previewDay.dinner)} kcal</span>
+                        <span>🥩 {getMealProtein(previewDay.dinner)}g protein</span>
                       </div>
                     </>
                   ) : (
                     <>
-                      <p className="meal-name">{day.dinner.name}</p>
+                      <p className="meal-name">{previewDay.dinner.name}</p>
                       <div className="meal-macros">
-                        <span>🔥 {day.dinner.calories} kcal</span>
-                        <span>🥩 {day.dinner.protein}g protein</span>
+                        <span>🔥 {getMealCalories(previewDay.dinner)} kcal</span>
+                        <span>🥩 {getMealProtein(previewDay.dinner)}g protein</span>
                       </div>
                     </>
                   )}
                 </div>
               </div>
             </div>
-          ))}
+          )}
         </div>
 
         {/* Action Buttons */}
@@ -533,7 +600,7 @@ const MealPlanPreview = () => {
             ← Huỷ
           </button>
           <button className="btn-regenerate" onClick={handleRegenerate}>
-            Tạo lộ trình khác
+            Tạo thực đơn khác
           </button>
           <button className="btn-primary" onClick={handleConfirm}>
             ✓ Xác nhận & Bắt đầu

@@ -1,5 +1,5 @@
 import express from "express";
-import { loginUser, registerUser, saveOnboarding, getUserProfile, updateProfile, selectPlan, getCurrentPlan, confirmPremium, redeemCoupleShareCode, searchUsers, getUserPublicProfile, followUser, unfollowUser } from "../controllers/userController.js";
+import { loginUser, sendRegisterVerificationCode, registerUser, saveOnboarding, getUserProfile, updateProfile, selectPlan, getCurrentPlan, confirmPremium, redeemCoupleShareCode, searchUsers, getUserPublicProfile, followUser, unfollowUser } from "../controllers/userController.js";
 import authMiddleware from "../middleware/auth.js";
 import multer from "multer";
 
@@ -14,6 +14,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+userRouter.post("/send-register-code", sendRegisterVerificationCode);
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
 userRouter.get("/search", searchUsers);

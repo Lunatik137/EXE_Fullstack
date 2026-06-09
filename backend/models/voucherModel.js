@@ -13,6 +13,7 @@ const voucherSchema = new mongoose.Schema(
     discountPercent: { type: Number, required: true, min: 0, max: 100 },
     maxUses: { type: Number, default: 1 },
     usedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+    requiresReferralCode: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },
     note: { type: String, default: "" },
   },

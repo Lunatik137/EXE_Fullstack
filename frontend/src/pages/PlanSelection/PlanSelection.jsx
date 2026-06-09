@@ -73,7 +73,8 @@ const PlanSelection = () => {
     navigate('/generate-plan', {
       state: {
         planType: userPlan,
-        duration: parseInt(selectedDuration)
+        duration: parseInt(selectedDuration),
+        mode: 'generate'
       }
     });
   };

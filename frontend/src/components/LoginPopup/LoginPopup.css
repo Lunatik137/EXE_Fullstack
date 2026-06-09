@@ -145,6 +145,42 @@
     box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
 }
 
+.login-popup-container button:disabled {
+    cursor: not-allowed;
+    opacity: 0.75;
+    transform: none;
+    box-shadow: none;
+}
+
+.login-popup-container .resend-code-btn {
+    align-self: flex-end;
+    margin-top: -8px;
+    padding: 0;
+    color: #059669;
+    background: transparent;
+    border-radius: 0;
+    font-size: 14px;
+    box-shadow: none;
+}
+
+.login-popup-container .resend-code-btn:hover {
+    color: #047857;
+    background: transparent;
+    transform: none;
+    box-shadow: none;
+}
+
+.login-popup-container .resend-code-btn:disabled {
+    color: #9ca3af;
+}
+
+.login-popup-container .resend-countdown {
+    align-self: flex-end;
+    margin-top: -8px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
 .switch-text {
     text-align: center;
     color: #6b7280;

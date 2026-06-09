@@ -1,0 +1,27 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "restore-recipes-exedev",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"recipes:restore:exedev"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "restore-recipes-exedev",
+			"type": "shell",
+			"command": "Set-Location \"backend\"; npm run recipes:restore:exedev",
+			"isBackground": false
+		},
+		{
+			"label": "restore-recipes-exedev-2",
+			"type": "shell",
+			"command": "Set-Location \"backend\"; npm run recipes:restore:exedev",
+			"isBackground": false
+		}
+	]
+}

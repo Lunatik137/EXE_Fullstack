@@ -1,0 +1,162 @@
+[
+  {
+    "run": 1,
+    "success": true,
+    "usedAI": true,
+    "calories": 2425,
+    "protein": 81.3,
+    "fat": 71.5,
+    "carbs": 377,
+    "fiber": 35.8,
+    "lunchDishCount": 3,
+    "dinnerDishCount": 5,
+    "duplicateNonRiceNames": [],
+    "nutritionCheck": {
+      "checks": {
+        "calories": true,
+        "protein": true,
+        "fat": true,
+        "carbs": true,
+        "fiber": true,
+        "dedupe": true
+      },
+      "failed": [],
+      "pass": true
+    },
+    "target": {
+      "calories": 2449,
+      "protein": 76,
+      "fat": 73,
+      "carbs": 372,
+      "fiber": 34
+    }
+  },
+  {
+    "run": 2,
+    "success": true,
+    "usedAI": true,
+    "calories": 2415,
+    "protein": 86.3,
+    "fat": 74.5,
+    "carbs": 361,
+    "fiber": 35.8,
+    "lunchDishCount": 4,
+    "dinnerDishCount": 5,
+    "duplicateNonRiceNames": [],
+    "nutritionCheck": {
+      "checks": {
+        "calories": true,
+        "protein": true,
+        "fat": true,
+        "carbs": true,
+        "fiber": true,
+        "dedupe": true
+      },
+      "failed": [],
+      "pass": true
+    },
+    "target": {
+      "calories": 2449,
+      "protein": 76,
+      "fat": 73,
+      "carbs": 372,
+      "fiber": 34
+    }
+  },
+  {
+    "run": 3,
+    "success": true,
+    "usedAI": true,
+    "calories": 2610,
+    "protein": 81.4,
+    "fat": 79.2,
+    "carbs": 405,
+    "fiber": 37.3,
+    "lunchDishCount": 4,
+    "dinnerDishCount": 5,
+    "duplicateNonRiceNames": [],
+    "nutritionCheck": {
+      "checks": {
+        "calories": true,
+        "protein": true,
+        "fat": true,
+        "carbs": true,
+        "fiber": true,
+        "dedupe": true
+      },
+      "failed": [],
+      "pass": true
+    },
+    "target": {
+      "calories": 2449,
+      "protein": 76,
+      "fat": 73,
+      "carbs": 372,
+      "fiber": 34
+    }
+  },
+  {
+    "run": 4,
+    "success": true,
+    "usedAI": true,
+    "calories": 2570,
+    "protein": 80.3,
+    "fat": 78.2,
+    "carbs": 407,
+    "fiber": 35.2,
+    "lunchDishCount": 4,
+    "dinnerDishCount": 5,
+    "duplicateNonRiceNames": [],
+    "nutritionCheck": {
+      "checks": {
+        "calories": true,
+        "protein": true,
+        "fat": true,
+        "carbs": true,
+        "fiber": true,
+        "dedupe": true
+      },
+      "failed": [],
+      "pass": true
+    },
+    "target": {
+      "calories": 2449,
+      "protein": 76,
+      "fat": 73,
+      "carbs": 372,
+      "fiber": 34
+    }
+  },
+  {
+    "run": 5,
+    "success": true,
+    "usedAI": true,
+    "calories": 2545,
+    "protein": 77.1,
+    "fat": 80.1,
+    "carbs": 395,
+    "fiber": 36.2,
+    "lunchDishCount": 4,
+    "dinnerDishCount": 5,
+    "duplicateNonRiceNames": [],
+    "nutritionCheck": {
+      "checks": {
+        "calories": true,
+        "protein": true,
+        "fat": true,
+        "carbs": true,
+        "fiber": true,
+        "dedupe": true
+      },
+      "failed": [],
+      "pass": true
+    },
+    "target": {
+      "calories": 2449,
+      "protein": 76,
+      "fat": 73,
+      "carbs": 372,
+      "fiber": 34
+    }
+  }
+]

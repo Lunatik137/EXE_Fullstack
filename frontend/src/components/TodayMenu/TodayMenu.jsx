@@ -611,7 +611,6 @@ const TodayMenu = ({
     );
   }
 
-  const currentDay = todayMeal.dayNumber;
   const isSelectedDateToday = selectedDateValue.toDateString() === new Date().toDateString();
   const streakMeals = streakStatus?.meals || {};
 
@@ -654,7 +653,6 @@ const TodayMenu = ({
             <h2 className="menu-title">Thực đơn hôm nay</h2>
             <p className="menu-subtitle">Dựa trên lộ trình &quot;{mealPlan.dietType === 'vegan' ? 'Ăn chay' : 'Healthy'}&quot; của bạn</p>
           </div>
-          <div className="day-badge">Day {currentDay}/{mealPlan.duration}</div>
         </div>
 
         <div className="meals-container">

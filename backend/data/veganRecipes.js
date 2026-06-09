@@ -2,19 +2,66 @@
 // Updated with heart health nutrition information
 export const veganRecipes = [
   {
-    "name": "Cơm Trắng 100g",
-    "description": "Khẩu phần cơm nhỏ (100g gạo chưa nấu) - phù hợp cho người ăn ít hoặc đang giảm cân",
+    "name": "Cơm Trắng 50g",
+    "description": "Khẩu phần cơm rất nhỏ (50g gạo tẻ) phù hợp meal plan cho 1 người, ưu tiên kiểm soát carbs",
     "category": "staple",
     "cookingMethod": "luoc",
     "dietType": "vegan",
-    "calories": 260,
-    "protein": 5.5,
-    "carbs": 56,
-    "fat": 0.5,
-    "fiber": 0.6,
+    "calories": 130,
+    "protein": 2.8,
+    "carbs": 28,
+    "fat": 0.3,
+    "fiber": 0.3,
     "ingredients": [
-      "100g gạo tẻ",
-      "200ml nước",
+      "50g gạo tẻ",
+      "110ml nước",
+      "1 nhúm muối (optional)"
+    ],
+    "instructions": [
+      "Vo gạo sạch 2-3 lần",
+      "Ngâm gạo 15 phút (optional)",
+      "Cho gạo và nước vào nồi cơm điện (tỷ lệ 1:2)",
+      "Nấu chế độ cơm trắng (~25 phút)",
+      "Để cơm rest 10 phút trước khi xới"
+    ],
+    "preparationTime": 5,
+    "cookingTime": 25,
+    "servings": 1,
+    "difficulty": "easy",
+    "allergens": [],
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
+    "tags": [
+      "staple",
+      "basic",
+      "everyday",
+      "very-low-portion"
+    ],
+    "isPopular": true,
+    "season": [
+      "all-season"
+    ],
+    "isRice": true,
+    "riceAmount": "50g",
+    "cholesterol": 0,
+    "omega3": 0.1,
+    "water": 70,
+    "saturatedFat": 0.1,
+    "sodium": 273
+  },
+  {
+    "name": "Cơm Trắng 75g",
+    "description": "Khẩu phần cơm nhỏ (75g gạo tẻ) cho bữa chính cá nhân, cân bằng năng lượng tốt hơn",
+    "category": "staple",
+    "cookingMethod": "luoc",
+    "dietType": "vegan",
+    "calories": 195,
+    "protein": 4.1,
+    "carbs": 42,
+    "fat": 0.4,
+    "fiber": 0.4,
+    "ingredients": [
+      "75g gạo tẻ",
+      "160ml nước",
       "1 nhúm muối (optional)"
     ],
     "instructions": [
@@ -41,27 +88,27 @@ export const veganRecipes = [
       "all-season"
     ],
     "isRice": true,
-    "riceAmount": "100g",
+    "riceAmount": "75g",
     "cholesterol": 0,
-    "omega3": 0.2,
-    "water": 141,
-    "saturatedFat": 0.1,
-    "sodium": 546
+    "omega3": 0.1,
+    "water": 106,
+    "saturatedFat": 0.2,
+    "sodium": 359
   },
   {
-    "name": "Cơm Trắng 150g",
-    "description": "Khẩu phần cơm vừa (150g gạo chưa nấu) - phù hợp cho người trưởng thành hoạt động nhẹ",
+    "name": "Cơm Trắng 100g",
+    "description": "Khẩu phần cơm vừa (100g gạo tẻ) cho bữa chính khi cần thêm năng lượng",
     "category": "staple",
     "cookingMethod": "luoc",
     "dietType": "vegan",
-    "calories": 390,
-    "protein": 8,
-    "carbs": 84,
-    "fat": 0.7,
-    "fiber": 0.9,
+    "calories": 260,
+    "protein": 5.5,
+    "carbs": 56,
+    "fat": 0.5,
+    "fiber": 0.6,
     "ingredients": [
-      "150g gạo tẻ",
-      "300ml nước",
+      "100g gạo tẻ",
+      "210ml nước",
       "1 nhúm muối (optional)"
     ],
     "instructions": [
@@ -88,59 +135,12 @@ export const veganRecipes = [
       "all-season"
     ],
     "isRice": true,
-    "riceAmount": "150g",
-    "cholesterol": 0,
-    "omega3": 0.1,
-    "water": 147,
-    "saturatedFat": 0.2,
-    "sodium": 479
-  },
-  {
-    "name": "Cơm Trắng 200g",
-    "description": "Khẩu phần cơm lớn (200g gạo chưa nấu) - phù hợp cho người vận động nhiều hoặc tăng cân",
-    "category": "staple",
-    "cookingMethod": "luoc",
-    "dietType": "vegan",
-    "calories": 520,
-    "protein": 11,
-    "carbs": 112,
-    "fat": 1,
-    "fiber": 1.2,
-    "ingredients": [
-      "200g gạo tẻ",
-      "400ml nước",
-      "1 nhúm muối (optional)"
-    ],
-    "instructions": [
-      "Vo gạo sạch 2-3 lần",
-      "Ngâm gạo 15 phút (optional)",
-      "Cho gạo và nước vào nồi cơm điện (tỷ lệ 1:2)",
-      "Nấu chế độ cơm trắng (~25 phút)",
-      "Để cơm rest 10 phút trước khi xới"
-    ],
-    "preparationTime": 5,
-    "cookingTime": 25,
-    "servings": 1,
-    "difficulty": "easy",
-    "allergens": [],
-    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
-    "tags": [
-      "staple",
-      "basic",
-      "everyday",
-      "large-portion"
-    ],
-    "isPopular": true,
-    "season": [
-      "all-season"
-    ],
-    "isRice": true,
-    "riceAmount": "200g",
+    "riceAmount": "100g",
     "cholesterol": 0,
     "omega3": 0.2,
-    "water": 134,
+    "water": 141,
     "saturatedFat": 0.2,
-    "sodium": 248
+    "sodium": 546
   },
   {
     "name": "Rau Muống Xào Tỏi",

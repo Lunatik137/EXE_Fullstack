@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "restore-recipes-exedev",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"recipes:restore:exedev"
+			],
+			"isBackground": false
+		}
+	]
+}
